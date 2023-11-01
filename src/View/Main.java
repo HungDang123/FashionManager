@@ -30,31 +30,9 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton4 = new javax.swing.JButton();
-        panelShadow1 = new swing.PanelShadow();
-        pictureBox1 = new swing.PictureBox();
-        jLabel5 = new javax.swing.JLabel();
-        jTextArea1 = new javax.swing.JTextArea();
-        panelShadow15 = new swing.PanelShadow();
-        pictureBox16 = new swing.PictureBox();
-        jLabel18 = new javax.swing.JLabel();
-        jTextArea15 = new javax.swing.JTextArea();
-        panelShadow14 = new swing.PanelShadow();
-        pictureBox15 = new swing.PictureBox();
-        jLabel12 = new javax.swing.JLabel();
-        jTextArea14 = new javax.swing.JTextArea();
-        panelShadow12 = new swing.PanelShadow();
-        pictureBox12 = new swing.PictureBox();
-        jLabel21 = new javax.swing.JLabel();
-        jTextArea12 = new javax.swing.JTextArea();
-        panelShadow16 = new swing.PanelShadow();
-        pictureBox17 = new swing.PictureBox();
-        jLabel20 = new javax.swing.JLabel();
-        jTextArea16 = new javax.swing.JTextArea();
-        scrollBarCustom1 = new swing.ScrollBarCustom();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        imageAvatar1 = new com.pro1041.avatar.ImageAvatar();
         btnDangXuat = new javax.swing.JButton();
         btnCaNhan = new javax.swing.JButton();
         lblHoVaTen = new javax.swing.JLabel();
@@ -70,231 +48,6 @@ public class Main extends javax.swing.JFrame {
         jButton4.setBackground(new java.awt.Color(157, 167, 137));
         jButton4.setForeground(new java.awt.Color(221, 224, 209));
         jButton4.setText("BÁN HÀNG");
-
-        panelShadow1.setBackground(new java.awt.Color(255, 255, 255));
-        panelShadow1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panelShadow1.setShadowOpacity(0.3F);
-
-        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/image/a6.jpg"))); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(90, 90, 90));
-        jLabel5.setText("Phụ kiện trang trí");
-        jLabel5.setMaximumSize(new java.awt.Dimension(189, 20));
-        jLabel5.setMinimumSize(new java.awt.Dimension(189, 20));
-
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jTextArea1.setForeground(new java.awt.Color(204, 204, 204));
-        jTextArea1.setRows(5);
-        jTextArea1.setText("145.000 VND");
-        jTextArea1.setBorder(null);
-        jTextArea1.setFocusable(false);
-
-        javax.swing.GroupLayout panelShadow1Layout = new javax.swing.GroupLayout(panelShadow1);
-        panelShadow1.setLayout(panelShadow1Layout);
-        panelShadow1Layout.setHorizontalGroup(
-            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelShadow1Layout.setVerticalGroup(
-            panelShadow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextArea1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
-        panelShadow15.setBackground(new java.awt.Color(255, 255, 255));
-        panelShadow15.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panelShadow15.setShadowOpacity(0.3F);
-
-        pictureBox16.setImage(new javax.swing.ImageIcon(getClass().getResource("/image/a14.jpg"))); // NOI18N
-
-        jLabel18.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(90, 90, 90));
-        jLabel18.setText("Phụ kiện trang trí");
-        jLabel18.setMaximumSize(new java.awt.Dimension(189, 20));
-        jLabel18.setMinimumSize(new java.awt.Dimension(189, 20));
-
-        jTextArea15.setEditable(false);
-        jTextArea15.setColumns(20);
-        jTextArea15.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jTextArea15.setForeground(new java.awt.Color(204, 204, 204));
-        jTextArea15.setRows(5);
-        jTextArea15.setText("145.000 VND");
-        jTextArea15.setBorder(null);
-        jTextArea15.setFocusable(false);
-
-        javax.swing.GroupLayout panelShadow15Layout = new javax.swing.GroupLayout(panelShadow15);
-        panelShadow15.setLayout(panelShadow15Layout);
-        panelShadow15Layout.setHorizontalGroup(
-            panelShadow15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelShadow15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pictureBox16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextArea15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelShadow15Layout.setVerticalGroup(
-            panelShadow15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow15Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pictureBox16, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextArea15, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
-        panelShadow14.setBackground(new java.awt.Color(255, 255, 255));
-        panelShadow14.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panelShadow14.setShadowOpacity(0.3F);
-
-        pictureBox15.setImage(new javax.swing.ImageIcon(getClass().getResource("/image/a11.jpg"))); // NOI18N
-
-        jLabel12.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(90, 90, 90));
-        jLabel12.setText("Áo len ");
-        jLabel12.setMaximumSize(new java.awt.Dimension(189, 20));
-        jLabel12.setMinimumSize(new java.awt.Dimension(189, 20));
-
-        jTextArea14.setEditable(false);
-        jTextArea14.setColumns(20);
-        jTextArea14.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jTextArea14.setForeground(new java.awt.Color(204, 204, 204));
-        jTextArea14.setRows(5);
-        jTextArea14.setText("145.000 VND");
-        jTextArea14.setBorder(null);
-        jTextArea14.setFocusable(false);
-
-        javax.swing.GroupLayout panelShadow14Layout = new javax.swing.GroupLayout(panelShadow14);
-        panelShadow14.setLayout(panelShadow14Layout);
-        panelShadow14Layout.setHorizontalGroup(
-            panelShadow14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelShadow14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pictureBox15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextArea14, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelShadow14Layout.setVerticalGroup(
-            panelShadow14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pictureBox15, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextArea14, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
-        panelShadow12.setBackground(new java.awt.Color(255, 255, 255));
-        panelShadow12.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panelShadow12.setShadowOpacity(0.3F);
-
-        pictureBox12.setImage(new javax.swing.ImageIcon(getClass().getResource("/image/a10.jpg"))); // NOI18N
-
-        jLabel21.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(90, 90, 90));
-        jLabel21.setText("Phụ kiện trang trí");
-        jLabel21.setMaximumSize(new java.awt.Dimension(189, 20));
-        jLabel21.setMinimumSize(new java.awt.Dimension(189, 20));
-
-        jTextArea12.setEditable(false);
-        jTextArea12.setColumns(20);
-        jTextArea12.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jTextArea12.setForeground(new java.awt.Color(204, 204, 204));
-        jTextArea12.setRows(5);
-        jTextArea12.setText("145.000 VND");
-        jTextArea12.setBorder(null);
-        jTextArea12.setFocusable(false);
-
-        javax.swing.GroupLayout panelShadow12Layout = new javax.swing.GroupLayout(panelShadow12);
-        panelShadow12.setLayout(panelShadow12Layout);
-        panelShadow12Layout.setHorizontalGroup(
-            panelShadow12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelShadow12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pictureBox12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextArea12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelShadow12Layout.setVerticalGroup(
-            panelShadow12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow12Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pictureBox12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextArea12, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
-
-        panelShadow16.setBackground(new java.awt.Color(255, 255, 255));
-        panelShadow16.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        panelShadow16.setShadowOpacity(0.3F);
-
-        pictureBox17.setImage(new javax.swing.ImageIcon(getClass().getResource("/image/a12.jpg"))); // NOI18N
-
-        jLabel20.setFont(new java.awt.Font("sansserif", 1, 15)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(90, 90, 90));
-        jLabel20.setText("Phụ kiện trang trí");
-        jLabel20.setMaximumSize(new java.awt.Dimension(189, 20));
-        jLabel20.setMinimumSize(new java.awt.Dimension(189, 20));
-
-        jTextArea16.setEditable(false);
-        jTextArea16.setColumns(20);
-        jTextArea16.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
-        jTextArea16.setForeground(new java.awt.Color(204, 204, 204));
-        jTextArea16.setRows(5);
-        jTextArea16.setText("145.000 VND");
-        jTextArea16.setBorder(null);
-        jTextArea16.setFocusable(false);
-
-        javax.swing.GroupLayout panelShadow16Layout = new javax.swing.GroupLayout(panelShadow16);
-        panelShadow16.setLayout(panelShadow16Layout);
-        panelShadow16Layout.setHorizontalGroup(
-            panelShadow16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelShadow16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pictureBox17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextArea16, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        panelShadow16Layout.setVerticalGroup(
-            panelShadow16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelShadow16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pictureBox17, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextArea16, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -326,9 +79,6 @@ public class Main extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(252, 211, 172));
         jPanel2.setPreferredSize(new java.awt.Dimension(200, 700));
-
-        imageAvatar1.setBackground(new java.awt.Color(255, 255, 0));
-        imageAvatar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/min.jpg"))); // NOI18N
 
         btnDangXuat.setBackground(new java.awt.Color(114, 130, 97));
         btnDangXuat.setForeground(new java.awt.Color(221, 224, 209));
@@ -407,23 +157,16 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblHoVaTen, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(lblChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(62, 62, 62))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38))))))
+                            .addComponent(lblHoVaTen, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(lblChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(62, 62, 62))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(153, 153, 153)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCaNhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -549,35 +292,13 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btn_khachHang;
     private javax.swing.JButton btn_nhanVien;
     private javax.swing.JButton btn_sanPham;
-    private com.pro1041.avatar.ImageAvatar imageAvatar1;
     private javax.swing.JButton jButton4;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea12;
-    private javax.swing.JTextArea jTextArea14;
-    private javax.swing.JTextArea jTextArea15;
-    private javax.swing.JTextArea jTextArea16;
     private javax.swing.JLabel lblChucVu;
     private javax.swing.JLabel lblHoVaTen;
-    private swing.PanelShadow panelShadow1;
-    private swing.PanelShadow panelShadow12;
-    private swing.PanelShadow panelShadow14;
-    private swing.PanelShadow panelShadow15;
-    private swing.PanelShadow panelShadow16;
-    private swing.PictureBox pictureBox1;
-    private swing.PictureBox pictureBox12;
-    private swing.PictureBox pictureBox15;
-    private swing.PictureBox pictureBox16;
-    private swing.PictureBox pictureBox17;
-    private swing.ScrollBarCustom scrollBarCustom1;
     // End of variables declaration//GEN-END:variables
 }
