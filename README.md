@@ -1,7 +1,10 @@
-# java-ui-008
-Date : 27/01/2022<br/>
-How to coding in java
-visit my youtube : https://www.youtube.com/c/HelloWorld-Raven/featured
-<br/><br/>
+# PRO1041
+Dự án quản lí cửa hàng thời trang sử dụng ngôn ngữ Java
 
-![cover 1](https://user-images.githubusercontent.com/58245926/151393261-02787758-7bc0-42b7-b564-d15376d8d46e.png)
+Thành viên nhóm bao gồm:
+- Đặng Thành Hùng (Trưởng nhóm)
+- Phan Huy Hoàng
+- Huỳnh Anh Quân
+- Nguyễn Thị Trà My
+- Nguyễn Anh Tài
+- Hồ Minh Nhựt
