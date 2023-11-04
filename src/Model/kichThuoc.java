@@ -10,18 +10,22 @@ import java.io.Serializable;
  *
  * @author HUNG
  */
-public class chiTietSanPham implements Serializable{
+public class kichThuoc implements Serializable{
+    private String maKichThuoc;
     private sanPham sanPham;
     private int kichThuoc,VAT;
 
-    public chiTietSanPham() {
+    public kichThuoc() {
     }
 
-    public chiTietSanPham(sanPham sanPham, int kichThuoc, int VAT) {
+    public kichThuoc(String maKichThuoc, sanPham sanPham, int kichThuoc, int VAT) {
+        this.maKichThuoc = maKichThuoc;
         this.sanPham = sanPham;
         this.kichThuoc = kichThuoc;
         this.VAT = VAT;
     }
+
+    
 
     public sanPham getSanPham() {
         return sanPham;
@@ -50,6 +54,14 @@ public class chiTietSanPham implements Serializable{
     @Override
     public String toString() {
         return "chiTietSanPham{" + "sanPham=" + sanPham + ", kichThuoc=" + kichThuoc + ", VAT=" + VAT + '}';
+    }
+
+    public String getMaKichThuoc() {
+        return maKichThuoc;
+    }
+
+    public void setMaKichThuoc(String maKichThuoc) {
+        this.maKichThuoc = maKichThuoc;
     }
     
 }

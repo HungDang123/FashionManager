@@ -11,18 +11,20 @@ import java.sql.Date;
  *
  * @author HUNG
  */
-public class nhanVien implements Serializable{
-    private String maNhanVien,hoVaTen;
-    private Boolean chucVu,gioiTinh;
+public class nhanVien implements Serializable {
+
+    private String maNhanVien, hoVaTen, matKhau;
+    private Boolean chucVu, gioiTinh;
     private Date ngaySinh;
-    private String canCuocCongDan,soDienThoai,hinhAnh;
+    private String canCuocCongDan, soDienThoai, hinhAnh;
 
     public nhanVien() {
     }
 
-    public nhanVien(String maNhanVien, String hoVaTen, Boolean chucVu, Boolean gioiTinh, Date ngaySinh, String canCuocCongDan, String soDienThoai, String hinhAnh) {
+    public nhanVien(String maNhanVien, String hoVaTen, String matKhau, Boolean chucVu, Boolean gioiTinh, Date ngaySinh, String canCuocCongDan, String soDienThoai, String hinhAnh) {
         this.maNhanVien = maNhanVien;
         this.hoVaTen = hoVaTen;
+        this.matKhau = matKhau;
         this.chucVu = chucVu;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
@@ -95,9 +97,17 @@ public class nhanVien implements Serializable{
         this.hinhAnh = hinhAnh;
     }
 
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
     @Override
     public String toString() {
-        return "nhanVien{" + "maNhanVien=" + maNhanVien + ", hoVaTen=" + hoVaTen + ", chucVu=" + chucVu + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", canCuocCongDan=" + canCuocCongDan + ", soDienThoai=" + soDienThoai + ", hinhAnh=" + hinhAnh + '}';
+        return "nhanVien{" + "maNhanVien=" + maNhanVien + ", hoVaTen=" + hoVaTen + ", matKhau=" + matKhau + ", chucVu=" + chucVu + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", canCuocCongDan=" + canCuocCongDan + ", soDienThoai=" + soDienThoai + ", hinhAnh=" + hinhAnh + '}';
     }
-    
+
 }
