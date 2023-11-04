@@ -1,6 +1,8 @@
 package View;
 
 
+import javax.swing.BorderFactory;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -20,7 +22,9 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     public formKhachHang() {
         initComponents();
         loaddata();
-        
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
     }
 
     public void loaddata() {
@@ -102,13 +106,10 @@ public class formKhachHang extends javax.swing.JInternalFrame {
 
         rdoNu.setText(" Nữ");
 
-        btnXacnhan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icon/Accept.png"))); // NOI18N
         btnXacnhan.setText(" Xác nhận");
 
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icon/Add.png"))); // NOI18N
         btnThem.setText(" Thêm");
 
-        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icon/Refresh.png"))); // NOI18N
         btnSua.setText(" Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +117,6 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             }
         });
 
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/icon/Delete.png"))); // NOI18N
         btnXoa.setText(" Xóa");
 
         btnFirst.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N

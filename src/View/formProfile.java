@@ -4,6 +4,9 @@
  */
 package View;
 
+import javax.swing.BorderFactory;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author Lenovo
@@ -15,6 +18,9 @@ public class formProfile extends javax.swing.JInternalFrame {
      */
     public formProfile() {
         initComponents();
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
     }
 
     /**
@@ -297,7 +303,7 @@ public class formProfile extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

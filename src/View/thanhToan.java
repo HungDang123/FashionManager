@@ -1,5 +1,7 @@
 package View;
 
+import javax.swing.BorderFactory;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,6 +21,9 @@ public class thanhToan extends javax.swing.JInternalFrame {
         initTableHD();
         initTableChiTietHD();
         initTableChiTietHD2();
+        this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
     }
 
     public void initTableSP() {

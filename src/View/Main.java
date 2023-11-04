@@ -18,6 +18,13 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setLocationRelativeTo(null);
+        begin();
+    }
+
+    public void begin() {
+        formProfile profile = new formProfile();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(profile).setVisible(true);
     }
 
     /**
@@ -110,6 +117,11 @@ public class Main extends javax.swing.JFrame {
         btn_banHang.setForeground(new java.awt.Color(221, 224, 209));
         btn_banHang.setText("BÁN HÀNG");
         btn_banHang.setPreferredSize(new java.awt.Dimension(200, 50));
+        btn_banHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_banHangActionPerformed(evt);
+            }
+        });
 
         btn_nhanVien.setBackground(new java.awt.Color(114, 130, 97));
         btn_nhanVien.setForeground(new java.awt.Color(221, 224, 209));
@@ -120,6 +132,11 @@ public class Main extends javax.swing.JFrame {
         btn_khachHang.setForeground(new java.awt.Color(221, 224, 209));
         btn_khachHang.setText("KHÁCH HÀNG");
         btn_khachHang.setPreferredSize(new java.awt.Dimension(200, 50));
+        btn_khachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_khachHangActionPerformed(evt);
+            }
+        });
 
         btn_sanPham.setBackground(new java.awt.Color(114, 130, 97));
         btn_sanPham.setForeground(new java.awt.Color(221, 224, 209));
@@ -254,14 +271,35 @@ public class Main extends javax.swing.JFrame {
         jDesktopPane1.removeAll();
         jDesktopPane1.add(sanPham).setVisible(true);
         Color background = new Color(211, 224, 209);
-        Color font = new Color(114,130,97);
+        Color font = new Color(114, 130, 97);
         btn_sanPham.setBackground(background);
         btn_sanPham.setForeground(font);
     }//GEN-LAST:event_btn_sanPhamActionPerformed
 
     private void btnCaNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaNhanActionPerformed
-        // TODO add your handling code here:
+       begin();
     }//GEN-LAST:event_btnCaNhanActionPerformed
+
+    private void btn_banHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHangActionPerformed
+        thanhToan thanhToan = new thanhToan();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(thanhToan).setVisible(true);
+        Color background = new Color(211, 224, 209);
+        Color font = new Color(114, 130, 97);
+        btn_banHang.setBackground(background);
+        btn_banHang.setForeground(font);
+    }//GEN-LAST:event_btn_banHangActionPerformed
+
+    private void btn_khachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_khachHangActionPerformed
+        // TODO add your handling code here: 
+        formKhachHang khachHang = new formKhachHang();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(khachHang).setVisible(true);
+        Color background = new Color(211, 224, 209);
+        Color font = new Color(114, 130, 97);
+        btn_sanPham.setBackground(background);
+        btn_sanPham.setForeground(font);
+    }//GEN-LAST:event_btn_khachHangActionPerformed
 
     /**
      * @param args the command line arguments
