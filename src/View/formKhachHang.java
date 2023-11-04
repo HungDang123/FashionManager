@@ -12,12 +12,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author admin
  */
-public class myy extends javax.swing.JInternalFrame {
+public class formKhachHang extends javax.swing.JInternalFrame {
  DefaultTableModel md= new DefaultTableModel();
     /**
      * Creates new form myy
      */
-    public myy() {
+    public formKhachHang() {
         initComponents();
         loaddata();
         
@@ -68,6 +68,8 @@ public class myy extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtMa = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1000, 800));
 
@@ -323,7 +325,7 @@ public class myy extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
