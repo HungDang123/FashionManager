@@ -4,6 +4,9 @@
  */
 package View;
 
+import View.KhachHang.formKhachHang;
+import View.BanHang.thanhToan;
+import View.SanPham.formSanPham;
 import java.awt.Color;
 
 /**

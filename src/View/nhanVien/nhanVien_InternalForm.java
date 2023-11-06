@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package NhanVien_MinhNhut;
+package View.nhanVien;
 
-import DAO.DAO_nhanVien;
+import View.nhanVien.NhanVienCard;
+import com.pro1041.dao.DAO_nhanVien;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Panel;

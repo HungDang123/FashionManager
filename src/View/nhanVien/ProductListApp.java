@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package NhanVien_MinhNhut;
+package View.nhanVien;
 
 /**
  *
  * @author hnhut
  */
+import View.nhanVien.NhanVienCard;
 import Model.nhanVien;
 import javax.swing.*;
 import java.awt.*;

@@ -1,5 +1,6 @@
-package View;
+package View.BanHang;
 
+import View.BanHang.formThanhToan;
 import javax.swing.BorderFactory;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;

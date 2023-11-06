@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package DAO;
+package com.pro1041.dao;
 
 import Model.nhanVien;
+import com.pro1041.util.jdbcHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,15 +20,14 @@ import java.util.logging.Logger;
 public class DAO_nhanVien {
 
     String sql_getAll = "Select * from nhanVien";
-    JdbcConnect jdbc = new JdbcConnect();
-    static ResultSet rs;
 
     public List<nhanVien> getALL_nv() {
+        try {
         List<nhanVien> listNV = new ArrayList<>();
 //       Gọi connection
         Object[] params = null;
-        rs = jdbc.executeQuery(sql_getAll, params);
-        try {
+        ResultSet rs = (ResultSet) jdbcHelper.prepareStatement(sql_getAll);
+        
             while (rs.next()) {
                 nhanVien nhanVien = new nhanVien();
                 nhanVien.setMaNhanVien(rs.getString("manhanvien"));
@@ -49,9 +49,4 @@ public class DAO_nhanVien {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-       
-    }
-
 }
