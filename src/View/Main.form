@@ -106,7 +106,7 @@
               <Color blue="44" green="44" red="43" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Noel Shop"/>
+            <Property name="text" type="java.lang.String" value="Hello"/>
           </Properties>
         </Component>
       </SubComponents>
