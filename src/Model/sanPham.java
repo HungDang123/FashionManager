@@ -13,19 +13,24 @@ import java.io.Serializable;
 public class sanPham implements Serializable{
     private String maSanPham,tenSanPham,loaiSanPham,xuatXu;
     private Float donGia;
-    private String nhaCungCap;
+    private String nhaCungCap,moTa,mauSac;
 
     public sanPham() {
     }
 
-    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, String nhaCungCap) {
+    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, String nhaCungCap, String moTa, String mauSac) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;
         this.xuatXu = xuatXu;
         this.donGia = donGia;
         this.nhaCungCap = nhaCungCap;
+        this.moTa = moTa;
+        this.mauSac = mauSac;
     }
+
+    
+
 
     public String getMaSanPham() {
         return maSanPham;
@@ -75,9 +80,28 @@ public class sanPham implements Serializable{
         this.nhaCungCap = nhaCungCap;
     }
 
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public String getMauSac() {
+        return mauSac;
+    }
+
+    public void setMauSac(String mauSac) {
+        this.mauSac = mauSac;
+    }
+
     @Override
     public String toString() {
-        return "sanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", nhaCungCap=" + nhaCungCap + '}';
+        return "sanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", nhaCungCap=" + nhaCungCap + ", moTa=" + moTa + ", mauSac=" + mauSac + '}';
     }
+
+    
+    
     
 }

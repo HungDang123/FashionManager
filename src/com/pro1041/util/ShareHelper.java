@@ -19,7 +19,7 @@ public class ShareHelper {
 
     public static nhanVien USER; // Thông tin nhân viên đăng nhập
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
-
+    public static String SDT;
     static {
         // Khởi tạo biểu tượng của ứng dụng
         Image icon = null;
