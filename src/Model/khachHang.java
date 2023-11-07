@@ -11,21 +11,23 @@ import java.sql.Date;
  *
  * @author HUNG
  */
-public class khachHang implements Serializable{
-    private String maKhachHang,hoVaTen;
+public class khachHang implements Serializable {
+
+    private String maKhachHang, hoVaTen;
     private Date ngaySinh;
     private boolean gioiTinh;
-    private String soDienThoai;
+    private String soDienThoai, email;
 
     public khachHang() {
     }
 
-    public khachHang(String maKhachHang, String hoVaTen, Date ngaySinh, boolean gioiTinh, String soDienThoai) {
+    public khachHang(String maKhachHang, String hoVaTen, Date ngaySinh, boolean gioiTinh, String soDienThoai, String email) {
         this.maKhachHang = maKhachHang;
         this.hoVaTen = hoVaTen;
         this.ngaySinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.soDienThoai = soDienThoai;
+        this.email = email;
     }
 
     public String getMaKhachHang() {
@@ -68,9 +70,17 @@ public class khachHang implements Serializable{
         this.soDienThoai = soDienThoai;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "khachHang{" + "maKhachHang=" + maKhachHang + ", hoVaTen=" + hoVaTen + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + '}';
+        return "khachHang{" + "maKhachHang=" + maKhachHang + ", hoVaTen=" + hoVaTen + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", email=" + email + '}';
     }
-    
+
 }

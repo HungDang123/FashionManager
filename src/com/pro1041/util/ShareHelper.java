@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 
 public class ShareHelper {
 
-    public static  nhanVien USER; // Thông tin nhân viên đăng nhậpz
+    public static nhanVien USER; // Thông tin nhân viên đăng nhập
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
 
     static {
