@@ -1,4 +1,4 @@
-package View.nhanVien;
+package View.NhanVien.View;
 
 import Model.nhanVien;
 import java.awt.BorderLayout;

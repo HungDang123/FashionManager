@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package View.nhanVien;
+package View.NhanVien.View;
 
+import View.nhanVien.nhanVien_InternalForm;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,16 +18,15 @@ public class desktop extends javax.swing.JFrame {
     /**
      * Creates new form desktop
      */
-  public desktop() {
-    initComponents();
-    deskTop.setLayout(new BorderLayout());
-    nhanVien_InternalForm s = new nhanVien_InternalForm();
-    s.setVisible(true);
-    deskTop.add(s,BorderLayout.CENTER);
-    pack();
-    // Lấy kích thước của JFrame
-}
-
+    public desktop() {
+        initComponents();
+        deskTop.setLayout(new BorderLayout());
+        nhanVien_InternalForm internalForm = new nhanVien_InternalForm();
+        internalForm.setVisible(true);
+        deskTop.add(internalForm, BorderLayout.CENTER);
+        pack();
+        // Lấy kích thước của JFrame
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

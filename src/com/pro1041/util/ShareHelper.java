@@ -8,6 +8,7 @@ package com.pro1041.util;
  *
  * @author HUNG
  */
+import Model.nhanVien;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.io.File;
@@ -16,7 +17,7 @@ import javax.imageio.ImageIO;
 
 public class ShareHelper {
 
-//    public static  USER; // Thông tin nhân viên đăng nhập
+    public static  nhanVien USER; // Thông tin nhân viên đăng nhậpz
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
 
     static {
@@ -35,13 +36,13 @@ public class ShareHelper {
         APP_ICON = icon;
     }
 
-//    public static void logoff() {
-////        USER = null;
-//    }
-//
-//    public static boolean authenticated() {
-////        return USER != null;
-//    }
+    public static void logoff() {
+        USER = null;
+    }
+
+    public static boolean authenticated() {
+        return USER != null;
+    }
 
     public static void saveLogo(File file) {
         try {

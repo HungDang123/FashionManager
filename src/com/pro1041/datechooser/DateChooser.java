@@ -104,6 +104,7 @@ public final class DateChooser extends javax.swing.JPanel {
     }
 
     private Event getEventMonth() {
+        Slider slide = new Slider();
         return (MouseEvent evt, int num) -> {
             MONTH = num;
             selectedDate.setDay(DAY);
@@ -115,105 +116,105 @@ public final class DateChooser extends javax.swing.JPanel {
             d.setEvent(getEventDay(d));
             d.showDate(MONTH, YEAR, selectedDate);
             if (slide.slideToDown(d)) {
-                cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
-                cmdYear.setText(YEAR + "");
+//                cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
+//                cmdYear.setText(YEAR + "");
                 STATUS = 1;
             }
         };
     }
 
-    private Event getEventYear() {
-        return (MouseEvent evt, int num) -> {
-            YEAR = num;
-            selectedDate.setDay(DAY);
-            selectedDate.setMonth(MONTH);
-            selectedDate.setYear(YEAR);
-            setText(true, 3);
-            Months d = new Months();
-            d.setEvent(getEventMonth());
-            if (slide.slideToDown(d)) {
-                cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
-                cmdYear.setText(YEAR + "");
-                STATUS = 2;
-            }
-        };
-    }
-
-    private void toDay(boolean runEvent) {
-        Dates dates = new Dates();
-        dates.setForeground(getForeground());
-        dates.setEvent(getEventDay(dates));
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        Date date = new Date();
-        String toDay = df.format(date);
-        DAY = Integer.valueOf(toDay.split("-")[0]);
-        MONTH = Integer.valueOf(toDay.split("-")[1]);
-        YEAR = Integer.valueOf(toDay.split("-")[2]);
-        selectedDate.setDay(DAY);
-        selectedDate.setMonth(MONTH);
-        selectedDate.setYear(YEAR);
-        dates.showDate(MONTH, YEAR, selectedDate);
-        slide.slideNon(dates);
-        cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
-        cmdYear.setText(YEAR + "");
-        setText(runEvent, 0);
-    }
-
-    public void toDay() {
-        toDay(true);
-    }
-
-    private void setDateNext() {
-        Dates dates = new Dates();
-        dates.setForeground(getForeground());
-        dates.setEvent(getEventDay(dates));
-        dates.showDate(MONTH, YEAR, selectedDate);
-        if (slide.slideToLeft(dates)) {
-            cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
-            cmdYear.setText(YEAR + "");
-        }
-    }
-
-    private void setDateBack() {
-        Dates dates = new Dates();
-        dates.setForeground(getForeground());
-        dates.setEvent(getEventDay(dates));
-        dates.showDate(MONTH, YEAR, selectedDate);
-        if (slide.slideToRight(dates)) {
-            cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
-            cmdYear.setText(YEAR + "");
-        }
-    }
-
-    private void setYearNext() {
-        Years years = new Years();
-        years.setEvent(getEventYear());
-        startYear = years.next(startYear);
-        slide.slideToLeft(years);
-    }
-
-    private void setYearBack() {
-        if (startYear >= 1000) {
-            Years years = new Years();
-            years.setEvent(getEventYear());
-            startYear = years.back(startYear);
-            slide.slideToLeft(years);
-        }
-    }
-
-    public void showPopup(Component com, int x, int y) {
-        popup.show(com, x, y);
-    }
-
-    public void showPopup() {
-        popup.show(textRefernce, 0, textRefernce.getHeight());
-    }
-
-    public void hidePopup() {
-        popup.setVisible(false);
-    }
-
-    @SuppressWarnings("unchecked")
+////    private Event getEventYear() {
+////        return (MouseEvent evt, int num) -> {
+////            YEAR = num;
+////            selectedDate.setDay(DAY);
+////            selectedDate.setMonth(MONTH);
+////            selectedDate.setYear(YEAR);
+////            setText(true, 3);
+////            Months d = new Months();
+////            d.setEvent(getEventMonth());
+////            if (slide.slideToDown(d)) {
+//////                cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
+//////                cmdYear.setText(YEAR + "");
+////                STATUS = 2;
+////            }
+////        };
+////    }
+////
+////    private void toDay(boolean runEvent) {
+////        Dates dates = new Dates();
+////        dates.setForeground(getForeground());
+////        dates.setEvent(getEventDay(dates));
+////        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+////        Date date = new Date();
+////        String toDay = df.format(date);
+////        DAY = Integer.valueOf(toDay.split("-")[0]);
+////        MONTH = Integer.valueOf(toDay.split("-")[1]);
+////        YEAR = Integer.valueOf(toDay.split("-")[2]);
+////        selectedDate.setDay(DAY);
+////        selectedDate.setMonth(MONTH);
+////        selectedDate.setYear(YEAR);
+////        dates.showDate(MONTH, YEAR, selectedDate);
+////        slide.slideNon(dates);
+////        cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
+////        cmdYear.setText(YEAR + "");
+////        setText(runEvent, 0);
+////    }
+////
+////    public void toDay() {
+////        toDay(true);
+////    }
+////
+////    private void setDateNext() {
+////        Dates dates = new Dates();
+////        dates.setForeground(getForeground());
+////        dates.setEvent(getEventDay(dates));
+////        dates.showDate(MONTH, YEAR, selectedDate);
+////        if (slide.slideToLeft(dates)) {
+////            cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
+////            cmdYear.setText(YEAR + "");
+////        }
+////    }
+////
+////    private void setDateBack() {
+////        Dates dates = new Dates();
+////        dates.setForeground(getForeground());
+////        dates.setEvent(getEventDay(dates));
+////        dates.showDate(MONTH, YEAR, selectedDate);
+////        if (slide.slideToRight(dates)) {
+////            cmdMonth.setText(MONTH_ENGLISH[MONTH - 1]);
+////            cmdYear.setText(YEAR + "");
+////        }
+////    }
+////
+////    private void setYearNext() {
+////        Years years = new Years();
+////        years.setEvent(getEventYear());
+////        startYear = years.next(startYear);
+////        slide.slideToLeft(years);
+////    }
+////
+////    private void setYearBack() {
+////        if (startYear >= 1000) {
+////            Years years = new Years();
+////            years.setEvent(getEventYear());
+////            startYear = years.back(startYear);
+////            slide.slideToLeft(years);
+////        }
+////    }
+////
+////    public void showPopup(Component com, int x, int y) {
+////        popup.show(com, x, y);
+////    }
+////
+////    public void showPopup() {
+////        popup.show(textRefernce, 0, textRefernce.getHeight());
+////    }
+////
+////    public void hidePopup() {
+////        popup.setVisible(false);
+////    }
+////
+////    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -227,104 +228,39 @@ public final class DateChooser extends javax.swing.JPanel {
             }
         };
         header = new javax.swing.JPanel();
-        cmdForward = new com.pro1041.datechooser.Button();
         MY = new javax.swing.JLayeredPane();
-        cmdMonth = new com.pro1041.datechooser.Button();
         lb = new javax.swing.JLabel();
-        cmdYear = new com.pro1041.datechooser.Button();
-        cmdPrevious = new com.pro1041.datechooser.Button();
-        slide = new com.pro1041.datechooser.Slider();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         header.setBackground(new java.awt.Color(204, 93, 93));
         header.setMaximumSize(new java.awt.Dimension(262, 40));
 
-        cmdForward.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmdForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/datechooser/forward.png"))); // NOI18N
-        cmdForward.setFocusable(true);
-        cmdForward.setPaintBackground(false);
-        cmdForward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdForwardActionPerformed(evt);
-            }
-        });
-
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0);
         flowLayout1.setAlignOnBaseline(true);
         MY.setLayout(flowLayout1);
-
-        cmdMonth.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmdMonth.setForeground(new java.awt.Color(255, 255, 255));
-        cmdMonth.setText("January");
-        cmdMonth.setFocusPainted(false);
-        cmdMonth.setFont(new java.awt.Font("Kh Content", 0, 14)); // NOI18N
-        cmdMonth.setPaintBackground(false);
-        cmdMonth.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdMonthActionPerformed(evt);
-            }
-        });
-        MY.add(cmdMonth);
 
         lb.setForeground(new java.awt.Color(255, 255, 255));
         lb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lb.setText("-");
         MY.add(lb);
 
-        cmdYear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmdYear.setForeground(new java.awt.Color(255, 255, 255));
-        cmdYear.setText("2018");
-        cmdYear.setFocusPainted(false);
-        cmdYear.setFont(new java.awt.Font("Kh Content", 0, 14)); // NOI18N
-        cmdYear.setPaintBackground(false);
-        cmdYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdYearActionPerformed(evt);
-            }
-        });
-        MY.add(cmdYear);
-
-        cmdPrevious.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cmdPrevious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/raven/datechooser/previous.png"))); // NOI18N
-        cmdPrevious.setFocusable(true);
-        cmdPrevious.setPaintBackground(false);
-        cmdPrevious.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdPreviousActionPerformed(evt);
-            }
-        });
-        cmdPrevious.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdPreviousKeyPressed(evt);
-            }
-        });
-
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmdPrevious, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(49, 49, 49)
                 .addComponent(MY, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmdForward, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(49, 49, 49))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmdPrevious, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(MY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmdForward, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(MY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        slide.setLayout(new javax.swing.BoxLayout(slide, javax.swing.BoxLayout.LINE_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -332,19 +268,15 @@ public final class DateChooser extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(slide, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 1, Short.MAX_VALUE)
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(slide, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -368,6 +300,7 @@ public final class DateChooser extends javax.swing.JPanel {
                 cmdYear.setText(YEAR + "");
             }
         }
+        
     }//GEN-LAST:event_cmdPreviousActionPerformed
 
     private void cmdForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdForwardActionPerformed
@@ -482,14 +415,9 @@ public final class DateChooser extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLayeredPane MY;
-    private com.pro1041.datechooser.Button cmdForward;
-    private com.pro1041.datechooser.Button cmdMonth;
-    private com.pro1041.datechooser.Button cmdPrevious;
-    private com.pro1041.datechooser.Button cmdYear;
     private javax.swing.JPanel header;
     private javax.swing.JLabel lb;
     private javax.swing.JPopupMenu popup;
-    private com.pro1041.datechooser.Slider slide;
     // End of variables declaration//GEN-END:variables
 
     public SelectedDate getSelectedDate() {
@@ -521,4 +449,5 @@ public final class DateChooser extends javax.swing.JPanel {
             toDay(false);
         }
     }
+    /*
 }
