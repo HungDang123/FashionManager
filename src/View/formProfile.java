@@ -78,7 +78,7 @@ public class formProfile extends javax.swing.JInternalFrame {
             }
         });
 
-        jTextField1.setText("Hùng cubé");
+        jTextField1.setText("Hùng dz");
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTextField2.setForeground(new java.awt.Color(255, 0, 0));

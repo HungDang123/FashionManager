@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author HUNG
  */
 public class chiTietHoaDon implements Serializable{
-    private int maCthd;
+    private String maCthd;
     private sanPham maSanPham;
     private int soLuong;
     private float tongTien;
@@ -22,7 +22,7 @@ public class chiTietHoaDon implements Serializable{
     public chiTietHoaDon() {
     }
 
-    public chiTietHoaDon(int maCthd, sanPham maSanPham, int soLuong, float tongTien, Date ngayLapHoaDon, hoaDon maHoaDon) {
+    public chiTietHoaDon(String maCthd, sanPham maSanPham, int soLuong, float tongTien, Date ngayLapHoaDon, hoaDon maHoaDon) {
         this.maCthd = maCthd;
         this.maSanPham = maSanPham;
         this.soLuong = soLuong;
@@ -31,11 +31,11 @@ public class chiTietHoaDon implements Serializable{
         this.maHoaDon = maHoaDon;
     }
 
-    public int getMaCthd() {
+    public String getMaCthd() {
         return maCthd;
     }
 
-    public void setMaCthd(int maCthd) {
+    public void setMaCthd(String maCthd) {
         this.maCthd = maCthd;
     }
 
@@ -81,7 +81,7 @@ public class chiTietHoaDon implements Serializable{
 
     @Override
     public String toString() {
-        return "chiTietHoaDon{" + "maCthd=" + maCthd + ", maSanPham=" + maSanPham + ", soLuong=" + soLuong + ", tongTien=" + tongTien + ", ngayLapHoaDon=" + ngayLapHoaDon + ", maHoaDon=" + maHoaDon + '}';
+        return "chiTietHoaDon{" + "maCthd=" + maCthd + ", maSanPhams=" + maSanPham + ", soLuong=" + soLuong + ", tongTien=" + tongTien + ", ngayLapHoaDon=" + ngayLapHoaDon + ", maHoaDon=" + maHoaDon + '}';
     }
     
 }

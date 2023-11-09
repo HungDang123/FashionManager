@@ -8,6 +8,7 @@ package com.pro1041.util;
  *
  * @author HUNG
  */
+import Model.khachHang;
 import Model.nhanVien;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -18,6 +19,7 @@ import javax.imageio.ImageIO;
 public class ShareHelper {
 
     public static nhanVien USER; // Thông tin nhân viên đăng nhập
+    public static khachHang khachHang; // thông tin khách hàng
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
     public static String SDT;
     static {

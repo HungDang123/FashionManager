@@ -14,7 +14,7 @@ import java.sql.*;
  */
 public class jdbcHelper {
 
-    static String url = "jdbc:sqlserver://localhost:1433;databaseName=Polypro;encrypt=false";
+    static String url = "jdbc:sqlserver://localhost:1433;databaseName=quanLyCuaHangThoiTrang;encrypt=false";
     static String user = "sa";
     static String pass = "hung";
 

@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateHelper {
+
     private static final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String toString(Date date, String format) {
@@ -39,4 +40,13 @@ public class DateHelper {
         calendar.add(Calendar.DAY_OF_YEAR, days);
         return calendar.getTime();
     }
+
+    public static void main(String[] args) throws ParseException {
+        String originalDateString = "Sat Nov 04 13:05:54 ICT 2023";
+        Date date = toDate(originalDateString, "EEE MMM dd HH:mm:ss zzz yyyy");
+        System.out.println(date);
+        String formattedDate = toString(date, "yyyy-MM-dd");
+        System.out.println(formattedDate);
+    }
+
 }

@@ -4,13 +4,23 @@
  */
 package View.BanHang;
 
+import Model.khachHang;
+import com.pro1041.dao.DAO_banHang;
+import com.pro1041.util.DateHelper;
+import static com.pro1041.util.DateHelper.toString;
+import com.pro1041.util.DialogHelper;
 import com.pro1041.util.ShareHelper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 /**
  *
  * @author HUNG
  */
 public class themKhachHangForm extends javax.swing.JDialog {
+
+    private DAO_banHang dao = new DAO_banHang();
 
     /**
      * Creates new form NewJDialog
@@ -30,6 +40,35 @@ public class themKhachHangForm extends javax.swing.JDialog {
 
         System.out.println(ShareHelper.SDT);
     }
+
+    public void themKhachHang() {
+    try {
+        String maKh = lblMaKh.getText();
+        System.out.println(maKh);
+        String hoVaTen = txtTenKhachHang.getText();
+        String dateStr = DateHelper.toString(DateChooserNgaySinh.getDate(), "yyyy-MM-dd");
+        System.out.println(dateStr);
+        java.sql.Date dateOfBirth = new java.sql.Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime()); // Chuyển đổi thành java.sql.Date
+
+        Boolean gt = (rdoNam.isSelected());
+        String sdt = lblSdt.getText();
+        String email = txtEmail.getText();
+        khachHang kh = new khachHang(maKh, hoVaTen, dateOfBirth, gt, sdt, email);
+        System.out.println(kh.toString());
+        System.out.println(dao.findByIdKh(maKh));
+        if (dao.findByIdKh(maKh) == null) {
+            if (DialogHelper.confirm("Thêm khách hàng?")) {
+                dao.insertKhachHang(kh);
+                DialogHelper.alert("Thêm thành công!");
+                dispose();
+            }
+        } else {
+            DialogHelper.alert("Mã khách hàng đã tồn tại!!");
+        }
+    } catch (Exception e) {
+    }
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,17 +92,17 @@ public class themKhachHangForm extends javax.swing.JDialog {
         lblNgaySinh = new javax.swing.JLabel();
         lblGioiTinh = new javax.swing.JLabel();
         lblSoDienThoai = new javax.swing.JLabel();
+        DateChooserNgaySinh = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        lblEmail.setText("email");
-
-        lblSdt.setText("v");
+        lblEmail.setText("Email");
 
         rdoNam.setText("Nam");
 
         rdoNu.setText("Nữ");
 
+        lblMaKh.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblMaKh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMaKh.setText("Mã khách hàng");
 
@@ -76,8 +115,18 @@ public class themKhachHangForm extends javax.swing.JDialog {
         btnThem.setBackground(new java.awt.Color(51, 102, 255));
         btnThem.setForeground(new java.awt.Color(51, 51, 51));
         btnThem.setText("Thêm");
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemMouseClicked(evt);
+            }
+        });
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
-        lblNgaySinh.setText("ngày sinh");
+        lblNgaySinh.setText("Ngày sinh");
 
         lblGioiTinh.setText("Giới tính");
 
@@ -87,12 +136,13 @@ public class themKhachHangForm extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblMaKh, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(144, 144, 144))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btnDong)
+                        .addGap(69, 69, 69)
+                        .addComponent(btnThem))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -105,38 +155,39 @@ public class themKhachHangForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtTenKhachHang)
                             .addComponent(lblSdt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtEmail)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(rdoNam, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(rdoNu, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                                .addComponent(rdoNu, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtEmail)
+                            .addComponent(DateChooserNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(btnDong)
-                        .addGap(69, 69, 69)
-                        .addComponent(btnThem)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addGap(82, 82, 82)
+                        .addComponent(lblMaKh, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(42, 42, 42)
                 .addComponent(lblMaKh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTenKh)
                     .addComponent(txtTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNgaySinh)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNgaySinh)
+                    .addComponent(DateChooserNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGioiTinh)
                     .addComponent(rdoNam)
                     .addComponent(rdoNu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSoDienThoai)
-                    .addComponent(lblSdt))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblSoDienThoai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSdt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEmail)
@@ -145,11 +196,19 @@ public class themKhachHangForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDong)
                     .addComponent(btnThem))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
+        themKhachHang();
+    }//GEN-LAST:event_btnThemMouseClicked
 
     /**
      * @param args the command line arguments
@@ -197,6 +256,7 @@ public class themKhachHangForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser DateChooserNgaySinh;
     private javax.swing.JButton btnDong;
     private javax.swing.JButton btnThem;
     private javax.swing.JLabel lblEmail;

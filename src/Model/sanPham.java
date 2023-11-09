@@ -10,27 +10,27 @@ import java.io.Serializable;
  *
  * @author HUNG
  */
-public class sanPham implements Serializable{
-    private String maSanPham,tenSanPham,loaiSanPham,xuatXu;
-    private Float donGia;
-    private String nhaCungCap,moTa,mauSac;
+public class sanPham implements Serializable {
+
+    private String maSanPham, tenSanPham, loaiSanPham, xuatXu;
+    private Float donGia, VAT;
+    private String nhaCungCap, moTa, mauSac, hinhAnh;
 
     public sanPham() {
     }
 
-    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, String nhaCungCap, String moTa, String mauSac) {
+    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, Float VAT, String nhaCungCap, String moTa, String mauSac, String hinhAnh) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;
         this.xuatXu = xuatXu;
         this.donGia = donGia;
+        this.VAT = VAT;
         this.nhaCungCap = nhaCungCap;
         this.moTa = moTa;
         this.mauSac = mauSac;
+        this.hinhAnh = hinhAnh;
     }
-
-    
-
 
     public String getMaSanPham() {
         return maSanPham;
@@ -96,12 +96,25 @@ public class sanPham implements Serializable{
         this.mauSac = mauSac;
     }
 
-    @Override
-    public String toString() {
-        return "sanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", nhaCungCap=" + nhaCungCap + ", moTa=" + moTa + ", mauSac=" + mauSac + '}';
+    public Float getVAT() {
+        return VAT;
     }
 
-    
-    
-    
+    public void setVAT(Float VAT) {
+        this.VAT = VAT;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
+    @Override
+    public String toString() {
+        return "sanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", vat=" + VAT + ", nhaCungCap=" + nhaCungCap + ", moTa=" + moTa + ", mauSac=" + mauSac + ", hinhAnh=" + hinhAnh + '}';
+    }
+
 }

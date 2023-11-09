@@ -19,23 +19,26 @@ import java.util.List;
  */
 public class DAO_banHang {
 
-    List<sanPham> list = new ArrayList<>();
     sanPham sp;
     khachHang kh;
     private final String selectSanPham = "Select * From sanPham";
-    private final String findByNumber = "Select * from khachHang where soDienThoai = ?";
-    private final String insertKhachHang = " insert into khachHang(maKhachHang,hoVaTen,ngaySinh,gioiTinh,soDienThoai,email)"
-            + " values ?,?,?,?,?,?";
-    private final String Search = "select sp.* from sanPham sp where sp.tenSanPham"
-            + " COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%' "
-            + "or sp.maSanPham COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%'";
+    private final String findByNumber = "Select * from khachHang where soDienThoai like ?";
+    private final String insertKhachHang = "insert into khachHang(maKhachHang,hoVaTen,ngaySinh,gioiTinh,soDienThoai,email)"
+            + " values (?,?,?,?,?,?)";
+    private final String SearchByName = "select sp.* from sanPham sp where sp.tenSanPham"
+            + " COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%' ";
+    private final String SearchById = "select sp.* from sanPham sp where sp.maSanPham "
+            + " LIKE N'%' + ? + N'%' ";
     private final String SearchBoth = "select sp.* from sanPham sp where sp.tenSanPham"
             + " COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%' "
-            + "and sp.maSanPham COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%'";
+            + "and sp.maSanPham LIKE N'%' + ? + N'%'";
+    private final String findByIdKH = "SELECT * FROM khachHang WHERE maKhachHang = ?";
 
     public List<sanPham> SelectSanPham() {
+        List<sanPham> list = new ArrayList<>();
+        list.clear();
         try {
-            ResultSet rs = (ResultSet) jdbcHelper.prepareStatement(selectSanPham);
+            ResultSet rs = jdbcHelper.prepareStatement(selectSanPham).executeQuery();
             while (rs.next()) {
                 String maSanPham = rs.getString("maSanPham");
                 String tenSanPham = rs.getString("tenSanPham");
@@ -44,11 +47,13 @@ public class DAO_banHang {
                 String mauSac = rs.getString("mauSac");
                 Float giaNhap = rs.getFloat("donGia");
                 String xuatSu = rs.getString("xuatSu");
+                String hinhAnh = rs.getString("hinhAnh");
+                Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
                 list.add(sp);
-                return list;
             }
+            return list;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Select sanPham: " + e.getMessage());
@@ -85,9 +90,10 @@ public class DAO_banHang {
         }
     }
 
-    public List<sanPham> search(String str) {
+    public List<sanPham> searchByName(String str) {
+        List<sanPham> list = new ArrayList<>();
         try {
-            ResultSet rs = jdbcHelper.executeQuery(Search, str);
+            ResultSet rs = jdbcHelper.executeQuery(SearchByName, str);
             while (rs.next()) {
                 String maSanPham = rs.getString("maSanPham");
                 String tenSanPham = rs.getString("tenSanPham");
@@ -96,21 +102,46 @@ public class DAO_banHang {
                 String mauSac = rs.getString("mauSac");
                 Float giaNhap = rs.getFloat("donGia");
                 String xuatSu = rs.getString("xuatSu");
+                String hinhAnh = rs.getString("hinhAnh");
+                Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
                 list.add(sp);
-                return list;
             }
         } catch (Exception e) {
+            System.out.println("searchByName: " + e.getMessage());
             e.printStackTrace();
-            System.out.println("search: " + e.getMessage());
         }
-        return null;
+        return list;
+    }
+    public List<sanPham> searchById(String str) {
+        List<sanPham> list = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(SearchById, str);
+            while (rs.next()) {
+                String maSanPham = rs.getString("maSanPham");
+                String tenSanPham = rs.getString("tenSanPham");
+                String loaiSanPham = rs.getString("loaiSanPham");
+                String moTa = rs.getString("moTa");
+                String mauSac = rs.getString("mauSac");
+                Float giaNhap = rs.getFloat("donGia");
+                String xuatSu = rs.getString("xuatSu");
+                String hinhAnh = rs.getString("hinhAnh");
+                Float vat = rs.getFloat("VAT");
+                String nhaCungCap = rs.getString("nhaCungCap");
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
+                list.add(sp);
+            }
+        } catch (Exception e) {
+            System.out.println("searchByName: " + e.getMessage());
+        }
+        return list;
     }
 
-    public List<sanPham> searchBoth(String str, String str1) {
+    public List<sanPham> searchBoth(String name, String id) {
+        List<sanPham> list = new ArrayList<>();
         try {
-            ResultSet rs = jdbcHelper.executeQuery(SearchBoth, str, str1);
+            ResultSet rs = jdbcHelper.executeQuery(SearchBoth, name, id);
             while (rs.next()) {
                 String maSanPham = rs.getString("maSanPham");
                 String tenSanPham = rs.getString("tenSanPham");
@@ -119,16 +150,36 @@ public class DAO_banHang {
                 String mauSac = rs.getString("mauSac");
                 Float giaNhap = rs.getFloat("donGia");
                 String xuatSu = rs.getString("xuatSu");
+                String hinhAnh = rs.getString("hinhAnh");
+                Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
                 list.add(sp);
-                return list;
             }
+
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("search both: " + e.getMessage());
         }
-        return null;
+        return list;
     }
 
+    public khachHang findByIdKh(String k) {
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(findByIdKH, k);
+            if (rs.next()) {
+                String maKhachHang = rs.getString("maKhachHang");
+                String tenKhachHang = rs.getString("hoVaTen");
+                Date ngaySinh = rs.getDate("ngaySinh");
+                Boolean gioiTinh = rs.getBoolean("gioiTinh");
+                String sdt = rs.getString("soDienThoai");
+                String email = rs.getString("email");
+                khachHang kh = new khachHang(maKhachHang, tenKhachHang, ngaySinh, gioiTinh, sdt, email);
+                return kh;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("FindByIdKh :" + e.getMessage());
+        }
+        return null;
+    }
 }

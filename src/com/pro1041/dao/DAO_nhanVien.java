@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class DAO_nhanVien {
 
     String sql_getAll = "Select * from nhanVien";
+    final String findByID = "Select * from nhanVien where maNhanVien = ?";
 
     public List<nhanVien> getALL_nv() {
         try {
@@ -46,6 +47,29 @@ public class DAO_nhanVien {
             return listNV;
         } catch (SQLException ex) {
             Logger.getLogger(DAO_nhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    public nhanVien findById(String id){
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(findByID, id);
+            if(rs.next()){
+                nhanVien nhanVien = new nhanVien();
+                nhanVien.setMaNhanVien(rs.getString("manhanvien"));
+                nhanVien.setHoVaTen(rs.getString("hovaten"));
+                nhanVien.setMatKhau(rs.getString("matkhau"));
+                nhanVien.setChucVu(rs.getBoolean("chucvu"));
+                nhanVien.setGioiTinh(rs.getBoolean("gioitinh"));
+                nhanVien.setNgaySinh(rs.getDate("ngaysinh"));
+                nhanVien.setCanCuocCongDan(rs.getString("cancuoccongdan"));
+                nhanVien.setSoDienThoai(rs.getString("sodienthoai"));
+                nhanVien.setHinhAnh(rs.getString("hinhanh"));
+                
+                return nhanVien;
+            }
+        } catch (Exception e) {
+            System.out.println("Find by ID:  "+e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

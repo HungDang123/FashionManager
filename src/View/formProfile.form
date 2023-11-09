@@ -194,7 +194,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="H&#xf9;ng cub&#xe9;"/>
+                <Property name="text" type="java.lang.String" value="H&#xf9;ng dz"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField2">
