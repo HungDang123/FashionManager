@@ -5,7 +5,7 @@ import java.util.Base64;
 
 public class maHoa {
 	public static String toSha1(String text) {
-		String salt = "quanlycuahangthoitrang";
+		String salt = "sdnsss;dl;sfsjdkfnsd";
 		String result = null;
 		text += salt;
 		try {

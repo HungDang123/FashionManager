@@ -16,7 +16,7 @@ public class jdbcHelper {
 
     static String url = "jdbc:sqlserver://localhost:1433;databaseName=quanLyCuaHangThoiTrang;encrypt=false";
     static String user = "sa";
-    static String pass = "hung";
+    static String pass = "1";
 
     static {
         try {
@@ -32,8 +32,10 @@ public class jdbcHelper {
         } else {
             pr = con.prepareStatement(sql);
         }
-        for (int i = 0; i < args.length; i++) {
+        if (args != null) {
+            for (int i = 0; i < args.length; i++) {
             pr.setObject(i + 1, args[i]);
+        }
         }
         return pr;
     }

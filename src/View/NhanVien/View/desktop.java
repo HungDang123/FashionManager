@@ -4,10 +4,12 @@
  */
 package View.NhanVien.View;
 
-import View.nhanVien.nhanVien_InternalForm;
+import View.NhanVien.View.NhanVienCard;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -15,18 +17,25 @@ import java.awt.Toolkit;
  */
 public class desktop extends javax.swing.JFrame {
 
+    nhanVien_InternalForm internalForm = new nhanVien_InternalForm();
+
     /**
      * Creates new form desktop
      */
     public desktop() {
         initComponents();
         deskTop.setLayout(new BorderLayout());
-        nhanVien_InternalForm internalForm = new nhanVien_InternalForm();
+        internalForm.showList_nv();
         internalForm.setVisible(true);
+         
         deskTop.add(internalForm, BorderLayout.CENTER);
+      
         pack();
+        setLocationRelativeTo(null);
         // Lấy kích thước của JFrame
     }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +54,7 @@ public class desktop extends javax.swing.JFrame {
         deskTop.setLayout(deskTopLayout);
         deskTopLayout.setHorizontalGroup(
             deskTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGap(0, 557, Short.MAX_VALUE)
         );
         deskTopLayout.setVerticalGroup(
             deskTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

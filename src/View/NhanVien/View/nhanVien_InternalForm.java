@@ -4,30 +4,47 @@
  */
 package View.NhanVien.View;
 
-import View.nhanVien.NhanVienCard;
 import com.pro1041.dao.DAO_nhanVien;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import javax.swing.JPanel;
-import Model.nhanVien;
+import Model.nhanVien_Model;
+import View.NhanVien.Data.nhanVien_data_DAO;
+import com.pro1041.datechooser.Button;
+import java.awt.event.ActionListener;
+import java.util.EventListener;
+import javax.swing.JButton;
 
 /**
  *
  * @author hnhut
  */
 public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
-
     /**
      * Creates new form nhanVien_InternalForm
      */
     public nhanVien_InternalForm() {
         initComponents();
         System.out.println("Select All");
-        showList_nv();
 //        setSize(1000, 700);
-
     }
+    
+    public void update() {
+        showList_nv();
+        getParent().repaint();
+    }
+
+   
+    
+    
+    
+    public void clickAdd() {
+        System.out.println("showList");
+        showList_nv();
+    }
+    
+    
 
     public void CreateSize(int width, int heigt) {
         setSize(width, HEIGHT);
@@ -35,8 +52,8 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
 
     public void showList_nv() {
         nhanVien_showList_container.removeAll();
-        for (nhanVien nv : new DAO_nhanVien().getALL_nv()) {
-            NhanVienCard nv_Card = new NhanVienCard(nv);
+        for (nhanVien_Model nv : new nhanVien_data_DAO().selectAll()) {
+            NhanVienCard nv_Card = new NhanVienCard(nv,this);
             nhanVien_showList_container.add(nv_Card);
         }
         nhanVien_showList_container.repaint();
@@ -77,7 +94,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         showList_nav = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         nhanVien_showList_container = new javax.swing.JPanel();
         nhanVien_Item9 = new javax.swing.JPanel();
@@ -323,10 +340,13 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Clone");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Add.setBackground(new java.awt.Color(0, 0, 0));
+        Add.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        Add.setForeground(new java.awt.Color(255, 255, 255));
+        Add.setText("Add");
+        Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                AddActionPerformed(evt);
             }
         });
 
@@ -339,9 +359,9 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         showList_navLayout.setVerticalGroup(
             showList_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +370,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 .addGroup(showList_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(Add))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1006,15 +1026,15 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
+       nhanVien_Form_Add add = new nhanVien_Form_Add(this);
+       add.setVisible(true);
+    }//GEN-LAST:event_AddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Add;
     private javax.swing.JLabel jLabel100;
     private javax.swing.JLabel jLabel101;
     private javax.swing.JLabel jLabel16;
