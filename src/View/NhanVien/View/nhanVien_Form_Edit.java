@@ -285,7 +285,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
 
     private void edit_btn_ImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btn_ImageActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser("C:\\Users\\hnhut\\OneDrive\\Máy tính\\Pro1041_Nhom2\\PRO1041_1\\src\\image");
+        JFileChooser fileChooser = new JFileChooser("Máy tính\\Pro1041_Nhom2\\PRO1041_1\\src\\image");
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
