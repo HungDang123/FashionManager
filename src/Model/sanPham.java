@@ -10,21 +10,26 @@ import java.io.Serializable;
  *
  * @author HUNG
  */
-public class sanPham implements Serializable{
-    private String maSanPham,tenSanPham,loaiSanPham,xuatXu;
-    private Float donGia;
-    private String nhaCungCap;
+public class sanPham implements Serializable {
+
+    private String maSanPham, tenSanPham, loaiSanPham, xuatXu;
+    private Float donGia, VAT;
+    private String nhaCungCap, moTa, mauSac, hinhAnh;
 
     public sanPham() {
     }
 
-    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, String nhaCungCap) {
+    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, Float VAT, String nhaCungCap, String moTa, String mauSac, String hinhAnh) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;
         this.xuatXu = xuatXu;
         this.donGia = donGia;
+        this.VAT = VAT;
         this.nhaCungCap = nhaCungCap;
+        this.moTa = moTa;
+        this.mauSac = mauSac;
+        this.hinhAnh = hinhAnh;
     }
 
     public String getMaSanPham() {
@@ -75,9 +80,41 @@ public class sanPham implements Serializable{
         this.nhaCungCap = nhaCungCap;
     }
 
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
+    }
+
+    public String getMauSac() {
+        return mauSac;
+    }
+
+    public void setMauSac(String mauSac) {
+        this.mauSac = mauSac;
+    }
+
+    public Float getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(Float VAT) {
+        this.VAT = VAT;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
     @Override
     public String toString() {
-        return "sanPham{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", nhaCungCap=" + nhaCungCap + '}';
+        return "sanPham,{" + "maSanPham=" + maSanPham + ", tenSanPham=" + tenSanPham + ", loaiSanPham=" + loaiSanPham + ", xuatXu=" + xuatXu + ", donGia=" + donGia + ", VAT=" + VAT + ", nhaCungCap=" + nhaCungCap + ", moTa=" + moTa + ", mauSac=" + mauSac + ", hinhAnh=" + hinhAnh + '}';
     }
-    
+
 }

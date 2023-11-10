@@ -53,7 +53,7 @@ public class kichThuoc implements Serializable{
 
     @Override
     public String toString() {
-        return "chiTietSanPham{" + "sanPham=" + sanPham + ", kichThuoc=" + kichThuoc + ", VAT=" + VAT + '}';
+        return "chiTietSanPham,{" + "sanPham=" + sanPham + ", kichThuoc=" + kichThuoc + ", VAT=" + VAT + '}';
     }
 
     public String getMaKichThuoc() {

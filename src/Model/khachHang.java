@@ -80,7 +80,7 @@ public class khachHang implements Serializable {
 
     @Override
     public String toString() {
-        return "khachHang{" + "maKhachHang=" + maKhachHang + ", hoVaTen=" + hoVaTen + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", email=" + email + '}';
+        return "khachHang,{" + "maKhachHang=" + maKhachHang + ", hoVaTen=" + hoVaTen + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", email=" + email + '}';
     }
 
 }

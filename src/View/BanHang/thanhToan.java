@@ -31,7 +31,7 @@ public class thanhToan extends javax.swing.JInternalFrame {
     private JDesktopPane desktopPane;
     DAO_banHang dao = new DAO_banHang();
     List<sanPham> listSp = new ArrayList<>();
-    private khachHang kh = ShareHelper.khachHang;
+    private static khachHang kh;
     DefaultTableModel modelSp;
     DefaultTableModel modelCthd;
     DefaultTableModel modelCthd2;
@@ -39,6 +39,9 @@ public class thanhToan extends javax.swing.JInternalFrame {
     listData ld = new listData();
     DAO_hoaDon daoHd = new DAO_hoaDon();
 //    List<HoaDoa> listHd = new ArrayList<>();
+    List<Object[]> list = new ArrayList<>();
+    private static Float tongTien;
+    private static String maHoaDon;
 
     public JDesktopPane getDesktopPane() {
         return desktopPane;
@@ -60,14 +63,14 @@ public class thanhToan extends javax.swing.JInternalFrame {
 
     public void initTableSP() {
         modelSp = new DefaultTableModel();
-        String[] cols = new String[]{"Mã sản phẩm", "Tên", "Mô tả", "Màu sắc", "Xuất xứ", "Giá nhập", "Nhà cung cấpp"};
+        String[] cols = new String[]{"Mã sản phẩm", "Tên", "Mô tả", "Màu sắc", "Xuất xứ", "Giá nhập", "Nhà cung cấp"};
         modelSp.setColumnIdentifiers(cols);
         tblSanPham.setModel(modelSp);
     }
 
     public void initTableHD() {
         modelHd = new DefaultTableModel();
-        String[] cols = new String[]{"Tên sản phẩm", "Màu sắc", "Đơn vị", "Giá bán", "Kích thước", "Số lượng", "Tiền VAT", "Thành tiền"};
+        String[] cols = new String[]{"Tên sản phẩm", "Màu sắc", "Giá bán", "Kích thước", "Số lượng", "Tiền VAT", "Thành tiền"};
         modelHd.setColumnIdentifiers(cols);
         tblHoaDon.setModel(modelHd);
     }
@@ -81,7 +84,7 @@ public class thanhToan extends javax.swing.JInternalFrame {
 
     public void initTableChiTietHD2() {
         modelCthd2 = new DefaultTableModel();
-        String[] cols = new String[]{"Tên sản phẩm", "Màu sắc", "Đơn vị", "Giá bán", "Kích thước", "Số lượng", "Tiền VAT", "Thành tiền"};
+        String[] cols = new String[]{"Tên sản phẩm", "Màu sắc", "Giá bán", "Kích thước", "Số lượng", "Tiền VAT", "Thành tiền"};
         modelCthd2.setColumnIdentifiers(cols);
         tblChiTietHD2.setModel(modelCthd2);
     }
@@ -91,6 +94,7 @@ public class thanhToan extends javax.swing.JInternalFrame {
             ShareHelper.SDT = txtSdt.getText();
             MySwingWorker worker = new MySwingWorker(this);
             worker.execute();
+            kh = ShareHelper.khachHang;
         } catch (Exception e) {
         }
     }
@@ -105,7 +109,6 @@ public class thanhToan extends javax.swing.JInternalFrame {
                 txtHoVaTen.setText(kh.getHoVaTen());
                 if (kh.isGioiTinh() == true) {
                     txtGioiTinh.setText("Nam");
-                    System.out.println("Nam");
                 } else {
                     txtGioiTinh.setText("Nữ");
                 }
@@ -147,7 +150,7 @@ public class thanhToan extends javax.swing.JInternalFrame {
     }
 
     public void taoHoaDon() {
-        String maHoaDon = "HD" + System.currentTimeMillis();
+        maHoaDon = "HD" + System.currentTimeMillis();
         thongTinNhanVien();
         lbl_banHang_hoaDon.setText(maHoaDon);
         String maKhachHang = txtMaKh.getText();
@@ -158,18 +161,6 @@ public class thanhToan extends javax.swing.JInternalFrame {
         daoHd.insertHoaDon(hd);
         System.out.println("thêm hóa đơn thành công");
         loadData();
-    }
-
-    public void getItemTableSanPham(int index) {
-        String maSanPham = listSp.get(index).getMaSanPham();
-        String ten = listSp.get(index).getTenSanPham();
-        String moTa = listSp.get(index).getMoTa();
-        String mauSac = listSp.get(index).getMauSac();
-        String xuatSu = listSp.get(index).getXuatXu();
-        Float giaNhap = listSp.get(index).getDonGia();
-        String nhaCungCap = listSp.get(index).getNhaCungCap();
-        String hinhAnh = listSp.get(index).getHinhAnh();
-        Float vat = listSp.get(index).getVAT();
     }
 
     public void SearchByName(String name) {
@@ -189,7 +180,31 @@ public class thanhToan extends javax.swing.JInternalFrame {
         listSp = dao.searchBoth(name, id);
         fillToTableSp();
     }
-
+    public void addThongTinHoaDon(){
+        String ten = listSp.get(index).getTenSanPham();
+        String mauSac = listSp.get(index).getMauSac();
+        Float giaNhap = listSp.get(index).getDonGia();
+        Float vat = listSp.get(index).getVAT();
+        String kichThuoc = (String) cbo_banHang_kichThuoc.getSelectedItem();
+        Float soLuong = Float.parseFloat(txt_banHang_soLuong.getText());
+        Float thanhTien = soLuong*giaNhap;
+        Float tienVat = thanhTien*(vat/100);
+        list.add(new Object[]{ten,mauSac,giaNhap,kichThuoc,soLuong,thanhTien,tienVat});
+        modelHd.addRow(new Object[]{ten,mauSac,giaNhap,kichThuoc,soLuong,tienVat,thanhTien});
+    }
+    public void tongTien(){
+        for(Object[] obj : list){
+            tongTien+= (Float) obj[5] +(Float) obj[6];
+        }
+        System.out.println("Tổng tiền: "+tongTien);
+    }
+    public void formThanhToan(){
+        try {
+            MySwingWorkerThanhToan worker = new MySwingWorkerThanhToan(this,kh,tongTien,maHoaDon);
+            worker.execute();
+        } catch (Exception e) {
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -548,6 +563,11 @@ public class thanhToan extends javax.swing.JInternalFrame {
 
         btn_banHang_themHoaDon.setBackground(new java.awt.Color(123, 213, 0));
         btn_banHang_themHoaDon.setText("Thêm");
+        btn_banHang_themHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_banHang_themHoaDonActionPerformed(evt);
+            }
+        });
 
         lbl_banHang_imageSanPham.setPreferredSize(new java.awt.Dimension(40, 20));
 
@@ -1049,8 +1069,8 @@ public class thanhToan extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_banHang_xoaHoaDonActionPerformed
 
     private void btn_banHang_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_thanhToanActionPerformed
-        formThanhToan form = new formThanhToan();
-        form.setVisible(true);
+        tongTien();
+        formThanhToan();
     }//GEN-LAST:event_btn_banHang_thanhToanActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -1106,6 +1126,10 @@ public class thanhToan extends javax.swing.JInternalFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_txt_banHang_TimTheoMaCaretUpdate
+
+    private void btn_banHang_themHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_themHoaDonActionPerformed
+        addThongTinHoaDon();
+    }//GEN-LAST:event_btn_banHang_themHoaDonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

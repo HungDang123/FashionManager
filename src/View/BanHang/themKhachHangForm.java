@@ -63,7 +63,7 @@ public class themKhachHangForm extends javax.swing.JDialog {
                 dispose();
             }
         } else {
-            DialogHelper.alert("Mã khách hàng đã tồn tại!!");
+            DialogHelper.alert("Mã khách hàng đã tồn tại!.");
         }
     } catch (Exception e) {
     }
@@ -79,6 +79,7 @@ public class themKhachHangForm extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCalendar1 = new com.toedter.calendar.JCalendar();
         lblEmail = new javax.swing.JLabel();
         txtTenKhachHang = new javax.swing.JTextField();
         lblSdt = new javax.swing.JLabel();
@@ -196,7 +197,7 @@ public class themKhachHangForm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDong)
                     .addComponent(btnThem))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -259,6 +260,7 @@ public class themKhachHangForm extends javax.swing.JDialog {
     private com.toedter.calendar.JDateChooser DateChooserNgaySinh;
     private javax.swing.JButton btnDong;
     private javax.swing.JButton btnThem;
+    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblMaKh;

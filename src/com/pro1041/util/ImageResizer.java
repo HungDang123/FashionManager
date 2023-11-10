@@ -19,8 +19,8 @@ public class ImageResizer {
              private  static String outputURL = "C:\\Users\\hnhut\\OneDrive\\Máy tính\\Pro1041_Nhom2\\PRO1041\\src\\image\\";
 
     public static boolean Resize(String inputURL, String outputURL) {
-        int newWidth = 180; // Replace this with the desired width of the resized image
-        int newHeight = 160; // Replace this with the desired height of the resized image
+        int newWidth = 150; // Replace this with the desired width of the resized image
+        int newHeight = 130; // Replace this with the desired height of the resized image
         try {
             // Read the input image
             BufferedImage originalImage = ImageIO.read(new File(inputURL));

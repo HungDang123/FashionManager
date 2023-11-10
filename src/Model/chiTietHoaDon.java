@@ -5,7 +5,7 @@
 package Model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Date; 
 
 /**
  *
@@ -81,7 +81,7 @@ public class chiTietHoaDon implements Serializable{
 
     @Override
     public String toString() {
-        return "chiTietHoaDon{" + "maCthd=" + maCthd + ", maSanPhams=" + maSanPham + ", soLuong=" + soLuong + ", tongTien=" + tongTien + ", ngayLapHoaDon=" + ngayLapHoaDon + ", maHoaDon=" + maHoaDon + '}';
+        return "chiTietHoaDon.{" + "maCthd=" + maCthd + ", maSanPham=" + maSanPham + ", soLuong=" + soLuong + ", tongTien=" + tongTien + ", ngayLapHoaDon=" + ngayLapHoaDon + ", maHoaDon=" + maHoaDon + '}';
     }
     
 }

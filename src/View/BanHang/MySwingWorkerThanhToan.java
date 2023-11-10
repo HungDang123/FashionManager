@@ -4,14 +4,22 @@
  */
 package View.BanHang;
 
+import Model.khachHang;
+import com.pro1041.util.ShareHelper;
 import javax.swing.*;
 
-public class MySwingWorker extends SwingWorker<Void, Void> {
+public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
 
+    private static khachHang kh = ShareHelper.khachHang;
+    private static float tongTien;
+    private static String hoaDon;
     private JInternalFrame internalFrame;
 
-    public MySwingWorker(JInternalFrame internalFrame) {
+    public MySwingWorkerThanhToan(JInternalFrame internalFrame, khachHang kh, Float tongTien, String hoaDon) {
         this.internalFrame = internalFrame;
+        System.out.println(kh.toString());
+        System.out.println(tongTien);
+        System.out.println(hoaDon);
     }
 
     @Override
@@ -21,7 +29,7 @@ public class MySwingWorker extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                themKhachHangForm dialog = new themKhachHangForm(new javax.swing.JFrame(), true);
+                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, kh,tongTien,hoaDon);
                 dialog.setVisible(true);
             }
         });
@@ -34,7 +42,6 @@ public class MySwingWorker extends SwingWorker<Void, Void> {
         // Đảm bảo rằng JInternalFrame không bị mất
         if (internalFrame != null) {
             internalFrame.toFront();
-            System.out.println("");
         }
     }
 }

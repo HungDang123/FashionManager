@@ -51,7 +51,7 @@ public class hoaDon implements Serializable{
 
     @Override
     public String toString() {
-        return "hoaDon{" + "maHoaDon=" + maHoaDon + ", maNhanVien=" + maNhanVien + ", maKhachHang=" + maKhachHang + '}';
+        return "hoaDon,{" + "maHoaDon=" + maHoaDon + ", maNhanVien=" + maNhanVien + ", maKhachHang=" + maKhachHang + '}';
     }
     
 }
