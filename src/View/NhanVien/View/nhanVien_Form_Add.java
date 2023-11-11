@@ -4,7 +4,7 @@
  */
 package View.NhanVien.View;
 
-import Model.nhanVien_Model;
+import Model.nhanVien;
 import View.NhanVien.Data.nhanVien_data_DAO;
 import com.pro1041.util.DateHelper;
 import com.pro1041.util.checkNhanVien;
@@ -31,13 +31,12 @@ import javax.swing.border.LineBorder;
     private String canCuocCongDan, soDienThoai, hinhAnh;
  */
 public class nhanVien_Form_Add extends javax.swing.JFrame {
-//    nhanVien_Model user = new ShareHelper().getAccount();
+//    nhanVien user = new ShareHelper().getAccount();
     private nhanVien_InternalForm form;
     
-    static String message = "";
     static boolean isTrue = true;
     static String MessageError = "";
-    nhanVien_Model nvInsert = new nhanVien_Model();
+    nhanVien nvInsert = new nhanVien();
     static nhanVien_data_DAO nvDao = new nhanVien_data_DAO();
 
     /**
@@ -46,7 +45,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
     public nhanVien_Form_Add(nhanVien_InternalForm form) {
         initComponents();
         this.form = form;
-        nhanVien_Model user = new nhanVien_Model();
+        nhanVien user = new nhanVien();
         nhanVien_lb_nameManager.setText(user.getHoVaTen());
 
         nhanVien_txt_maNV.setText(generateRandomString());
@@ -62,7 +61,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
    
     
 
-    public nhanVien_Model Nv_getForm() {
+    public nhanVien Nv_getForm() {
         String maNhanVien = nhanVien_txt_maNV.getText();
         String hovaTen = nhanVien_txt_hovaTen.getText();
         boolean chucVu = nhanVien_cbb_chucVu.getSelectedItem().toString().equalsIgnoreCase("Quản lý") ? true : false;
@@ -73,7 +72,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             Date parseDate = DateHelper.toDate(dateString, "MM/dd/yyyy");
             java.sql.Date ngaySinh = new java.sql.Date(parseDate.getTime());
             String canCuocCongDan = nhanVien_txt_CCCD.getText();
-            nvInsert = new nhanVien_Model(maNhanVien, hovaTen, null, chucVu, gioiTinh, ngaySinh,null, canCuocCongDan, null, null);
+            nvInsert = new nhanVien(maNhanVien, hovaTen, null, chucVu, gioiTinh, ngaySinh,null, canCuocCongDan, null, null);
         } catch (ParseException ex) {
             Logger.getLogger(nhanVien_Form_Add.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +82,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
     
   
 
-    public void checkNull() {
+    public void checkForm() {
         Nv_getForm();
         if (nhanVien_txt_hovaTen.getText().trim().isEmpty()) {
             nhanVien_txt_hovaTen.setBorder(new LineBorder(Color.red));
@@ -111,12 +110,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         }
     }
     
-    public void checkFormat() {
-        MessageError = "";
-        
-        
-    }
-
+    
     public static String generateRandomString() {
         String letters = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "0123456789";
@@ -430,8 +424,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
     private void nhanVien_btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_btn_AddActionPerformed
         // TODO add your handling code here:
         isTrue = true;
-        checkNull();
-        checkFormat();
+        checkForm();
         if (isTrue) {
             System.out.println("Login thành công");
             nvInsert.setMatKhau("1");

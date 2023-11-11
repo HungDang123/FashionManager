@@ -9,7 +9,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import javax.swing.JPanel;
-import Model.nhanVien_Model;
+import Model.nhanVien;
 import View.NhanVien.Data.nhanVien_data_DAO;
 import com.pro1041.datechooser.Button;
 import java.awt.event.ActionListener;
@@ -21,6 +21,7 @@ import javax.swing.JButton;
  * @author hnhut
  */
 public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
+
     /**
      * Creates new form nhanVien_InternalForm
      */
@@ -29,22 +30,16 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         System.out.println("Select All");
 //        setSize(1000, 700);
     }
-    
+
     public void update() {
         showList_nv();
         getParent().repaint();
     }
 
-   
-    
-    
-    
     public void clickAdd() {
         System.out.println("showList");
         showList_nv();
     }
-    
-    
 
     public void CreateSize(int width, int heigt) {
         setSize(width, HEIGHT);
@@ -52,10 +47,21 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
 
     public void showList_nv() {
         nhanVien_showList_container.removeAll();
-        for (nhanVien_Model nv : new nhanVien_data_DAO().selectAll()) {
-            NhanVienCard nv_Card = new NhanVienCard(nv,this);
+        for (nhanVien nv : new nhanVien_data_DAO().selectAll()) {
+            NhanVienCard nv_Card = new NhanVienCard(nv, this);
             nhanVien_showList_container.add(nv_Card);
         }
+        nhanVien_showList_container.repaint();
+    }
+
+    public void showList_nv_byID_almost(String id) {
+        nhanVien_showList_container.removeAll();
+        System.out.println("M: "+new nhanVien_data_DAO().selectNhanVien_byID_almost(id));
+        for (nhanVien nv : new nhanVien_data_DAO().selectNhanVien_byID_almost(id)) {
+            NhanVienCard nv_Card = new NhanVienCard(nv, this);
+            nhanVien_showList_container.add(nv_Card);
+        }
+        nhanVien_showList_container.revalidate();
         nhanVien_showList_container.repaint();
     }
 
@@ -93,7 +99,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         nhanVien_showList_tbP = new javax.swing.JPanel();
         showList_nav = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        nhanVien_txt_searchID = new javax.swing.JTextField();
         Add = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         nhanVien_showList_container = new javax.swing.JPanel();
@@ -334,9 +340,19 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
 
         jLabel16.setText("Search");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        nhanVien_txt_searchID.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                nhanVien_txt_searchIDCaretUpdate(evt);
+            }
+        });
+        nhanVien_txt_searchID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                nhanVien_txt_searchIDActionPerformed(evt);
+            }
+        });
+        nhanVien_txt_searchID.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                nhanVien_txt_searchIDPropertyChange(evt);
             }
         });
 
@@ -358,7 +374,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel16)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nhanVien_txt_searchID, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -369,7 +385,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(showList_navLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nhanVien_txt_searchID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Add))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1022,15 +1038,24 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void nhanVien_txt_searchIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_txt_searchIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_nhanVien_txt_searchIDActionPerformed
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         // TODO add your handling code here:
-       nhanVien_Form_Add add = new nhanVien_Form_Add(this);
-       add.setVisible(true);
+        nhanVien_Form_Add add = new nhanVien_Form_Add(this);
+        add.setVisible(true);
     }//GEN-LAST:event_AddActionPerformed
+
+    private void nhanVien_txt_searchIDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_nhanVien_txt_searchIDPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nhanVien_txt_searchIDPropertyChange
+
+    private void nhanVien_txt_searchIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nhanVien_txt_searchIDCaretUpdate
+        // TODO add your handling code here:
+        showList_nv_byID_almost(nhanVien_txt_searchID.getText());
+    }//GEN-LAST:event_nhanVien_txt_searchIDCaretUpdate
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1083,7 +1108,6 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel nhanVien_Item10;
     private javax.swing.JPanel nhanVien_Item11;
     private javax.swing.JPanel nhanVien_Item12;
@@ -1147,6 +1171,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel nhanVien_showData_tbP;
     private javax.swing.JPanel nhanVien_showList_container;
     private javax.swing.JPanel nhanVien_showList_tbP;
+    private javax.swing.JTextField nhanVien_txt_searchID;
     private javax.swing.JPanel showList_nav;
     // End of variables declaration//GEN-END:variables
 }

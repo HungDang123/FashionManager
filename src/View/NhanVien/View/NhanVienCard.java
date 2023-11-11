@@ -1,7 +1,7 @@
 package View.NhanVien.View;
 
-import Model.nhanVien_Model;
-import View.NhanVien.Data.nhanVien_data_DAO;
+import Model.nhanVien;
+import View.NhanVien.Controller.Controller_nhanVien_Crud;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -22,7 +22,7 @@ import javax.swing.border.BevelBorder;
 
 public class NhanVienCard extends JPanel {
 
-    private nhanVien_Model nhanVienInstance;
+    private nhanVien nhanVienInstance;
     static nhanVien_InternalForm container;
 
     private JLabel labelMaNV;
@@ -33,7 +33,7 @@ public class NhanVienCard extends JPanel {
     private JLabel labelGioiTinh;
     private JLabel labelMatKhau;
 
-    public NhanVienCard(nhanVien_Model nv, nhanVien_InternalForm container) {
+    public NhanVienCard(nhanVien nv, nhanVien_InternalForm container) {
         this.nhanVienInstance = nv;
         NhanVienCard.container = container;
         this.setLayout(new BorderLayout());
@@ -115,52 +115,33 @@ public class NhanVienCard extends JPanel {
         JPanel pnFooter = new JPanel();
 
         JButton btnEdit = new JButton("Edit");
-        btnEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nhanVien_Form_Edit edit = new nhanVien_Form_Edit(nhanVienInstance, NhanVienCard.this);
-                edit.setVisible(true);
-                edit.setLocationRelativeTo(null);
-//                JDialog j = new JDialog(edit, "Edit Form", true);
-//                j.setContentPane(edit.getContentPane());
-//                j.pack();
-//                j.setLocationRelativeTo(null);
-//                j.setVisible(true);
-            }
-        });
 
         JButton btnDelete = new JButton("Delete");
 
-        btnDelete.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int op = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa", "Delete", JOptionPane.YES_NO_OPTION);
-                if (op == JOptionPane.YES_OPTION) {
-                    new nhanVien_data_DAO().delete(nv.getMaNhanVien());
-                    updateParent();
-                }
-            }
-        });
-
         JButton btnChangePw = new JButton("Change Password");
 
-        btnChangePw.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                nhanVien_Form_changePassword cd = new nhanVien_Form_changePassword(nv.getMaNhanVien(), NhanVienCard.this);
-                JDialog j = new JDialog(cd, "Change Password", true);
-                j.setContentPane(cd.getContentPane());
-                j.pack();
-                j.setLocationRelativeTo(null);
-                j.setVisible(true);
-            }
-        });
+        JButton btn_Security = new JButton("Security");
+
+        btnEdit.addActionListener(Controller_nhanVien_Crud.getController_nvEdit(this));
+        btnDelete.addActionListener(Controller_nhanVien_Crud.getController_nvDelete(this));
+        btnChangePw.addActionListener(Controller_nhanVien_Crud.getController_nvChangePw(this));
+        btn_Security.addActionListener(Controller_nhanVien_Crud.getController_nvUpdateSecurity(this));
+
+        pnFooter.add(btn_Security);
         pnFooter.add(btnDelete);
         pnFooter.add(btnEdit);
         pnFooter.add(btnChangePw);
 
         this.add(pnFooter, BorderLayout.SOUTH);
 
+    }
+
+    public nhanVien getNhanVienInstance() {
+        return nhanVienInstance;
+    }
+
+    public void setNhanVienInstance(nhanVien nhanVienInstance) {
+        this.nhanVienInstance = nhanVienInstance;
     }
 
     public void updatePassworđ(String Password) {
@@ -172,25 +153,41 @@ public class NhanVienCard extends JPanel {
         container.update();
     }
 
-    public void updateCard(nhanVien_Model nvM) {
+    public void updateCard(nhanVien nvM) {
         this.nhanVienInstance = nvM;
         labelMaNV.setText("Mã nhân viên: " + nhanVienInstance.getMaNhanVien());
         labelName.setText("Họ và tên: " + nhanVienInstance.getHoVaTen());
         labelChucVu.setText("Chức Vụ: " + (nhanVienInstance.getChucVu() ? "Quản lý" : "Nhân Viên"));
-        
-        labelNgaySinh.setText("Ngày Sinh: "+nhanVienInstance.getNgaySinh());
+
+        labelNgaySinh.setText("Ngày Sinh: " + nhanVienInstance.getNgaySinh());
         labelImage = new JLabel();
         Icon icon = new ImageIcon(nhanVienInstance.getHinhAnh());
         labelImage.setIcon(icon);
-        labelGioiTinh.setText("Giới tính: "+ (nhanVienInstance.getGioiTinh() ? "Nam" : "Nữ"));
-        labelMatKhau.setText("Mật khẩu: "+ nhanVienInstance.getMatKhau());
-        
+        labelGioiTinh.setText("Giới tính: " + (nhanVienInstance.getGioiTinh() ? "Nam" : "Nữ"));
+        labelMatKhau.setText("Mật khẩu: " + nhanVienInstance.getMatKhau());
+
         labelImage = new JLabel();
         icon = new ImageIcon(nhanVienInstance.getHinhAnh());
         labelImage.setIcon(icon);
-        
+
         updateParent();
-       
+
+    }
+
+    void setMatKhau(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setSoDienThoai(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setGmail(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    void setCanCuocCongDan(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

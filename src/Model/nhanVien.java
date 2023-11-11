@@ -16,24 +16,36 @@ public class nhanVien implements Serializable {
     private String maNhanVien, hoVaTen, matKhau;
     private Boolean chucVu, gioiTinh;
     private Date ngaySinh;
-    private String canCuocCongDan, soDienThoai, hinhAnh,email;
+    private String email;
+    private String canCuocCongDan, soDienThoai, hinhAnh;
 
     public nhanVien() {
     }
 
-    public nhanVien(String maNhanVien, String hoVaTen, String matKhau, Boolean chucVu, Boolean gioiTinh, Date ngaySinh, String canCuocCongDan, String soDienThoai, String hinhAnh, String email) {
+    public nhanVien(String maNhanVien, String hoVaTen, String matKhau, Boolean chucVu, Boolean gioiTinh, Date ngaySinh, String gmail, String canCuocCongDan, String soDienThoai, String hinhAnh) {
         this.maNhanVien = maNhanVien;
         this.hoVaTen = hoVaTen;
         this.matKhau = matKhau;
         this.chucVu = chucVu;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+        this.email = gmail;
         this.canCuocCongDan = canCuocCongDan;
         this.soDienThoai = soDienThoai;
         this.hinhAnh = hinhAnh;
-        this.email = email;
     }
 
+    public String getGmail() {
+        return email;
+    }
+
+    public void setGmail(String gmail) {
+        this.email = gmail;
+    }
+    
+    
+
+   
 
     public String getMaNhanVien() {
         return maNhanVien;
@@ -107,19 +119,9 @@ public class nhanVien implements Serializable {
         this.matKhau = matKhau;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public String toString() {
-        return "nhanVien,{" + "maNhanVien=" + maNhanVien + ", hoVaTen=" + hoVaTen + ", matKhau=" + matKhau + ", chucVu=" + chucVu + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", canCuocCongDan=" + canCuocCongDan + ", soDienThoai=" + soDienThoai + ", hinhAnh=" + hinhAnh + ", email=" + email + '}';
+        return "nhanVien{" + "maNhanVien=" + maNhanVien + ", hoVaTen=" + hoVaTen + ", matKhau=" + matKhau + ", chucVu=" + chucVu + ", gioiTinh=" + gioiTinh + ", ngaySinh=" + ngaySinh + ", canCuocCongDan=" + canCuocCongDan + ", soDienThoai=" + soDienThoai + ", hinhAnh=" + hinhAnh + '}';
     }
-
-    
 
 }

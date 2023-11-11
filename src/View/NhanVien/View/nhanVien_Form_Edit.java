@@ -4,7 +4,7 @@
  */
 package View.NhanVien.View;
 
-import Model.nhanVien_Model;
+import Model.nhanVien;
 import View.NhanVien.Data.nhanVien_data_DAO;
 import com.pro1041.util.DateHelper;
 import com.pro1041.util.checkNhanVien;
@@ -28,13 +28,13 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
     /**
      * Creates new form nhanVien_Form_Edit
      */
-    private nhanVien_Model nvM;
+    private nhanVien nvM;
     private NhanVienCard nhanVienCard;
     nhanVien_data_DAO dao = new nhanVien_data_DAO();
     private String maNV_old;
     static boolean ck = true;
 
-    public nhanVien_Form_Edit(nhanVien_Model nvM, NhanVienCard nhanVienCard) {
+    public nhanVien_Form_Edit(nhanVien nvM, NhanVienCard nhanVienCard) {
         initComponents();
         this.nhanVienCard = nhanVienCard;
         this.nvM = nvM;
@@ -68,14 +68,14 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         edit_date_Date.setDate(nvM.getNgaySinh());
     }
 
-    public nhanVien_Model getForm() {
+    public nhanVien getForm() {
         String maNhanVien = edit_txt_maNhanVien.getText();
         String hoVaTen = edit_txt_hovaTen.getText();
         boolean chucVu = edit_cbb_chucVu.getSelectedItem().toString().equals("Quản lý") ? true : false;
         boolean gioiTinh = edit_rdo_Male.isSelected() ? true : false;
         java.sql.Date date = new java.sql.Date(edit_date_Date.getDate().getTime());
 
-        return new nhanVien_Model(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getGmail(), nvM.getCanCuocCongDan(), nvM.getCanCuocCongDan(), nvM.getHinhAnh()
+        return new nhanVien(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getGmail(), nvM.getCanCuocCongDan(), nvM.getCanCuocCongDan(), nvM.getHinhAnh()
         );
     }
 
@@ -139,6 +139,11 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
 
         edit_txt_hovaTen.setFont(new java.awt.Font("SansSerif", 1, 16)); // NOI18N
         edit_txt_hovaTen.setMargin(new java.awt.Insets(5, 9, 5, 9));
+        edit_txt_hovaTen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                edit_txt_hovaTenMouseClicked(evt);
+            }
+        });
         edit_txt_hovaTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edit_txt_hovaTenActionPerformed(evt);
@@ -285,7 +290,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
 
     private void edit_btn_ImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btn_ImageActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser("Desktop\\Pro1041_Nhom2\\PRO1041_1\\src\\image");
+        JFileChooser fileChooser = new JFileChooser("C:\\Users\\hnhut\\OneDrive\\Máy tính\\Pro1041_Nhom2\\PRO1041_1\\src\\image");
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
@@ -308,6 +313,12 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         // TODO add your handling code here:
         edit_erorMs.setText("");
     }//GEN-LAST:event_edit_date_DateMouseClicked
+
+    private void edit_txt_hovaTenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit_txt_hovaTenMouseClicked
+        // TODO add your handling code here:
+        edit_txt_hovaTen.setText("");
+        edit_txt_hovaTen.setBorder(new LineBorder(Color.WHITE));
+    }//GEN-LAST:event_edit_txt_hovaTenMouseClicked
 
     /**
      * @param args the command line arguments
