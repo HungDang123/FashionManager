@@ -9,7 +9,5 @@ package com.pro1041.dao;
  * @author HUNG
  */
 public class DAO_sanPham {
-    public static void main(String[] args) {
-        
-    }
+   
 }

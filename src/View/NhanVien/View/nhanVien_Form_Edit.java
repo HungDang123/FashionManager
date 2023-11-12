@@ -75,7 +75,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         boolean gioiTinh = edit_rdo_Male.isSelected() ? true : false;
         java.sql.Date date = new java.sql.Date(edit_date_Date.getDate().getTime());
 
-        return new nhanVien(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getGmail(), nvM.getCanCuocCongDan(), nvM.getCanCuocCongDan(), nvM.getHinhAnh()
+        return new nhanVien(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getEmail(), nvM.getCanCuocCongDan(), nvM.getCanCuocCongDan(), nvM.getHinhAnh()
         );
     }
 

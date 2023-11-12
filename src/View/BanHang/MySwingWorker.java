@@ -21,7 +21,7 @@ public class MySwingWorker extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                themKhachHangForm dialog = new themKhachHangForm(new javax.swing.JFrame(), true);
+                formThemKhachHang dialog = new formThemKhachHang(new javax.swing.JFrame(), true);
                 dialog.setVisible(true);
             }
         });

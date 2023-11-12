@@ -40,7 +40,7 @@ public class nhanVien_Form_Security extends javax.swing.JFrame {
         nhanVien nv = new nhanVien_data_DAO().selectNhanVien_byID(nvCard.getNhanVienInstance().getMaNhanVien());
 
         hasInfor(Security_txt_cccd, nv.getCanCuocCongDan());
-        hasInfor(Security_txt_email, nv.getGmail());
+        hasInfor(Security_txt_email, nv.getEmail());
         hasInfor(Security_txt_pw, nv.getMatKhau());
         hasInfor(Security_txt_sdt, nv.getSoDienThoai());
 
@@ -61,7 +61,7 @@ public class nhanVien_Form_Security extends javax.swing.JFrame {
         nvCard.getNhanVienInstance().setMatKhau(Security_txt_pw.getText());
         nvCard.getNhanVienInstance().setSoDienThoai(Security_txt_sdt.getText());
         System.out.println("sdT: "+Security_txt_sdt.getText());
-        nvCard.getNhanVienInstance().setGmail(Security_txt_email.getText());
+        nvCard.getNhanVienInstance().setEmail(Security_txt_email.getText());
         nvCard.getNhanVienInstance().setCanCuocCongDan(Security_txt_cccd.getText());
     }
 

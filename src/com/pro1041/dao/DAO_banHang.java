@@ -33,6 +33,8 @@ public class DAO_banHang {
             + " COLLATE Vietnamese_CI_AS LIKE N'%' + ? + N'%' "
             + "and sp.maSanPham LIKE N'%' + ? + N'%'";
     private final String findByIdKH = "SELECT * FROM khachHang WHERE maKhachHang = ?";
+    private final String findByIdSP = "SELCT * FROM sanPham * where maSanPham = ?";
+    private final String insertCTHD = "Insert into chiTietHoaDon(maCthd,maSanPham,maHoaDon,soLuong,tongTien,ngayLapHoaDon) values(?,?,?,?,?,?)";
 
     public List<sanPham> SelectSanPham() {
         List<sanPham> list = new ArrayList<>();
@@ -113,6 +115,7 @@ public class DAO_banHang {
         }
         return list;
     }
+
     public List<sanPham> searchById(String str) {
         List<sanPham> list = new ArrayList<>();
         try {
@@ -181,4 +184,18 @@ public class DAO_banHang {
         }
         return null;
     }
+
+    public void insertCTHD(List<Object> obj) {
+        try {
+            Object[] objArray = (Object[]) obj.get(0);
+            System.out.println(objArray[0] + " " + objArray[1] + " " + objArray[2] + " " + objArray[3] + " " + objArray[4] + " " + objArray[5]);
+
+            // Use executeUpdate for INSERT queries
+            jdbcHelper.executeUpdate(insertCTHD, objArray[0], objArray[1], objArray[2], objArray[3], objArray[4], objArray[5]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Insert cthd: " + e.getMessage());
+        }
+    }
+
 }

@@ -5,32 +5,73 @@
 package View.BanHang;
 
 import Model.khachHang;
+import com.pro1041.dao.DAO_banHang;
+import com.pro1041.util.DateHelper;
 import com.pro1041.util.DialogHelper;
 import com.pro1041.util.ShareHelper;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Date;
+import com.pro1041.dao.DAO_banHang;
 
 /**
  *
  * @author HUNG
  */
 public class formThanhToan extends javax.swing.JDialog {
-   public static khachHang kh;
-   public static float tongTien;
-   public static String hoaDon;
+
+    public static khachHang kh;
+    public static float tongTien;
+    public static String hoaDon;
+    public static List<Object[]> list;
+    public static List<Object> objects = new ArrayList<>();
+
     /**
      * Creates new form formThanhToan_1
      */
-    public formThanhToan(java.awt.Frame parent, boolean modal,khachHang kh, float tongTien,String hoaDon) {
+    public formThanhToan(java.awt.Frame parent, boolean modal, khachHang kh, float tongTien, String hoaDon, List<Object[]> list) {
         super(parent, modal);
+        this.kh = kh;
+        this.hoaDon = hoaDon;
+        this.tongTien = tongTien;
+        this.list = list;
         initComponents();
         setLocationRelativeTo(null);
         hienThiThanhToan();
     }
-    public void hienThiThanhToan(){
+
+    public void hienThiThanhToan() {
         lbl_banHang_maHoaDon.setText(hoaDon);
         lbl_banHang_maKhachHang.setText(kh.getMaKhachHang());
         lbl_banHang_tenKh.setText(kh.getHoVaTen());
-        lbl_banHang_tongThanhToan.setText(String.valueOf(tongTien));
+        lbl_banHang_tongThanhToan.setText(String.valueOf(tongTien) + " VNĐ");
     }
+
+    public void thanhToan() {
+        try {
+            DAO_banHang dao = new DAO_banHang();
+            for (Object[] obj : list) {
+                String maCthd = "CTHD" + System.currentTimeMillis();
+                String maSp = (String) obj[0];
+                System.out.println("Mã sp :" + maSp);
+                String maHd = hoaDon;
+                int soLuong = (Integer) obj[5];
+                System.out.println("Số lượng: " + soLuong);
+                Float tongTien = (Float) obj[7];
+                System.out.println("Tiền: " + tongTien);
+                String dateStr = DateHelper.toString(DateHelper.now(), "yyyy-MM-dd");
+                Date date = new Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime());
+                objects.clear();
+                objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date});
+                dao.insertCTHD(objects);
+                System.out.println("Đã thêm thành công");
+                System.out.println();
+            }
+        } catch (Exception e) {
+            System.out.println("ThanhToan");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +95,10 @@ public class formThanhToan extends javax.swing.JDialog {
         lbl_banHang_tongThanhToan = new javax.swing.JLabel();
         txt_banHang_tienKhachDua = new javax.swing.JTextField();
         lbl_banHang_tienTraKhach = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        btnDong = new javax.swing.JButton();
+        btn_thanhToan = new javax.swing.JButton();
+        btn_inHoaDon = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -125,6 +170,27 @@ public class formThanhToan extends javax.swing.JDialog {
             }
         });
 
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
+
+        btnDong.setText("Đóng");
+        btnDong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDongActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDong);
+
+        btn_thanhToan.setText("Thanh toán");
+        btn_thanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_thanhToanActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btn_thanhToan);
+
+        btn_inHoaDon.setText("In hóa đơn");
+        jPanel2.add(btn_inHoaDon);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,6 +198,9 @@ public class formThanhToan extends javax.swing.JDialog {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(lbl_banHang_maHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -146,11 +215,12 @@ public class formThanhToan extends javax.swing.JDialog {
                             .addComponent(lbl_banHang_tongThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_banHang_tenKh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbl_banHang_maKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_banHang_tienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(lbl_banHang_maHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txt_banHang_tienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,13 +245,12 @@ public class formThanhToan extends javax.swing.JDialog {
                     .addComponent(jLabel6)
                     .addComponent(txt_banHang_tienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(0, 22, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbl_banHang_tienTraKhach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lbl_banHang_tienTraKhach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,19 +261,29 @@ public class formThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_txt_banHang_tienKhachDuaActionPerformed
 
     private void lbl_banHang_ngayLapAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_lbl_banHang_ngayLapAncestorAdded
-        // TODO add your handling code here:
+        String date = DateHelper.toString(DateHelper.now(), "dd-MM-yyyy");
+        lbl_banHang_ngayLap.setText("Ngày lập hóa đơn: " + date);
     }//GEN-LAST:event_lbl_banHang_ngayLapAncestorAdded
 
     private void txt_banHang_tienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_banHang_tienKhachDuaCaretUpdate
         Float tienKhachTra = Float.parseFloat(txt_banHang_tienKhachDua.getText());
-        if((tienKhachTra)<tongTien){
-            DialogHelper.alert("Tiền khách trả không đủ!");
-            return;
-        }else{
-            String tienTraKhach = String.valueOf(tongTien-tienKhachTra);
-            lbl_banHang_tienTraKhach.setText(tienTraKhach);
+        if ((tienKhachTra) < tongTien) {
+            System.out.println("Trả không đủ ");
+            lbl_banHang_tienTraKhach.setText("");
+        } else {
+            String tienTraKhach = String.valueOf(tienKhachTra - tongTien);
+            lbl_banHang_tienTraKhach.setText(tienTraKhach + " VNĐ");
         }
     }//GEN-LAST:event_txt_banHang_tienKhachDuaCaretUpdate
+
+    private void btnDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongActionPerformed
+        dispose();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    }//GEN-LAST:event_btnDongActionPerformed
+
+    private void btn_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhToanActionPerformed
+        thanhToan();
+    }//GEN-LAST:event_btn_thanhToanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,7 +316,7 @@ public class formThanhToan extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true,kh,tongTien,hoaDon);
+                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, kh, tongTien, hoaDon, list);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -250,6 +329,9 @@ public class formThanhToan extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDong;
+    private javax.swing.JButton btn_inHoaDon;
+    private javax.swing.JButton btn_thanhToan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -257,6 +339,7 @@ public class formThanhToan extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbl_banHang_maHoaDon;
     private javax.swing.JLabel lbl_banHang_maKhachHang;
     private javax.swing.JLabel lbl_banHang_ngayLap;
