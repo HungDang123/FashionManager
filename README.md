@@ -11,11 +11,11 @@
 <br/>
 <h3 align="center">Thành viên trong nhóm:</h3>
 <div align="center>
-- Đặng Thành Hùng (Trưởng nhóm)
+<p>- Đặng Thành Hùng (Trưởng nhóm)
 - Phan Huy Hoàng
 - Nguyễn Thị Trà My
 - Huỳnh Anh Quân
 - Hồ Minh Nhựt
-- Nguyễn Anh Tài
+- Nguyễn Anh Tài<p/>
 </div>
 
