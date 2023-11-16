@@ -10,12 +10,10 @@
 </div>
 <br/>
 <h3 align="center">Thành viên trong nhóm:</h3>
-<div align="center>
-<p>- Đặng Thành Hùng (Trưởng nhóm)
+- Đặng Thành Hùng (Trưởng nhóm)
 - Phan Huy Hoàng
 - Nguyễn Thị Trà My
 - Huỳnh Anh Quân
 - Hồ Minh Nhựt
-- Nguyễn Anh Tài<p/>
-</div>
+- Nguyễn Anh Tài
 
