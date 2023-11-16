@@ -1,6 +1,6 @@
-# PRO1041
+<h1 align="center">PRO1041<h1/>
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=4000&lines=Dự+án+1+🐧;+Quản+lý+cửa+hàng+thời+trang!;" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=Righteous&size=35&center=true&vCenter=true&width=500&height=70&duration=4000&lines=Dự+án+1;+Quản+lý+cửa+hàng+thời+trang!;" />
 </h1>
 <br/>
 <h2 align="center">⚒️Language⚒️</h2>
@@ -10,10 +10,9 @@
 </div>
 <br/>
 <h3 align="center">Thành viên trong nhóm:</h3>
-- Đặng Thành Hùng (Trưởng nhóm) <br/>
-- Phan Huy Hoàng<br/>
-- Nguyễn Thị Trà My<br/>
-- Huỳnh Anh Quân<br/>
-- Hồ Minh Nhựt<br/>
-- Nguyễn Anh Tài<br/>
-
+<p align="center">Đặng Thành Hùng (Trưởng nhóm)</p>
+<p align="center">Phan Huy Hoàng</p>
+<p align="center">Nguyễn Thị Trà My</p>
+<p align="center">Huỳnh Anh Quân</p>
+<p align="center">Hồ Minh Nhựt</p>
+<p align="center">Nguyễn Anh Tài</p>
