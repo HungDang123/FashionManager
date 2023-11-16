@@ -8,6 +8,7 @@
 <div align="center">
     <img src="https://skillicons.dev/icons?i=java" /><br>
 </div>
+<hr/>
 <br/>
 <h3 align="center">Thành viên trong nhóm:</h3>
 <p align="center">Đặng Thành Hùng (Trưởng nhóm)</p>
