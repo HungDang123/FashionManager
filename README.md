@@ -3,7 +3,7 @@
 </h1>
 <h2 align="center">⚒️Language⚒️</h2>
 <div align="center">
-    <img src="https://skillicons.dev/icons?i=java, html, css, js"/><br>
+    <img src="https://skillicons.dev/icons?i=java,mongodb, mysql"/><br>
 </div>
 <hr/>
 <br/>
