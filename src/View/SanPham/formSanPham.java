@@ -73,7 +73,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             
             @Override
             public void changedUpdate(DocumentEvent e) {
-                
+                System.out.println("");
             }
         });
 
