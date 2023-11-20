@@ -206,7 +206,7 @@ public class card extends javax.swing.JPanel {
             DialogHelper.alert("Xóa thành công");
             Main.sanPham.loadToData();
         } else {
-//            System.out.println(evt);
+            System.out.println(evt);
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
