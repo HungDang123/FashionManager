@@ -6,8 +6,9 @@ import com.pro1041.dao.DAO_sanPham;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import View.SanPham.them;
+import com.pro1041.util.DialogHelper;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,7 +20,7 @@ public class card extends javax.swing.JPanel {
     DAO_sanPham dao = new DAO_sanPham();
     String idSanPham;
     sanPham sp;
-    DecimalFormat df = new DecimalFormat("#.000 đồng");
+    DecimalFormat df = new DecimalFormat("#,###.### đồng");
 
     /**
      * Creates new form card
@@ -83,6 +84,7 @@ public class card extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblHinh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblHinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblHinh.setOpaque(true);
         lblHinh.setPreferredSize(new java.awt.Dimension(228, 194));
         lblHinh.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,11 +95,13 @@ public class card extends javax.swing.JPanel {
                 lblHinhMouseExited(evt);
             }
         });
-        jPanel1.add(lblHinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 240, -1));
+        jPanel1.add(lblHinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 230, -1));
 
+        lblTen.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
         lblTen.setText("Tên sản phẩm:");
         jPanel1.add(lblTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 218, -1, -1));
 
+        lblGia.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
         lblGia.setText("Giá:");
         jPanel1.add(lblGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 241, -1, -1));
 
@@ -108,6 +112,8 @@ public class card extends javax.swing.JPanel {
         });
 
         btnXoa.setBackground(new java.awt.Color(211, 37, 71));
+        btnXoa.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
+        btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
         btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -127,6 +133,7 @@ public class card extends javax.swing.JPanel {
         });
 
         btnSua.setBackground(new java.awt.Color(255, 209, 84));
+        btnSua.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
         btnSua.setText("Sửa");
         btnSua.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -143,6 +150,7 @@ public class card extends javax.swing.JPanel {
         });
 
         btnXem.setBackground(new java.awt.Color(123, 213, 0));
+        btnXem.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
         btnXem.setText("Xem");
         btnXem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,15 +174,15 @@ public class card extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnXoa)
-                    .addComponent(btnSua)
-                    .addComponent(btnXem))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnXem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 260, -1, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 260, -1, 60));
         jPanel1.add(lblTenSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 206, 118, -1));
         jPanel1.add(lblGiaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 212, -1, -1));
 
@@ -191,8 +199,15 @@ public class card extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        dao.delete(idSanPham);
-        Main.sanPham.loadToData();
+        int confirmResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        
+        if (confirmResult == JOptionPane.YES_OPTION) {
+            dao.delete(idSanPham);
+            DialogHelper.alert("Xóa thành công");
+            Main.sanPham.loadToData();
+        } else {
+            
+        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -252,7 +267,6 @@ public class card extends javax.swing.JPanel {
         them.setVisible(true);
         them.setLocationRelativeTo(null);
         them.setForm(sp);
-        // set disable
     }//GEN-LAST:event_btnXemActionPerformed
 
     private void lblHinhMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseExited

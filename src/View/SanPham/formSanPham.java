@@ -11,13 +11,20 @@ import Model.sanPham;
 import com.pro1041.dao.DAO_sanPham;
 import java.awt.Dimension;
 import View.SanPham.card;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author HUNG
  */
 public class formSanPham extends javax.swing.JInternalFrame {
+    
     String setDis = null;
     String hinhAnh = null;
     DAO_sanPham dao = new DAO_sanPham();
@@ -33,8 +40,69 @@ public class formSanPham extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         loadToData();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
-    }
 
+        // tìm sản phẩm theo tên
+        txtFindByName.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                findByName();
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                findByName();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                
+            }
+        });
+
+        // tìm sản phẩm theo mã
+        txtFindByID.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                findByID();
+            }
+            
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                findByID();
+            }
+            
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                
+            }
+        });
+
+        // sắp xếp
+        cboSapXep.addItem("Tất cả");
+        cboSapXep.addItem("Giá tăng dần");
+        cboSapXep.addItem("Giá giảm dần");
+        cboSapXep.addItem("Tên A -> Z");
+        cboSapXep.addItem("Tên Z -> A");
+        cboSapXep.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sapXepDuLieu();
+            }
+        });
+
+        // lọc
+        cboLoc.addItem("Tất cả");
+        cboLoc.addItem("Quần");
+        cboLoc.addItem("Áo");
+        cboLoc.addItem("Mũ");
+        cboLoc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                locDuLieu();
+            }
+        });
+    }
+    
     public void loadToData() {
         try {
             list = dao.getSelectAll();
@@ -43,7 +111,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             System.out.println(e.getMessage());
         }
     }
-
+    
     public void fillCard() {
         jPanel1.removeAll();
         for (sanPham sp : list) {
@@ -57,6 +125,107 @@ public class formSanPham extends javax.swing.JInternalFrame {
         }
         repaint();
 //        validate();
+    }
+
+    // tìm kiếm sản phẩm theo tên và mã sản phẩm
+    public void findByName() {
+        String searchTerm = txtFindByName.getText().trim().toLowerCase(); // getText FindByName
+        // Lọc list theo từ tìm kiếm
+        List<sanPham> filteredListName = list.stream()
+                .filter(sp -> sp.getTenSanPham().toLowerCase().contains(searchTerm))
+                .collect(Collectors.toList());
+        // Cập nhật lại danh sách
+        displayFilteredResults(filteredListName);
+    }
+    
+    private void displayFilteredResults(List<sanPham> filteredList) {
+        jPanel1.removeAll();
+        
+        for (sanPham sp : filteredList) {
+            card card = new card(sp);
+            jPanel1.add(card);
+            
+            if (filteredList.indexOf(sp) % 6 == 0) {
+                if (filteredList.indexOf(sp) != 0) {
+                    jPanel1.setPreferredSize(new Dimension(700, jPanel1.getPreferredSize().height + 350));
+                }
+            }
+        }
+        
+        repaint();
+        validate();
+    }
+    
+    public void findByID() {
+        String searchTerm = txtFindByID.getText().trim().toLowerCase(); // getText FindByID
+        // Lọc list theo từ tìm kiếm
+        List<sanPham> filteredListID = list.stream()
+                .filter(sp -> sp.getMaSanPham().toLowerCase().contains(searchTerm))
+                .collect(Collectors.toList());
+        // Cập nhật lại danh sách
+        displayFilteredResults(filteredListID);
+    }
+
+    // sắp xếp sản phẩm
+    public void sapXepDuLieu() {
+        String selectedOption = cboSapXep.getSelectedItem().toString();
+        
+        switch (selectedOption) {
+            case "Tất cả":
+                loadToData();
+                break;
+            case "Giá tăng dần":
+                // Sắp xếp theo giá tăng dần
+                Collections.sort(list, (sp1, sp2) -> Double.compare(sp1.getDonGia(), sp2.getDonGia()));
+                break;
+            case "Giá giảm dần":
+                // Sắp xếp theo giá giảm dần
+                Collections.sort(list, (sp1, sp2) -> Double.compare(sp2.getDonGia(), sp1.getDonGia()));
+                break;
+            case "Tên A -> Z":
+                // Sắp xếp theo tên A -> Z
+                Collections.sort(list, (sp1, sp2) -> sp2.getTenSanPham().compareToIgnoreCase(sp1.getTenSanPham()));
+                break;
+            case "Tên Z -> A":
+                // Sắp xếp theo tên Z -> A
+                Collections.sort(list, (sp1, sp2) -> sp1.getTenSanPham().compareToIgnoreCase(sp2.getTenSanPham()));
+                break;
+            default:
+                break;
+        }
+//        fillCard();
+        displayFilteredResults(list);
+    }
+
+    // lọc sản phẩm
+    public void locDuLieu() {
+        String selectedOption2 = cboLoc.getSelectedItem().toString();
+        
+        List<sanPham> filteredList = new ArrayList<>();
+        
+        switch (selectedOption2) {
+            case "Tất cả":
+                loadToData();
+                return;
+            case "Quần":
+                // Lọc và chỉ hiển thị sản phẩm có chứa chữ "quần" trong tên
+                List<sanPham> filteredListQuan = list.stream()
+                        .filter(sp -> sp.getTenSanPham().toLowerCase().contains("quần"))
+                        .collect(Collectors.toList());
+                displayFilteredResults(filteredListQuan);
+                return;
+            case "Áo":
+                // Lọc và chỉ hiển thị sản phẩm có chứa chữ "quần" trong tên
+                List<sanPham> filteredListAo = list.stream()
+                        .filter(sp -> sp.getTenSanPham().toLowerCase().contains("áo"))
+                        .collect(Collectors.toList());
+                displayFilteredResults(filteredListAo);
+                return;
+            default:
+                break;
+        }
+//        fillCard();
+        displayFilteredResults(filteredList);
     }
 
     /**
@@ -91,10 +260,6 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Lọc");
 
-        cboLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quần", "Áo", "Váy", "Phụ kiện" }));
-
-        cboSapXep.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tăng dần giá", "Giảm dần giá", "Tên A -> Z", "Tên Z -> A" }));
-
         jLabel2.setText("Sắp xếp");
 
         btnThem.setBackground(new java.awt.Color(123, 213, 0));
@@ -108,7 +273,19 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Tìm theo tên");
 
+        txtFindByName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindByNameActionPerformed(evt);
+            }
+        });
+
         jLabel6.setText("Tìm theo mã");
+
+        txtFindByID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindByIDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -192,8 +369,16 @@ public class formSanPham extends javax.swing.JInternalFrame {
         them themSP = new them(setDis);
         themSP.setVisible(true);
         themSP.setLocationRelativeTo(null);
-        
+
     }//GEN-LAST:event_btnThemActionPerformed
+
+    private void txtFindByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindByNameActionPerformed
+        findByName();
+    }//GEN-LAST:event_txtFindByNameActionPerformed
+
+    private void txtFindByIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindByIDActionPerformed
+        findByID();
+    }//GEN-LAST:event_txtFindByIDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -132,12 +132,7 @@
             <Component class="javax.swing.JComboBox" name="cboLoc">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Qu&#x1ea7;n"/>
-                    <StringItem index="1" value="&#xc1;o"/>
-                    <StringItem index="2" value="V&#xe1;y"/>
-                    <StringItem index="3" value="Ph&#x1ee5; ki&#x1ec7;n"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -147,12 +142,7 @@
             <Component class="javax.swing.JComboBox" name="cboSapXep">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="T&#x103;ng d&#x1ea7;n gi&#xe1;"/>
-                    <StringItem index="1" value="Gi&#x1ea3;m d&#x1ea7;n gi&#xe1;"/>
-                    <StringItem index="2" value="T&#xea;n A -&gt; Z"/>
-                    <StringItem index="3" value="T&#xea;n Z -&gt; A"/>
-                  </StringArray>
+                  <StringArray count="0"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -184,6 +174,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFindByName">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFindByNameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
@@ -191,6 +184,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtFindByID">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFindByIDActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
