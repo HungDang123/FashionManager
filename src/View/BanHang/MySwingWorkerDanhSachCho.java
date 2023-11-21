@@ -4,14 +4,18 @@
  */
 package View.BanHang;
 
+import Model.hoaDonContainer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 public class MySwingWorkerDanhSachCho extends SwingWorker<Void, Void> {
 
     private JInternalFrame internalFrame;
-
-    public MySwingWorkerDanhSachCho(JInternalFrame internalFrame) {
+    private List<hoaDonContainer> listKh;
+    public MySwingWorkerDanhSachCho(JInternalFrame internalFrame,List<hoaDonContainer> listKh) {
         this.internalFrame = internalFrame;
+        this.listKh = listKh;
     }
 
     @Override
@@ -21,7 +25,7 @@ public class MySwingWorkerDanhSachCho extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                formThemKhachHang dialog = new formThemKhachHang(new javax.swing.JFrame(), true);
+                formDanhSachCho dialog = new formDanhSachCho(new javax.swing.JFrame(), true,listKh);
                 dialog.setVisible(true);
             }
         });

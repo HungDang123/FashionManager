@@ -5,19 +5,18 @@
 package View.BanHang;
 
 import Model.hoaDon;
-import com.pro1041.util.ShareHelper;
 import java.util.List;
 import javax.swing.*;
 
-public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
+public class MySwingWorkerBill extends SwingWorker<Void, Void> {
 
-    private static float tongTien;
-    private static hoaDon hoaDon;
-    private static List<Object[]> list;
-    private JInternalFrame internalFrame;
+    private JDialog dialog;
+    public static float tongTien;
+    public static hoaDon hoaDon;
+    public static List<Object[]> list;
 
-    public MySwingWorkerThanhToan(JInternalFrame internalFrame, Float tongTien, hoaDon hoaDon,List<Object[]> list) {
-        this.internalFrame = internalFrame;
+    public MySwingWorkerBill(JDialog dialog, float tongTien, hoaDon hoaDon, List<Object[]> list) {
+        this.dialog = dialog;
         this.hoaDon = hoaDon;
         this.tongTien = tongTien;
         this.list = list;
@@ -30,7 +29,7 @@ public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true,tongTien,hoaDon,list);
+                Bill dialog = new Bill(new javax.swing.JFrame(), true, tongTien, hoaDon, list);
                 dialog.setVisible(true);
             }
         });
@@ -41,8 +40,9 @@ public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
     protected void done() {
         // Xử lý khi công việc trong background thread hoàn thành
         // Đảm bảo rằng JInternalFrame không bị mất
-        if (internalFrame != null) {
-            internalFrame.toFront();
+        if (dialog != null) {
+            dialog.toFront();
+            System.out.println("");
         }
     }
 }

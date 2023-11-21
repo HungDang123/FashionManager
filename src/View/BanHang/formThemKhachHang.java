@@ -4,6 +4,7 @@
  */
 package View.BanHang;
 
+import Model.hoaDonContainer;
 import Model.khachHang;
 import com.pro1041.dao.DAO_banHang;
 import com.pro1041.util.DateHelper;
@@ -13,6 +14,8 @@ import com.pro1041.util.ShareHelper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

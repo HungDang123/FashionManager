@@ -4,23 +4,21 @@
  */
 package View.BanHang;
 
+import Model.chiTietHoaDon;
 import Model.hoaDon;
-import com.pro1041.util.ShareHelper;
 import java.util.List;
 import javax.swing.*;
 
-public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
+public class MySwingWorkerBill1 extends SwingWorker<Void, Void> {
 
-    private static float tongTien;
-    private static hoaDon hoaDon;
-    private static List<Object[]> list;
     private JInternalFrame internalFrame;
+    private static chiTietHoaDon chiTiet;
+    private static List<Object[]> listHD;
 
-    public MySwingWorkerThanhToan(JInternalFrame internalFrame, Float tongTien, hoaDon hoaDon,List<Object[]> list) {
+    public MySwingWorkerBill1(JInternalFrame internalFrame,chiTietHoaDon chiTiet, List<Object[]> listHD) {
         this.internalFrame = internalFrame;
-        this.hoaDon = hoaDon;
-        this.tongTien = tongTien;
-        this.list = list;
+        this.chiTiet = chiTiet;
+        this.listHD = listHD;
     }
 
     @Override
@@ -30,7 +28,7 @@ public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true,tongTien,hoaDon,list);
+                Bill1 dialog = new Bill1(new javax.swing.JFrame(), true, chiTiet,listHD);
                 dialog.setVisible(true);
             }
         });
@@ -43,6 +41,7 @@ public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
         // Đảm bảo rằng JInternalFrame không bị mất
         if (internalFrame != null) {
             internalFrame.toFront();
+            System.out.println("");
         }
     }
 }

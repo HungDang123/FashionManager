@@ -239,6 +239,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="In h&#xf3;a &#x111;&#x1a1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inHoaDonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

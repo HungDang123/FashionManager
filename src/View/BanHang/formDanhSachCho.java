@@ -4,18 +4,120 @@
  */
 package View.BanHang;
 
+import Model.hoaDon;
+import Model.hoaDonContainer;
+import Model.sanPham;
+import com.pro1041.dao.DAO_banHang;
+import com.pro1041.util.DateHelper;
+import com.pro1041.util.DialogHelper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.sql.Date;
+
 /**
  *
  * @author HUNG
  */
 public class formDanhSachCho extends javax.swing.JDialog {
 
+    private static List<hoaDonContainer> listKh;
+    DefaultTableModel model = new DefaultTableModel();
+    int index = 0;
+    DAO_banHang dao = new DAO_banHang();
+    private TableRowSorter<DefaultTableModel> rowSorter;
+    private List<Object> list = new ArrayList<>();
+
     /**
      * Creates new form formDanhSachCho
      */
-    public formDanhSachCho(java.awt.Frame parent, boolean modal) {
+    public formDanhSachCho(java.awt.Frame parent, boolean modal, List<hoaDonContainer> listKh) {
         super(parent, modal);
+        this.listKh = listKh;
         initComponents();
+        setLocationRelativeTo(null);
+        initTable();
+        fillToTable();
+    }
+
+    public void initTable() {
+        String[] cols = new String[]{"Mã hóa đơn", "Tên khách hàng", "Số điện thoại", "Tổng tiền"};
+        model.setColumnIdentifiers(cols);
+        tbl_banHang_danhSachCho.setModel(model);
+    }
+
+    public void fillToTable() {
+        model.setRowCount(0);
+        for (hoaDonContainer h : listKh) {
+            float tongTien = 0.0f;
+            for (int i = 0; i < h.getList().size(); i++) {
+                Object[] objArray = (Object[]) h.getList().get(i);
+                tongTien += (Float) objArray[7] + (Float) objArray[6];
+            }
+            model.addRow(new Object[]{h.getHd().getMaHoaDon(), h.getHd().getMaKhachHang().getHoVaTen(),
+                h.getHd().getMaKhachHang().getSoDienThoai(), tongTien});
+        }
+    }
+
+    public void delete() {
+        index = tbl_banHang_danhSachCho.getSelectedRow();
+        dao.deleteHD(listKh.get(index).getHd().getMaHoaDon());
+        listKh.remove(index);
+        fillToTable();
+    }
+
+    public void deleteAll() {
+        for (int i = 0; i < listKh.size(); i++) {
+            dao.deleteHD(listKh.get(i).getHd().getMaHoaDon());
+        }
+        listKh.removeAll(listKh);
+        fillToTable();
+    }
+
+    public void search() {
+        String find = txt_banHang_find.getText();
+        rowSorter = new TableRowSorter<>(model);
+        tbl_banHang_danhSachCho.setRowSorter(rowSorter);
+        if (find.isEmpty()) {
+            rowSorter.setRowFilter(null);
+        } else {
+            RowFilter<DefaultTableModel, Object> rowFiler = RowFilter.regexFilter(find, 0);
+            rowSorter.setRowFilter(rowFiler);
+        }
+    }
+
+    public void thanhToan() {
+        try {
+            index = tbl_banHang_danhSachCho.getSelectedRow();
+            for (int i = 0; i < listKh.get(index).getList().size(); i++) {
+                Object[] objArray = (Object[]) listKh.get(index).getList().get(i);
+                if (objArray.length >= 7) {
+                    String maCthd = "CTHD" + System.currentTimeMillis();
+                    String maSp = ((String) objArray[0]);
+                    System.out.println(objArray[5]);
+                    int soLuong = Integer.parseInt(String.valueOf(objArray[5]));
+                    float tongTien = (Float) objArray[6] + (Float) objArray[7];
+                    java.sql.Date ngayLapHD = new java.sql.Date(DateHelper.now().getTime());
+                    String maHd = listKh.get(index).getHd().getMaHoaDon();
+                    String kichThuoc = (String) objArray[4];
+                    Object obj = new Object[]{maCthd, maSp, maHd, soLuong, tongTien, ngayLapHD, kichThuoc};
+                    list.clear();
+                    list.add(obj);
+                    dao.insertCTHD(list);
+                } else {
+                    System.out.println("Mảng không đủ chiều dài");
+                    return;
+                }
+            }
+            listKh.remove(index);
+            DialogHelper.alert("Thanh toán thành công");
+            fillToTable();
+        } catch (Exception e) {
+            System.out.println("Thanh toán: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -44,6 +146,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Chờ thanh toán");
 
+        tbl_banHang_danhSachCho.setFont(new java.awt.Font("Source Code Pro", 1, 14)); // NOI18N
         tbl_banHang_danhSachCho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -55,19 +158,45 @@ public class formDanhSachCho extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_banHang_danhSachCho.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_banHang_danhSachChoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_banHang_danhSachCho);
 
         jLabel2.setText("Tìm kiếm");
 
-        jPanel1.setLayout(new java.awt.GridLayout());
+        txt_banHang_find.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txt_banHang_findCaretUpdate(evt);
+            }
+        });
+
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         btn_banHang_thanhToan.setText("Thanh toán");
+        btn_banHang_thanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_banHang_thanhToanActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_banHang_thanhToan);
 
         btn_banHang_xoa.setText("Xóa");
+        btn_banHang_xoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_banHang_xoaActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_banHang_xoa);
 
         btn_banHang_xoaTatCa.setText("Xóa tất cả");
+        btn_banHang_xoaTatCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_banHang_xoaTatCaActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_banHang_xoaTatCa);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -76,10 +205,6 @@ public class formDanhSachCho extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -88,9 +213,13 @@ public class formDanhSachCho extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 114, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(100, 100, 100))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(180, 180, 180)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(180, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,6 +239,26 @@ public class formDanhSachCho extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tbl_banHang_danhSachChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_banHang_danhSachChoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_banHang_danhSachChoMouseClicked
+
+    private void btn_banHang_xoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_xoaActionPerformed
+        delete();
+    }//GEN-LAST:event_btn_banHang_xoaActionPerformed
+
+    private void btn_banHang_xoaTatCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_xoaTatCaActionPerformed
+        deleteAll();
+    }//GEN-LAST:event_btn_banHang_xoaTatCaActionPerformed
+
+    private void txt_banHang_findCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_banHang_findCaretUpdate
+        search();
+    }//GEN-LAST:event_txt_banHang_findCaretUpdate
+
+    private void btn_banHang_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_thanhToanActionPerformed
+        thanhToan();
+    }//GEN-LAST:event_btn_banHang_thanhToanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,7 +290,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                formDanhSachCho dialog = new formDanhSachCho(new javax.swing.JFrame(), true);
+                formDanhSachCho dialog = new formDanhSachCho(new javax.swing.JFrame(), true, listKh);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

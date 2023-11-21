@@ -4,6 +4,7 @@
  */
 package View.BanHang;
 
+import Model.hoaDon;
 import Model.khachHang;
 import com.pro1041.dao.DAO_banHang;
 import com.pro1041.util.DateHelper;
@@ -20,18 +21,16 @@ import com.pro1041.dao.DAO_banHang;
  */
 public class formThanhToan extends javax.swing.JDialog {
 
-    public static khachHang kh;
     public static float tongTien;
-    public static String hoaDon;
+    public static hoaDon hoaDon;
     public static List<Object[]> list;
     public static List<Object> objects = new ArrayList<>();
 
     /**
      * Creates new form formThanhToan_1
      */
-    public formThanhToan(java.awt.Frame parent, boolean modal, khachHang kh, float tongTien, String hoaDon, List<Object[]> list) {
+    public formThanhToan(java.awt.Frame parent, boolean modal, float tongTien, hoaDon hoaDon, List<Object[]> list) {
         super(parent, modal);
-        this.kh = kh;
         this.hoaDon = hoaDon;
         this.tongTien = tongTien;
         this.list = list;
@@ -41,9 +40,9 @@ public class formThanhToan extends javax.swing.JDialog {
     }
 
     public void hienThiThanhToan() {
-        lbl_banHang_maHoaDon.setText(hoaDon);
-        lbl_banHang_maKhachHang.setText(kh.getMaKhachHang());
-        lbl_banHang_tenKh.setText(kh.getHoVaTen());
+        lbl_banHang_maHoaDon.setText(hoaDon.getMaHoaDon());
+        lbl_banHang_maKhachHang.setText(hoaDon.getMaKhachHang().getMaKhachHang());
+        lbl_banHang_tenKh.setText(hoaDon.getMaKhachHang().getHoVaTen());
         lbl_banHang_tongThanhToan.setText(String.valueOf(tongTien) + " VNĐ");
     }
 
@@ -54,21 +53,32 @@ public class formThanhToan extends javax.swing.JDialog {
                 String maCthd = "CTHD" + System.currentTimeMillis();
                 String maSp = (String) obj[0];
                 System.out.println("Mã sp :" + maSp);
-                String maHd = hoaDon;
+                String maHd = hoaDon.getMaHoaDon();
                 int soLuong = (Integer) obj[5];
                 System.out.println("Số lượng: " + soLuong);
-                Float tongTien = (Float) obj[7];
+                Float tongTien = (Float) obj[7] + (Float)obj[6];
                 System.out.println("Tiền: " + tongTien);
                 String dateStr = DateHelper.toString(DateHelper.now(), "yyyy-MM-dd");
                 Date date = new Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime());
+                String kichThuoc = (String) obj[4];
                 objects.clear();
-                objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date});
+                objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date, kichThuoc});
                 dao.insertCTHD(objects);
                 System.out.println("Đã thêm thành công");
                 System.out.println();
             }
+            DialogHelper.alert("Đã thanh toán thành công!");
         } catch (Exception e) {
             System.out.println("ThanhToan");
+        }
+    }
+
+    public void formBill() {
+        try {
+            MySwingWorkerBill worker = new MySwingWorkerBill(this, tongTien, hoaDon, list);
+            worker.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -189,6 +199,11 @@ public class formThanhToan extends javax.swing.JDialog {
         jPanel2.add(btn_thanhToan);
 
         btn_inHoaDon.setText("In hóa đơn");
+        btn_inHoaDon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inHoaDonActionPerformed(evt);
+            }
+        });
         jPanel2.add(btn_inHoaDon);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,7 +298,13 @@ public class formThanhToan extends javax.swing.JDialog {
 
     private void btn_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhToanActionPerformed
         thanhToan();
+        dispose();
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btn_thanhToanActionPerformed
+
+    private void btn_inHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inHoaDonActionPerformed
+        formBill();
+    }//GEN-LAST:event_btn_inHoaDonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,7 +337,7 @@ public class formThanhToan extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, kh, tongTien, hoaDon, list);
+                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, tongTien, hoaDon, list);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
