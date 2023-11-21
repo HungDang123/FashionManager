@@ -2,7 +2,7 @@ package nhanVien.View;
 
 import Model.nhanVien;
 import nhanVien.Controller.Controller_nhanVien_Crud;
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.nhanVien_data_DAO;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;

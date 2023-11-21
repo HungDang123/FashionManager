@@ -5,9 +5,9 @@
 package nhanVien.View;
 
 import Model.nhanVien;
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.nhanVien_data_DAO;
 import com.pro1041.util.DateHelper;
-import nhanVien.Data.checkNhanVien;
+import nhanVien.data.checkNhanVien;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
@@ -119,10 +119,10 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         edit_cbb_chucVu = new javax.swing.JComboBox<>();
         edit_rdo_Male = new javax.swing.JRadioButton();
         edit_rdo_feMale = new javax.swing.JRadioButton();
-        edit_date_Date = new com.pro1041.datechooser.DateTextField();
         edit_btn_update = new javax.swing.JButton();
         edit_btn_Image = new javax.swing.JButton();
         edit_erorMs = new javax.swing.JLabel();
+        edit_date_Date = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,17 +163,6 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
 
         gioiTinh_group.add(edit_rdo_feMale);
         edit_rdo_feMale.setText("Nữ");
-
-        edit_date_Date.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                edit_date_DateMouseClicked(evt);
-            }
-        });
-        edit_date_Date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edit_date_DateActionPerformed(evt);
-            }
-        });
 
         edit_btn_update.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         edit_btn_update.setText("Cập nhật");
@@ -231,7 +220,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                                         .addComponent(edit_rdo_feMale, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addGap(3, 3, 3)
                                         .addComponent(edit_erorMs)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(40, 40, 40))))
@@ -243,7 +232,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edit_btn_Image, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(edit_txt_maNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -263,11 +252,13 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edit_erorMs))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(edit_erorMs)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(edit_btn_update)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -283,10 +274,6 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         this.dispose();
       }
     }//GEN-LAST:event_edit_btn_updateActionPerformed
-
-    private void edit_date_DateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_date_DateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit_date_DateActionPerformed
 
     private void edit_btn_ImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btn_ImageActionPerformed
         // TODO add your handling code here:
@@ -309,11 +296,6 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         edit_txt_hovaTen.setBorder(new LineBorder(Color.WHITE));
     }//GEN-LAST:event_edit_txt_hovaTenActionPerformed
 
-    private void edit_date_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit_date_DateMouseClicked
-        // TODO add your handling code here:
-        edit_erorMs.setText("");
-    }//GEN-LAST:event_edit_date_DateMouseClicked
-
     private void edit_txt_hovaTenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit_txt_hovaTenMouseClicked
         // TODO add your handling code here:
         edit_txt_hovaTen.setText("");
@@ -328,7 +310,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
     private javax.swing.JButton edit_btn_Image;
     private javax.swing.JButton edit_btn_update;
     private javax.swing.JComboBox<String> edit_cbb_chucVu;
-    private com.pro1041.datechooser.DateTextField edit_date_Date;
+    private com.toedter.calendar.JDateChooser edit_date_Date;
     private javax.swing.JLabel edit_erorMs;
     private javax.swing.JRadioButton edit_rdo_Male;
     private javax.swing.JRadioButton edit_rdo_feMale;

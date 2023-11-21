@@ -10,7 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Panel;
 import javax.swing.JPanel;
 import Model.nhanVien;
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.nhanVien_data_DAO;
 import com.pro1041.datechooser.Button;
 import java.awt.event.ActionListener;
 import java.util.EventListener;

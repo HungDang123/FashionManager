@@ -4,7 +4,7 @@
  */
 package nhanVien.Controller;
 
-import nhanVien.Data.DAO_Security;
+import nhanVien.data.DAO_Security;
 import nhanVien.View.NhanVienCard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

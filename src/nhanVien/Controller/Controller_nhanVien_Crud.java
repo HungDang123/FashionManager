@@ -4,7 +4,7 @@
  */
 package nhanVien.Controller;
 
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.nhanVien_data_DAO;
 import nhanVien.View.NhanVienCard;
 import nhanVien.View.nhanVien_Form_Edit;
 import nhanVien.View.nhanVien_Form_Security;

@@ -5,11 +5,13 @@
 package nhanVien.View;
 
 import Model.nhanVien;
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.nhanVien_data_DAO;
 import com.pro1041.util.DateHelper;
-import nhanVien.Data.checkNhanVien;
+import nhanVien.data.checkNhanVien;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.ActionListener;
+import java.net.URI;
 import java.text.ParseException;
 
 import java.util.Date;
@@ -33,8 +35,9 @@ import javax.swing.border.LineBorder;
  */
 public class nhanVien_Form_Add extends javax.swing.JFrame {
 //    nhanVien user = new ShareHelper().getAccount();
+
     private nhanVien_InternalForm form;
-    
+
     static boolean isTrue = true;
     static String MessageError = "";
     nhanVien nvInsert = new nhanVien();
@@ -50,17 +53,15 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         nhanVien_lb_nameManager.setText(user.getHoVaTen());
 
         nhanVien_txt_maNV.setText(generateRandomString());
-        
+
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        nhanVien_txt_Date.setDate(new Date());
     }
-    
+
     public void update() {
         form.update();
     }
-    
-   
-    
 
     public nhanVien Nv_getForm() {
         String maNhanVien = nhanVien_txt_maNV.getText();
@@ -68,36 +69,26 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         boolean chucVu = nhanVien_cbb_chucVu.getSelectedItem().toString().equalsIgnoreCase("Quản lý") ? true : false;
         boolean gioiTinh = nhanVien_rdo_Male.isSelected() ? true : false;
 
-        try {
-            String dateString = nhanVien_txt_Date.getText();
-            Date parseDate = DateHelper.toDate(dateString, "MM/dd/yyyy");
-            java.sql.Date ngaySinh = new java.sql.Date(parseDate.getTime());
-            String canCuocCongDan = nhanVien_txt_CCCD.getText();
-            nvInsert = new nhanVien(maNhanVien, hovaTen, null, chucVu, gioiTinh, ngaySinh,null, canCuocCongDan, null, null);
-        } catch (ParseException ex) {
-            Logger.getLogger(nhanVien_Form_Add.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Date dateString = nhanVien_txt_Date.getDate();
+        java.sql.Date ngaySinh = new java.sql.Date(dateString.getTime());
+        String canCuocCongDan = nhanVien_txt_CCCD.getText();
+        nvInsert = new nhanVien(maNhanVien, hovaTen, null, chucVu, gioiTinh, ngaySinh, null, canCuocCongDan, null, null);
         return null;
     }
-    
-    
-  
 
     public void checkForm() {
         Nv_getForm();
         if (nhanVien_txt_hovaTen.getText().trim().isEmpty()) {
             nhanVien_txt_hovaTen.setBorder(new LineBorder(Color.red));
             isTrue = false;
-        }
-        else if (!checkNhanVien.kiemTraHoTen(nhanVien_txt_hovaTen.getText())) {
+        } else if (!checkNhanVien.kiemTraHoTen(nhanVien_txt_hovaTen.getText())) {
             nhanVien_txt_hovaTen.setText("$Họ và tên không đúng định dạng!");
             isTrue = false;
         };
         if (nhanVien_txt_CCCD.getText().trim().isEmpty()) {
             nhanVien_txt_CCCD.setBorder(new LineBorder(Color.red));
             isTrue = false;
-        }
-        else if (!checkNhanVien.kiemTraDinhDangCCCD(nhanVien_txt_CCCD.getText())) {
+        } else if (!checkNhanVien.kiemTraDinhDangCCCD(nhanVien_txt_CCCD.getText())) {
             nhanVien_txt_CCCD.setText("$Căn cước công dân không đúng định dạng");
             isTrue = false;
         }
@@ -110,8 +101,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             isTrue = false;
         }
     }
-    
-    
+
     public static String generateRandomString() {
         String letters = "abcdefghijklmnopqrstuvwxyz";
         String numbers = "0123456789";
@@ -157,7 +147,6 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        nhanVien_txt_Date = new com.pro1041.datechooser.DateTextField();
         nhanVien_rdo_Male = new javax.swing.JRadioButton();
         nhanVien_txt_Female = new javax.swing.JRadioButton();
         nhanVien_cbb_chucVu = new javax.swing.JComboBox<>();
@@ -170,6 +159,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         nhanVien_txt_hovaTen = new javax.swing.JTextField();
         nhanVien_txt_CCCD = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        nhanVien_txt_Date = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -210,17 +200,6 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel8.setText("Ngày sinh");
 
-        nhanVien_txt_Date.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nhanVien_txt_DateMouseClicked(evt);
-            }
-        });
-        nhanVien_txt_Date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nhanVien_txt_DateActionPerformed(evt);
-            }
-        });
-
         nhanVien_group_gioiTinh.add(nhanVien_rdo_Male);
         nhanVien_rdo_Male.setSelected(true);
         nhanVien_rdo_Male.setText("Nam");
@@ -235,11 +214,6 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
 
         nhanVien_ck_agree.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
         nhanVien_ck_agree.setText("Đồng ý với các điều khoản và quy định của chúng tôi");
-        nhanVien_ck_agree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                nhanVien_ck_agreeMouseClicked(evt);
-            }
-        });
         nhanVien_ck_agree.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nhanVien_ck_agreeActionPerformed(evt);
@@ -299,10 +273,8 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nhanVien_ck_agree)
-                    .addComponent(nhanVien_btn_Add))
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addComponent(nhanVien_btn_Add)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -335,8 +307,8 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
+                                                .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(errorMessage_ngaySinh))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(nhanVien_rdo_Male, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,10 +327,13 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                 .addComponent(nhanVien_lb_nameManager))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(errorMessage_agree)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nhanVien_ck_agree)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(errorMessage_agree)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 197, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -376,37 +351,41 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(nhanVien_txt_maNV))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nhanVien_txt_hovaTen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(nhanVien_txt_maNV))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(nhanVien_rdo_Male)
-                            .addComponent(nhanVien_txt_Female)))
+                            .addComponent(nhanVien_txt_hovaTen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(nhanVien_rdo_Male)
+                                    .addComponent(nhanVien_txt_Female)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel7)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(errorMessage_ngaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
-                    .addComponent(errorMessage_ngaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
                 .addComponent(nhanVien_ck_agree)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
@@ -422,31 +401,28 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nhanVien_txt_maNVActionPerformed
 
-    private void nhanVien_txt_DateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_txt_DateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nhanVien_txt_DateActionPerformed
-
     private void nhanVien_btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_btn_AddActionPerformed
         // TODO add your handling code here:
         isTrue = true;
         checkForm();
+//        try {
+//            URI url = new URI("https://startbootstrap.com/previews/sb-admin-2");
+//            Desktop.getDesktop().browse(url);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         if (isTrue) {
             JOptionPane.showMessageDialog(this, "Tài khoản đã được tạo: \n mật khẩu của bạn là 1 \nVui lòng vào đổi lại mật khẩu để tránh trường hợp xấu");
             nvInsert.setMatKhau("1");
             nvDao.insert(nvInsert);
             update();
         }
-        
+
     }//GEN-LAST:event_nhanVien_btn_AddActionPerformed
 
     private void nhanVien_ck_agreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_ck_agreeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nhanVien_ck_agreeActionPerformed
-
-    private void nhanVien_txt_DateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nhanVien_txt_DateMouseClicked
-        // TODO add your handling code here:
-        errorMessage_ngaySinh.setText("");
-    }//GEN-LAST:event_nhanVien_txt_DateMouseClicked
 
     private void nhanVien_txt_hovaTenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nhanVien_txt_hovaTenMouseClicked
         // TODO add your handling code here:
@@ -466,12 +442,12 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
 
     private void nhanVien_txt_CCCDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_txt_CCCDActionPerformed
         // TODO add your handling code here:
-                nhanVien_txt_CCCD.setBorder(new LineBorder(Color.white));
+        nhanVien_txt_CCCD.setBorder(new LineBorder(Color.white));
     }//GEN-LAST:event_nhanVien_txt_CCCDActionPerformed
 
     private void nhanVien_txt_hovaTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhanVien_txt_hovaTenActionPerformed
         // TODO add your handling code here:
-         if (nhanVien_txt_hovaTen.getText().startsWith("$")) {
+        if (nhanVien_txt_hovaTen.getText().startsWith("$")) {
             nhanVien_txt_hovaTen.setText("");
         }
         nhanVien_txt_hovaTen.setBorder(new LineBorder(Color.white));
@@ -517,7 +493,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
     private javax.swing.JLabel nhanVien_lb_nameManager;
     private javax.swing.JRadioButton nhanVien_rdo_Male;
     private javax.swing.JTextField nhanVien_txt_CCCD;
-    private com.pro1041.datechooser.DateTextField nhanVien_txt_Date;
+    private com.toedter.calendar.JDateChooser nhanVien_txt_Date;
     private javax.swing.JRadioButton nhanVien_txt_Female;
     private javax.swing.JTextField nhanVien_txt_hovaTen;
     private javax.swing.JTextField nhanVien_txt_maNV;

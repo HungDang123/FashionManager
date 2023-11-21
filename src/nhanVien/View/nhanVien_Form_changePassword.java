@@ -4,8 +4,8 @@
  */
 package nhanVien.View;
 
-import nhanVien.Data.checkNhanVien;
-import nhanVien.Data.nhanVien_data_DAO;
+import nhanVien.data.checkNhanVien;
+import nhanVien.data.nhanVien_data_DAO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
