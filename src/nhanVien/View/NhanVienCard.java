@@ -110,7 +110,7 @@ public class NhanVienCard extends JPanel {
 //        pnMidder.add(labelMatKhau, midderConstraints);
 
         this.add(pnMidder, BorderLayout.CENTER);
-        this.setPreferredSize(new Dimension(370, 320));
+        this.setPreferredSize(new Dimension(300, 340));
 
         // Footer
         JPanel pnFooter = new JPanel();

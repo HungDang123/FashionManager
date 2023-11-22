@@ -28,7 +28,9 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
     public nhanVien_InternalForm() {
         initComponents();
         System.out.println("Select All");
-//        setSize(1000, 700);
+        showList_nv();
+        setSize(1000, 700);
+        nhanVien_showList_container.setLayout(new GridLayout(0, 3));
     }
 
     public void update() {
@@ -390,7 +392,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        nhanVien_showList_container.setLayout(new java.awt.GridLayout(0, 4));
+        nhanVien_showList_container.setLayout(new java.awt.GridLayout(0, 3));
 
         nhanVien_Item9.setBackground(new java.awt.Color(255, 255, 102));
 

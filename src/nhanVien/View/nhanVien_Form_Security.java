@@ -55,14 +55,14 @@ public class nhanVien_Form_Security extends javax.swing.JFrame {
         setAction_remove();
         levelSecurity();
         
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {                    
-                    levelSecurity();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {                    
+//                    levelSecurity();
+//                }
+//            }
+//        }).start();
     }
 
     public void setAction_change() {
