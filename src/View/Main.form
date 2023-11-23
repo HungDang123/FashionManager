@@ -269,6 +269,9 @@
               <Dimension value="[200, 50]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_nhanVienActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_khachHang">
           <Properties>

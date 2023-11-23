@@ -6,6 +6,12 @@ package View.BanHang;
 
 import Model.hoaDon;
 import Model.khachHang;
+import static View.BanHang.QRCodeGenerator.generateQR;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.pro1041.dao.DAO_banHang;
 import com.pro1041.util.DateHelper;
 import com.pro1041.util.DialogHelper;
@@ -14,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
 import com.pro1041.dao.DAO_banHang;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 /**
  *
@@ -25,6 +33,7 @@ public class formThanhToan extends javax.swing.JDialog {
     public static hoaDon hoaDon;
     public static List<Object[]> list;
     public static List<Object> objects = new ArrayList<>();
+    public static String path;
 
     /**
      * Creates new form formThanhToan_1
@@ -56,7 +65,7 @@ public class formThanhToan extends javax.swing.JDialog {
                 String maHd = hoaDon.getMaHoaDon();
                 int soLuong = (Integer) obj[5];
                 System.out.println("Số lượng: " + soLuong);
-                Float tongTien = (Float) obj[7] + (Float)obj[6];
+                Float tongTien = (Float) obj[7] + (Float) obj[6];
                 System.out.println("Tiền: " + tongTien);
                 String dateStr = DateHelper.toString(DateHelper.now(), "yyyy-MM-dd");
                 Date date = new Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime());
@@ -79,6 +88,30 @@ public class formThanhToan extends javax.swing.JDialog {
             worker.execute();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void generateQR(String url, int width, int height, String filePath) throws WriterException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(url, BarcodeFormat.QR_CODE, width, height);
+        Path path = FileSystems.getDefault().getPath(filePath);
+
+        try {
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void scanQR() {
+        String url = "http://hungdang1041.byethost7.com/?i=1"; // Địa chỉ URL của trang web
+        path = "D:/PRO1041/QR.png"; // Đường dẫn tập tin ảnh QR
+
+        try {
+            generateQR(url, 1250, 1250, path);
+            System.out.println("QR code generated successfully.");
+        } catch (WriterException e) {
+            System.out.println("QR code generation failed. Error: " + e.getMessage());
         }
     }
 
@@ -108,6 +141,7 @@ public class formThanhToan extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         btnDong = new javax.swing.JButton();
         btn_thanhToan = new javax.swing.JButton();
+        btnQR = new javax.swing.JButton();
         btn_inHoaDon = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -135,7 +169,7 @@ public class formThanhToan extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_banHang_ngayLap)
@@ -198,6 +232,14 @@ public class formThanhToan extends javax.swing.JDialog {
         });
         jPanel2.add(btn_thanhToan);
 
+        btnQR.setText("Quét mã QR");
+        btnQR.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnQRMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btnQR);
+
         btn_inHoaDon.setText("In hóa đơn");
         btn_inHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,28 +256,30 @@ public class formThanhToan extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
-                        .addComponent(lbl_banHang_maHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(lbl_banHang_maHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(39, 39, 39)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lbl_banHang_tienTraKhach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_banHang_tongThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_banHang_tenKh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbl_banHang_maKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_banHang_tienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbl_banHang_tienTraKhach, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_banHang_tongThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_banHang_tenKh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbl_banHang_maKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_banHang_tienKhachDua, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,6 +350,16 @@ public class formThanhToan extends javax.swing.JDialog {
         formBill();
     }//GEN-LAST:event_btn_inHoaDonActionPerformed
 
+    private void btnQRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQRMouseClicked
+        scanQR();
+        try {
+            MySwingWorkerQR worker = new MySwingWorkerQR(this, path);
+            worker.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnQRMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -351,6 +405,7 @@ public class formThanhToan extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDong;
+    private javax.swing.JButton btnQR;
     private javax.swing.JButton btn_inHoaDon;
     private javax.swing.JButton btn_thanhToan;
     private javax.swing.JLabel jLabel1;

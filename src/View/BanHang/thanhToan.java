@@ -6,6 +6,9 @@ import Model.hoaDonContainer;
 import Model.khachHang;
 import Model.nhanVien;
 import Model.sanPham;
+import static View.BanHang.formThanhToan.hoaDon;
+import static View.BanHang.formThanhToan.list;
+import static View.BanHang.formThanhToan.objects;
 import com.pro1041.dao.DAO_banHang;
 import com.pro1041.dao.DAO_nhanVien;
 import com.pro1041.util.DateHelper;
@@ -14,6 +17,8 @@ import com.pro1041.util.ShareHelper;
 import com.pro1041.util.listData;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,6 +31,12 @@ import javax.swing.SwingWorker;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 /**
  *
@@ -553,12 +564,89 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         o[4] = tblChiTietHD2.getValueAt(i, 4);
         String maCTHD = listCTHD.get(index1).getMaCthd();
         o[6] = Float.parseFloat(o[4].toString()) * Float.parseFloat(o[2].toString());
-        System.out.println(o[3] + " " + o[4] + " " +o[6] +" "+ maCTHD);
+        System.out.println(o[3] + " " + o[4] + " " + o[6] + " " + maCTHD);
         dao.updateCTHD((String) o[3], Integer.parseInt(o[4].toString()), Float.parseFloat(o[6].toString()), maCTHD);
         System.out.println("Cập nhật thành công");
         fillToTableHD2();
     }
 
+    public void xuatThongKe() {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet spreadsheet = workbook.createSheet("Thống kê bán hàng");
+
+            XSSFRow row = null;
+            Cell cell = null;
+
+            row = spreadsheet.createRow((short) 2);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("DANH SÁCH BÁN HÀNG");
+
+            row = spreadsheet.createRow((short) 3);
+            row.setHeight((short) 500);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("NGÀY THỐNG KÊ");
+            cell = row.createCell(1, CellType.NUMERIC);
+            cell.setCellValue("SỐ HÓA ĐƠN");
+            cell = row.createCell(2, CellType.NUMERIC);
+            cell.setCellValue("TỔNG TIỀN");
+            cell = row.createCell(3, CellType.NUMERIC);
+            cell.setCellValue("TIỀN VAT");
+            String years = (String) cboYear.getSelectedItem();
+            String month = cboThang.getSelectedItem().toString();
+            String datePart = cboQuy.getSelectedItem().toString();
+            for (int i = 0; i < thongke.size(); i++) {
+                Object[] firstItem = thongke.get(i);
+                row = spreadsheet.createRow((short) 4 + i);
+                row.setHeight((short) 400);
+
+                if (cboThang.isEnabled() == false) {
+                    row.createCell(0).setCellValue("QUÝ " + datePart + " NĂM " + years);
+                } else if (cboQuy.isEnabled() == false) {
+                    row.createCell(0).setCellValue("THÁNG " + month + " NĂM " + years);
+                }
+                row.createCell(1).setCellValue((Integer) firstItem[0]);
+                row.createCell(2).setCellValue((Float) firstItem[1]);
+                row.createCell(3).setCellValue((Float) firstItem[2]);
+            }
+            System.out.println(org.apache.xmlbeans.XmlBeans.getVersion());
+
+            FileOutputStream out = new FileOutputStream(new File("D:/PRO1041/thongKeBanHang.xlsx"));
+            workbook.write(out);
+            out.flush();
+            workbook.close();
+            out.close();
+            DialogHelper.alert("Xuất thống kê thành công!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void insertTemp(){
+        try {
+            DAO_banHang dao = new DAO_banHang();
+            for (Object[] obj : list) {
+                String maCthd = "CTHD" + System.currentTimeMillis();
+                String maSp = (String) obj[0];
+                System.out.println("Mã sp :" + maSp);
+                String maHd = hoaDon.getMaHoaDon();
+                int soLuong = (Integer) obj[5];
+                System.out.println("Số lượng: " + soLuong);
+                Float tongTien = (Float) obj[7] + (Float)obj[6];
+                System.out.println("Tiền: " + tongTien);
+                String dateStr = DateHelper.toString(DateHelper.now(), "yyyy-MM-dd");
+                java.sql.Date date = new java.sql.Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime());
+                String kichThuoc = (String) obj[4];
+                objects.clear();
+                objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date, kichThuoc});
+                dao.insertTemp(objects);
+                System.out.println("Đã thêm thành công vào bảng tạm");
+                System.out.println();
+            }
+        } catch (Exception e) {
+            System.out.println("temp");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -670,6 +758,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         lblTongTien = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         lblTongThue = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1000, 700));
         setRequestFocusEnabled(false);
@@ -1520,6 +1609,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         jPanel15.setPreferredSize(new java.awt.Dimension(200, 100));
 
         lblSoHoaDon.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblSoHoaDon.setForeground(new java.awt.Color(255, 255, 255));
         lblSoHoaDon.setText("Số hóa đơn:");
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -1543,6 +1633,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         jPanel16.setPreferredSize(new java.awt.Dimension(200, 100));
 
         lblTongTien.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblTongTien.setForeground(new java.awt.Color(255, 255, 255));
         lblTongTien.setText("Tổng tiền:");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
@@ -1566,6 +1657,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         jPanel13.setPreferredSize(new java.awt.Dimension(200, 100));
 
         lblTongThue.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        lblTongThue.setForeground(new java.awt.Color(255, 255, 255));
         lblTongThue.setText("Tổng thuế:");
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
@@ -1616,6 +1708,13 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
                     .addContainerGap(374, Short.MAX_VALUE)))
         );
 
+        jButton1.setText("Xuất thống kê");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -1623,7 +1722,9 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(431, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addGap(14, 14, 14)
@@ -1655,6 +1756,10 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
                 .addGap(109, 109, 109)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(318, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(384, 384, 384))
             .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel11Layout.createSequentialGroup()
                     .addContainerGap()
@@ -1720,6 +1825,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     }//GEN-LAST:event_btn_banHang_xoaHoaDonActionPerformed
 
     private void btn_banHang_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_thanhToanActionPerformed
+        insertTemp();
         tongTien();
         formThanhToan();
     }//GEN-LAST:event_btn_banHang_thanhToanActionPerformed
@@ -1829,6 +1935,10 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         fillToTableHD2();
     }//GEN-LAST:event_tblChiTietHD2ComponentRemoved
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        xuatThongKe();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThongKe;
@@ -1847,6 +1957,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     private javax.swing.JComboBox<String> cboThongKe;
     private javax.swing.JComboBox<String> cboYear;
     private javax.swing.JComboBox<String> cbo_banHang_kichThuoc;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

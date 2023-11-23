@@ -13,13 +13,14 @@ import java.io.Serializable;
 public class sanPham implements Serializable {
 
     private String maSanPham, tenSanPham, loaiSanPham, xuatXu;
-    private Float donGia, VAT;
+    private Float donGia;
     private String nhaCungCap, moTa, mauSac, hinhAnh;
+    private Float VAT;
 
     public sanPham() {
     }
 
-    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, Float VAT, String nhaCungCap, String moTa, String mauSac, String hinhAnh) {
+    public sanPham(String maSanPham, String tenSanPham, String loaiSanPham, String xuatXu, Float donGia, String nhaCungCap, String moTa, String mauSac, String hinhAnh, Float VAT) {
         this.maSanPham = maSanPham;
         this.tenSanPham = tenSanPham;
         this.loaiSanPham = loaiSanPham;

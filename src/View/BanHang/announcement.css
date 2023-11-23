@@ -1,0 +1,160 @@
+.colorful-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.colorful-text span {
+    font-size: 32px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .colorful-text span {
+        font-size: 14px;
+    }
+}
+
+.colorful-text span:nth-child(1) {
+    color: red;
+}
+
+.colorful-text span:nth-child(2) {
+    color: blue;
+}
+
+.colorful-text span:nth-child(3) {
+    color: green;
+}
+
+.colorful-text span:nth-child(4) {
+    color: pink;
+}
+
+.colorful-text span:nth-child(5) {
+    color: orange;
+}
+
+.colorful-text span:nth-child(6) {
+    color: orangered;
+}
+
+.colorful-text span:nth-child(7) {
+    color: blueviolet;
+}
+
+.colorful-text span:nth-child(8) {
+    color: brown;
+}
+
+.colorful-text span:nth-child(9) {
+    color: chocolate;
+}
+
+.colorful-text span:nth-child(10) {
+    color: coral;
+}
+
+.colorful-text span:nth-child(11) {
+    color: darkblue;
+}
+
+.colorful-text span:nth-child(12) {
+    color: darkcyan;
+}
+
+.colorful-text span:nth-child(13) {
+    color: darkgoldenrod;
+}
+
+.colorful-text span:nth-child(14) {
+    color: darkgreen;
+}
+
+.colorful-text span:nth-child(15) {
+    color: darkmagenta;
+}
+
+.colorful-text span:nth-child(16) {
+    color: darkolivegreen;
+}
+
+.colorful-text span:nth-child(17) {
+    color: darkorange;
+}
+
+.colorful-text span:nth-child(18) {
+    color: darkorchid;
+}
+
+.colorful-text span:nth-child(19) {
+    color: darkred;
+}
+
+.colorful-text span:nth-child(20) {
+    color: darksalmon;
+}
+
+.colorful-text span:nth-child(21) {
+    color: darkslateblue;
+}
+
+.colorful-text span:nth-child(22) {
+    color: darkslategray;
+}
+
+.colorful-text span:nth-child(23) {
+    color: darkturquoise;
+}
+
+.colorful-text span:nth-child(24) {
+    color: darkviolet;
+}
+
+.colorful-text span:nth-child(25) {
+    color: deeppink;
+}
+
+.colorful-text span:nth-child(26) {
+    color: deepskyblue;
+}
+
+.colorful-text span:nth-child(27) {
+    color: dodgerblue;
+}
+
+.colorful-text span:nth-child(28) {
+    color: firebrick;
+}
+
+.colorful-text span:nth-child(29) {
+    color: forestgreen;
+}
+
+.colorful-text span:nth-child(30) {
+    color: fuchsia;
+}
+
+.colorful-text span:nth-child(31) {
+    color: gold;
+}
+
+.colorful-text span:nth-child(32) {
+    color: greenyellow;
+}
+
+.colorful-text span:nth-child(33) {
+    color: brown;
+}
+
+.colorful-text span:nth-child(34) {
+    color: chocolate;
+}
+
+.colorful-text span:nth-child(35) {
+    color: coral;
+}
+.colorful-text span:nth-child(36) {
+    color: darkslategray;
+}

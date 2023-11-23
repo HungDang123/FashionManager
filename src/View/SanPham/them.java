@@ -45,7 +45,7 @@ public class them extends javax.swing.JFrame {
             float donGia = Float.parseFloat(txtGiaNhap.getText());
             float vat = Float.parseFloat(txtVAT.getText());
             String imageName = lblHinh.getToolTipText();
-            sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, donGia, vat, nhaCC, moTa, mauSac, imageName);
+            sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, donGia, nhaCC, moTa, mauSac, imageName,vat);
             if (dao.selectByID(maSP) == null) {
                 dao.insert(sp);
                 DialogHelper.alert("Thêm thành công");

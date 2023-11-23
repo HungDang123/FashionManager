@@ -6,13 +6,16 @@ import View.SanPham.formSanPham;
 //import com.formdev.flatlaf.FlatLaf;
 //import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Color;
+import nhanVien.View.nhanVien_InternalForm;
 
 /**
  *
  * @author HUNG
  */
 public class Main extends javax.swing.JFrame {
+
     public static formSanPham sanPham;
+
     /**
      * Creates new form Main
      */
@@ -20,7 +23,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         begin();
-        
+
     }
 
     public void begin() {
@@ -28,6 +31,7 @@ public class Main extends javax.swing.JFrame {
         jDesktopPane1.removeAll();
         jDesktopPane1.add(profile).setVisible(true);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -127,6 +131,11 @@ public class Main extends javax.swing.JFrame {
         btn_nhanVien.setForeground(new java.awt.Color(221, 224, 209));
         btn_nhanVien.setText("NHÂN VIÊN");
         btn_nhanVien.setPreferredSize(new java.awt.Dimension(200, 50));
+        btn_nhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_nhanVienActionPerformed(evt);
+            }
+        });
 
         btn_khachHang.setBackground(new java.awt.Color(114, 130, 97));
         btn_khachHang.setForeground(new java.awt.Color(221, 224, 209));
@@ -269,7 +278,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_sanPhamActionPerformed
 
     private void btnCaNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaNhanActionPerformed
-       begin();
+        begin();
     }//GEN-LAST:event_btnCaNhanActionPerformed
 
     private void btn_banHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHangActionPerformed
@@ -292,6 +301,17 @@ public class Main extends javax.swing.JFrame {
         btn_sanPham.setBackground(background);
         btn_sanPham.setForeground(font);
     }//GEN-LAST:event_btn_khachHangActionPerformed
+
+    private void btn_nhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nhanVienActionPerformed
+        // TODO add your handling code here:
+        nhanVien_InternalForm khachHang = new nhanVien_InternalForm();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(khachHang).setVisible(true);
+        Color background = new Color(211, 224, 209);
+        Color font = new Color(114, 130, 97);
+        btn_sanPham.setBackground(background);
+        btn_sanPham.setForeground(font);
+    }//GEN-LAST:event_btn_nhanVienActionPerformed
 
     /**
      * @param args the command line arguments

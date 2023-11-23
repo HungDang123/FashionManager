@@ -43,6 +43,8 @@ public class DAO_banHang {
     private final String findByIdKH = "SELECT * FROM khachHang WHERE maKhachHang = ?";
     private final String findByIdSP = "SELECT * FROM sanPham where maSanPham = ?";
     private final String insertCTHD = "Insert into chiTietHoaDon(maCthd,maSanPham,maHoaDon,soLuong,tongTien,ngayLapHoaDon,kichThuoc) values(?,?,?,?,?,?,?)";
+    private final String insertTemp = "Insert into chiTietHoaDonTam(maCthd,maSanPham,maHoaDon,soLuong,tongTien,ngayLapHoaDon,kichThuoc) values(?,?,?,?,?,?,?)";
+
     private final String getAllCTHD = "SELECT c.maCthd,c.maSanPham, c.soLuong,c.tongTien,c.ngayLapHoaDon,c.maHoaDon,c.kichThuoc,\n"
             + "    SUM(c.tongTien) OVER (PARTITION BY c.maHoaDon) AS 'tongTiens'\n"
             + "FROM chiTietHoaDon c\n"
@@ -105,7 +107,7 @@ public class DAO_banHang {
                 String hinhAnh = rs.getString("hinhAnh");
                 Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac, hinhAnh, vat);
                 list.add(sp);
             }
             return list;
@@ -160,7 +162,7 @@ public class DAO_banHang {
                 String hinhAnh = rs.getString("hinhAnh");
                 Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac, hinhAnh, vat);
                 list.add(sp);
             }
         } catch (Exception e) {
@@ -184,7 +186,7 @@ public class DAO_banHang {
                 String hinhAnh = rs.getString("hinhAnh");
                 Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac, hinhAnh, vat);
                 list.add(sp);
             }
         } catch (Exception e) {
@@ -208,7 +210,7 @@ public class DAO_banHang {
                 String hinhAnh = rs.getString("hinhAnh");
                 Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
+                sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac, hinhAnh, vat);
                 list.add(sp);
             }
 
@@ -346,8 +348,8 @@ public class DAO_banHang {
                 String hinhAnh = rs.getString("hinhAnh");
                 Float vat = rs.getFloat("VAT");
                 String nhaCungCap = rs.getString("nhaCungCap");
-                sanPham s = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, vat, nhaCungCap, moTa, mauSac, hinhAnh);
-                return s;
+                sanPham sp = new sanPham(maSanPham, tenSanPham, loaiSanPham, xuatSu, giaNhap, nhaCungCap, moTa, mauSac, hinhAnh, vat);
+                return sp;
             }
         } catch (Exception e) {
             System.out.println("Find by ma sp" + e.getMessage());
@@ -480,7 +482,7 @@ public class DAO_banHang {
         try {
             ResultSet rs = jdbcHelper.executeQuery(thongKeBanHangTheoNam, year);
             while (rs.next()) {
-                Float soHoaDon = rs.getFloat("SoHoaDon");
+                Integer soHoaDon = rs.getInt("SoHoaDon");
                 Float tongTien = rs.getFloat("TongTien");
                 Float tienVAT = rs.getFloat("TienVAT");
                 Object[] obj = new Object[]{soHoaDon, tongTien, tienVAT};
@@ -498,7 +500,7 @@ public class DAO_banHang {
         try {
             ResultSet rs = jdbcHelper.executeQuery(thongKeBanHangTheoQuy, year, datePart);
             while (rs.next()) {
-                Float soHoaDon = rs.getFloat("SoHoaDon");
+                Integer soHoaDon = rs.getInt("SoHoaDon");
                 Float tongTien = rs.getFloat("TongTien");
                 Float tienVAT = rs.getFloat("TienVAT");
                 Object[] obj = new Object[]{soHoaDon, tongTien, tienVAT};
@@ -516,7 +518,7 @@ public class DAO_banHang {
         try {
             ResultSet rs = jdbcHelper.executeQuery(thongKeBanHangTheoThang, year, month);
             while (rs.next()) {
-                Float soHoaDon = rs.getFloat("SoHoaDon");
+                Integer soHoaDon = rs.getInt("SoHoaDon");
                 Float tongTien = rs.getFloat("TongTien");
                 Float tienVAT = rs.getFloat("TienVAT");
                 Object[] obj = new Object[]{soHoaDon, tongTien, tienVAT};
@@ -529,12 +531,24 @@ public class DAO_banHang {
         return list;
     }
 
-    public void updateCTHD(String kichThuoc, int soLuong,Float tongTien,String maChiTietHoaDon) {
+    public void updateCTHD(String kichThuoc, int soLuong, Float tongTien, String maChiTietHoaDon) {
         try {
-            jdbcHelper.executeUpdate(updateCTHD, kichThuoc,soLuong,tongTien,maChiTietHoaDon);
+            jdbcHelper.executeUpdate(updateCTHD, kichThuoc, soLuong, tongTien, maChiTietHoaDon);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Update CTHD : " + e.getMessage());
+        }
+    }
+
+    public void insertTemp(List<Object> obj) {
+        try {
+            Object[] objArray = (Object[]) obj.get(0);
+            System.out.println(objArray[0] + " " + objArray[1] + " " + objArray[2] + " " + objArray[3] + " " + objArray[4] + " " + objArray[5] + " " + objArray[6]);
+
+            jdbcHelper.executeUpdate(insertTemp, objArray[0], objArray[1], objArray[2], objArray[3], objArray[4], objArray[5], objArray[6]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Insert cthd: " + e.getMessage());
         }
     }
 }

@@ -28,12 +28,12 @@ public class DAO_sanPham implements DAO<sanPham> {
                 String loaiSP = rs.getString("loaiSanPham");
                 String xuatXu = rs.getString("xuatSu");
                 String donGia = rs.getString("donGia");
-                String vat = rs.getString("VAT");
                 String nhaCC = rs.getString("nhaCungCap");
                 String moTa = rs.getString("moTa");
                 String mauSac = rs.getString("mauSac");
                 String hinhAnh = rs.getString("hinhAnh");
-                sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, Float.parseFloat(donGia), Float.parseFloat(vat), nhaCC, moTa, mauSac, hinhAnh);
+                String vat = rs.getString("VAT");
+                sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, Float.parseFloat(donGia), nhaCC, moTa, mauSac, hinhAnh, Float.parseFloat(vat));
                 list.add(sp);
             }
         } catch (Exception e) {
@@ -47,8 +47,8 @@ public class DAO_sanPham implements DAO<sanPham> {
         try {
             String sql = "exec addSanPham ?,?,?,?,?,?,?,?,?,?";
             jdbcHelper.executeUpdate(sql, entity.getMaSanPham(), entity.getTenSanPham(),
-                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getVAT(), entity.getNhaCungCap(),
-                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh());
+                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getNhaCungCap(),
+                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh(), entity.getVAT());
         } catch (Exception e) {
             System.out.println("Add sản phẩm: " + e.getMessage());
         }
@@ -68,9 +68,9 @@ public class DAO_sanPham implements DAO<sanPham> {
     public void update(sanPham entity) {
         try {
             String sql = "exec updateSanPham ?,?,?,?,?,?,?,?,?,?";
-            jdbcHelper.executeUpdate(sql, entity.getMaSanPham() , entity.getTenSanPham(),
-                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getVAT(), entity.getNhaCungCap(),
-                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh());
+            jdbcHelper.executeUpdate(sql, entity.getMaSanPham(), entity.getTenSanPham(),
+                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getNhaCungCap(),
+                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh(), entity.getVAT());
         } catch (Exception e) {
             System.out.println("Update người học" + e.getMessage());
         }
@@ -80,7 +80,7 @@ public class DAO_sanPham implements DAO<sanPham> {
         List<sanPham> list = new ArrayList<>();
         try {
             String sql = "select * from SanPham where maSanPham like ? ";
-            ResultSet rs = jdbcHelper.prepareStatement(sql,id).executeQuery();
+            ResultSet rs = jdbcHelper.prepareStatement(sql, id).executeQuery();
             while (rs.next()) {
                 String maSP = rs.getString("maSanPham");
                 String tenSP = rs.getString("tenSanPham");
@@ -92,7 +92,7 @@ public class DAO_sanPham implements DAO<sanPham> {
                 String moTa = rs.getString("moTa");
                 String mauSac = rs.getString("mauSac");
                 String hinhAnh = rs.getString("hinhAnh");
-                sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, Float.parseFloat(donGia), Float.parseFloat(vat), nhaCC, moTa, mauSac, hinhAnh);
+                sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, Float.parseFloat(donGia), nhaCC, moTa, mauSac, hinhAnh, Float.parseFloat(vat));
                 list.add(sp);
             }
             return list.get(0);
@@ -102,4 +102,3 @@ public class DAO_sanPham implements DAO<sanPham> {
         return null;
     }
 }
-
