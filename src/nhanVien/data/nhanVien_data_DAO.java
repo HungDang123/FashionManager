@@ -36,12 +36,24 @@ public class nhanVien_data_DAO {
     final String updateQuery = "UPDATE nhanVien \n"
             + "SET maNhanVien = ?,hoVaTen = ?, matKhau = ?, chucVu = ?, gioiTinh = ?, ngaySinh = ?, canCuocCongDan = ?, soDienThoai = ?, hinhAnh = ? "
             + "WHERE maNhanVien = ?";
-    
-   final String getSecurity_query = "Select matKhau, canCuocCongDan, soDienThoai, hinhAnh, email "
-           + "from nhanVien "
-           + "where maNhanVien = ?";
-   
-   
+
+    final String getSecurity_query = "Select matKhau, canCuocCongDan, soDienThoai, hinhAnh, email "
+            + "from nhanVien "
+            + "where maNhanVien = ?";
+    final String selectCount_maNhanVien = "Select Count(*) from nhanVien where maNhanVien = ?";
+
+    public int getCount_maNv(String id) {
+        Object[] args = null;
+        ResultSet rs = jdbcHelper.executeQuery(selectCount_maNhanVien, id);
+        try {
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(nhanVien_data_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
     public List<nhanVien> selectAll() {
         List<nhanVien> listNV = new ArrayList<>();
         Object[] obj = null;
@@ -124,8 +136,7 @@ public class nhanVien_data_DAO {
         }
         return null;
     }
-    
-   
+
     public void insert(nhanVien nvM) {
         jdbcHelper.executeUpdate(insertQuery, nvM.getMaNhanVien(), nvM.getHoVaTen(), nvM.getMatKhau(), nvM.getChucVu(),
                 nvM.getGioiTinh(), nvM.getNgaySinh(), nvM.getCanCuocCongDan(), nvM.getSoDienThoai(), nvM.getHinhAnh());
@@ -144,19 +155,13 @@ public class nhanVien_data_DAO {
     public void changePassword(String newPassword, String maNhanVien) {
         jdbcHelper.executeUpdate(changePassword, newPassword, maNhanVien);
     }
-    
-    
-     
-    
-    
 
-    
     public static void main(String[] args) {
 //        new nhanVien_data_DAO().nhanVien_Insert(new nhanVien("nv011", "Hồ Minh Nhựt", "123456", false, 
 //                Boolean.TRUE, new Date(new java.util.Date().getTime()), "0002223", "012345", "404"));
 //        new nhanVien_data_DAO().nhanVien_Delete("123456");
 
-        new nhanVien_data_DAO().insert(new nhanVien("nv0ss", "Hồ Minh Nhựts", "123456", false, 
-                Boolean.TRUE, new Date(new java.util.Date().getTime()),null, "0002223", "012345", "404"));
+        new nhanVien_data_DAO().insert(new nhanVien("nv0ss", "Hồ Minh Nhựts", "123456", false,
+                Boolean.TRUE, new Date(new java.util.Date().getTime()), null, "0002223", "012345", "404"));
     }
 }

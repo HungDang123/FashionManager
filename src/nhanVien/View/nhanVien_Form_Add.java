@@ -78,6 +78,8 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
 
     public void checkForm() {
         Nv_getForm();
+                    System.out.println(!checkNhanVien.kiemTraHoTen(nhanVien_txt_hovaTen.getText()));
+
         if (nhanVien_txt_hovaTen.getText().trim().isEmpty()) {
             nhanVien_txt_hovaTen.setBorder(new LineBorder(Color.red));
             isTrue = false;
@@ -159,7 +161,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         nhanVien_txt_hovaTen = new javax.swing.JTextField();
         nhanVien_txt_CCCD = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        nhanVien_txt_Date = new com.toedter.calendar.JDateChooser();
+        nhanVien_txt_Date = new com.toedter.calendar.JCalendar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -273,8 +275,10 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nhanVien_btn_Add)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nhanVien_ck_agree)
+                    .addComponent(nhanVien_btn_Add))
+                .addContainerGap(346, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -304,19 +308,19 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nhanVien_txt_maNV)
+                                    .addComponent(nhanVien_txt_hovaTen)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(103, 103, 103)
+                                                .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(83, 83, 83)
                                                 .addComponent(errorMessage_ngaySinh))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(nhanVien_rdo_Male, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(nhanVien_txt_Female, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(nhanVien_txt_hovaTen)))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,13 +331,10 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                 .addComponent(nhanVien_lb_nameManager))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nhanVien_ck_agree)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(errorMessage_agree)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 197, Short.MAX_VALUE)))
+                        .addComponent(errorMessage_agree)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -372,25 +373,22 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                         .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(errorMessage_ngaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(nhanVien_ck_agree)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nhanVien_btn_Add))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(errorMessage_ngaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addComponent(nhanVien_ck_agree)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nhanVien_btn_Add)
                 .addContainerGap())
         );
 
@@ -493,7 +491,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
     private javax.swing.JLabel nhanVien_lb_nameManager;
     private javax.swing.JRadioButton nhanVien_rdo_Male;
     private javax.swing.JTextField nhanVien_txt_CCCD;
-    private com.toedter.calendar.JDateChooser nhanVien_txt_Date;
+    private com.toedter.calendar.JCalendar nhanVien_txt_Date;
     private javax.swing.JRadioButton nhanVien_txt_Female;
     private javax.swing.JTextField nhanVien_txt_hovaTen;
     private javax.swing.JTextField nhanVien_txt_maNV;

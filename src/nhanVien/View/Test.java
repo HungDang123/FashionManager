@@ -6,6 +6,7 @@ package nhanVien.View;
 
 import Model.nhanVien;
 import com.pro1041.util.ShareHelper;
+import nhanVien.data.checkNhanVien;
 
 /**
  *
@@ -13,8 +14,7 @@ import com.pro1041.util.ShareHelper;
  */
 public class Test {
     public static void main(String[] args) {
-        nhanVien nv = new nhanVien();
-        nv.setHoVaTen("Ho Minh Nhut");
+        System.out.println(checkNhanVien.kiemTraHoTen("$$"));
 //        new ShareHelper(nv);
 //        new nhanVien_From_Add().setVisible(true);
     }

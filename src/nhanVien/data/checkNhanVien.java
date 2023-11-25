@@ -23,11 +23,11 @@ public class checkNhanVien {
 
     public static boolean kiemTraHoTen(String hoTen) {
         // Biểu thức chính quy cho phép chữ cái, dấu cách, và một số ký tự tiếng Việt
-        String regex = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨƠƯàáâãèéêìíòóôõùúăđĩơư\\s-]+$";
+        String regex = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨƠƯàáâãèéêìíòóôõùúăđĩơư\\s-ấầẩẫậắằẳẵặéèẹẻẽêếềểễệóòọỏõôốồổỗộúùụủũưứừửữựíìịỉĩđ]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(hoTen);
 
-        return !matcher.matches();
+        return matcher.matches();
     }
 
     public static boolean kiemTraEmail(String email) {
@@ -48,11 +48,11 @@ public class checkNhanVien {
     }
 
     public static boolean validateInput(String inputStr, String inputType) {
-        System.out.println("if: "+inputStr);
+        System.out.println("if: " + inputStr);
         if (inputStr.isEmpty() || inputStr == null || inputStr.equalsIgnoreCase("Chưa có thông tin")) {
             return true;
         }
-        
+
         if (inputType.equalsIgnoreCase("Password")) {
             // Kiểm tra mật khẩu: ít nhất 8 ký tự, ít nhất một chữ cái và một chữ số
             Pattern pattern = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
@@ -77,26 +77,25 @@ public class checkNhanVien {
         return false; // Trường hợp không khớp với bất kỳ loại nào
     }
 
-   public static String checkPasswordStrength(String password) {
-    int length = password.length();
+    public static String checkPasswordStrength(String password) {
+        int length = password.length();
 
-    boolean hasLetter = password.matches(".*[a-zA-Z].*");
-    boolean hasDigit = password.matches(".*\\d.*");
-    boolean hasUpperCase = password.matches(".*[A-Z].*");
-    boolean hasLowerCase = password.matches(".*[a-z].*");
-    boolean hasSpecialChar = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
+        boolean hasLetter = password.matches(".*[a-zA-Z].*");
+        boolean hasDigit = password.matches(".*\\d.*");
+        boolean hasUpperCase = password.matches(".*[A-Z].*");
+        boolean hasLowerCase = password.matches(".*[a-z].*");
+        boolean hasSpecialChar = password.matches(".*[!@#$%^&*(),.?\":{}|<>].*");
 
-    // Kiểm tra mức độ độ phức tạp của mật khẩu dựa trên các điều kiện
-    if (length >= 12 && (hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar)) {
-        return "Mạnh"; // Mật khẩu mạnh nếu đạt tất cả các yêu cầu
-    } else if (length >= 12 && (hasUpperCase || hasLowerCase || hasDigit || hasSpecialChar)) {
-        return "Khá"; // Mật khẩu khá nếu đạt nhiều yêu cầu hơn
-    } else if (length > 8 && (hasLetter || hasDigit)) {
-        return "Trung bình"; // Mật khẩu trung bình nếu đạt một số yêu cầu
-    } else {
-        return "Yếu"; // Mật khẩu yếu nếu không đạt các yêu cầu cơ bản
+        // Kiểm tra mức độ độ phức tạp của mật khẩu dựa trên các điều kiện
+        if (length >= 12 && (hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar)) {
+            return "Mạnh"; // Mật khẩu mạnh nếu đạt tất cả các yêu cầu
+        } else if (length >= 12 && (hasUpperCase || hasLowerCase || hasDigit || hasSpecialChar)) {
+            return "Khá"; // Mật khẩu khá nếu đạt nhiều yêu cầu hơn
+        } else if (length > 8 && (hasLetter || hasDigit)) {
+            return "Trung bình"; // Mật khẩu trung bình nếu đạt một số yêu cầu
+        } else {
+            return "Yếu"; // Mật khẩu yếu nếu không đạt các yêu cầu cơ bản
+        }
     }
-}
-
 
 }

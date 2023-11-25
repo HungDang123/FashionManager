@@ -75,12 +75,19 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         boolean gioiTinh = edit_rdo_Male.isSelected() ? true : false;
         java.sql.Date date = new java.sql.Date(edit_date_Date.getDate().getTime());
 
-        return new nhanVien(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getEmail(), nvM.getCanCuocCongDan(), nvM.getCanCuocCongDan(), nvM.getHinhAnh()
+        return new nhanVien(maNhanVien, hoVaTen, nvM.getMatKhau(), chucVu, gioiTinh, date, nvM.getEmail(), nvM.getCanCuocCongDan(), nvM.getSoDienThoai(), nvM.getHinhAnh()
         );
     }
 
     public void checkForm() {
         ck = true;
+
+        if (new nhanVien_data_DAO().getCount_maNv(edit_txt_maNhanVien.getText()) == 0) {
+        } else {
+            JOptionPane.showMessageDialog(this, "ID đã tồn tại", "ID Error", JOptionPane.ERROR_MESSAGE);
+            ck = false;
+        }
+
         if (edit_txt_hovaTen.getText().isEmpty()) {
             edit_txt_hovaTen.setBorder(new LineBorder(Color.yellow));
             ck = false;
@@ -122,7 +129,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         edit_btn_update = new javax.swing.JButton();
         edit_btn_Image = new javax.swing.JButton();
         edit_erorMs = new javax.swing.JLabel();
-        edit_date_Date = new com.toedter.calendar.JDateChooser();
+        edit_date_Date = new com.toedter.calendar.JCalendar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -173,7 +180,6 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         });
 
         edit_btn_Image.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
-        edit_btn_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/a13.jpg"))); // NOI18N
         edit_btn_Image.setText("Ảnh đại diện");
         edit_btn_Image.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         edit_btn_Image.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -219,8 +225,8 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(edit_rdo_feMale, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(3, 3, 3)
+                                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(edit_erorMs)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(40, 40, 40))))
@@ -232,7 +238,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edit_btn_Image, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(edit_txt_maNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -250,15 +256,14 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                     .addComponent(edit_rdo_Male)
                     .addComponent(edit_rdo_feMale))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(edit_erorMs)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(edit_erorMs))
+                    .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(edit_btn_update)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -266,18 +271,18 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
 
     private void edit_btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btn_updateActionPerformed
         // TODO add your handling code here:
-      checkForm();
-      if (ck) {
-           dao.update(getForm(), maNV_old);
-        nhanVienCard.updateCard(getForm());
-        JOptionPane.showMessageDialog(this, "Cập nhật thành công");
-        this.dispose();
-      }
+        checkForm();
+        if (ck) {
+            dao.update(getForm(), maNV_old);
+            nhanVienCard.updateCard(getForm());
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+            this.dispose();
+        }
     }//GEN-LAST:event_edit_btn_updateActionPerformed
 
     private void edit_btn_ImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btn_ImageActionPerformed
         // TODO add your handling code here:
-        JFileChooser fileChooser = new JFileChooser("C:\\Users\\hnhut\\OneDrive\\Máy tính\\Pro1041_Nhom2\\PRO1041_1\\src\\image");
+        JFileChooser fileChooser = new JFileChooser("\\src\\image");
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
@@ -310,7 +315,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
     private javax.swing.JButton edit_btn_Image;
     private javax.swing.JButton edit_btn_update;
     private javax.swing.JComboBox<String> edit_cbb_chucVu;
-    private com.toedter.calendar.JDateChooser edit_date_Date;
+    private com.toedter.calendar.JCalendar edit_date_Date;
     private javax.swing.JLabel edit_erorMs;
     private javax.swing.JRadioButton edit_rdo_Male;
     private javax.swing.JRadioButton edit_rdo_feMale;
