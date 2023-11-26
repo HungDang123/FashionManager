@@ -8,7 +8,6 @@ import Model.khachHang;
 import com.pro1041.util.jdbcHelper;
 import java.sql.Date;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,17 +177,15 @@ public class DAO_khachHang implements DAO<khachHang> {
             while (rs.next()) {
                 String maKhachHang = rs.getString(1);
                 String hoVaTen = rs.getString(2);
-                String tongHoaDon = rs.getString(3);
+                int tongHoaDon = rs.getInt(3);
                 float tongTien = rs.getFloat(4);
                 Object[] obj = {maKhachHang, hoVaTen, tongHoaDon, tongTien};
                 list.add(obj);
             }
-
         } catch (Exception e) {
             System.out.println("loi" + e.getMessage());
             e.printStackTrace();
         }
         return list;
-
     }
 }
