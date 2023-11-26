@@ -3,7 +3,7 @@
 </h1>
 <h2 align="center">⚒️Language⚒️</h2>
 <div align="center">
-    <img src="https://skillicons.dev/icons?i=java"/><br>
+    <img src="https://skillicons.dev/icons?i=java"/>
 </div>
 <hr/>
 <h3 align="center">Thành viên trong nhóm:</h3>
