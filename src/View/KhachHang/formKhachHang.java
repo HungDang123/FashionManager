@@ -1,9 +1,12 @@
 package View.KhachHang;
 
 import Model.khachHang;
+import Model.nhanVien;
+import com.pro1041.dao.DAO_banHang;
 import com.pro1041.dao.DAO_khachHang;
 import com.pro1041.util.DateHelper;
 import com.pro1041.util.DialogHelper;
+import com.pro1041.util.ShareHelper;
 import java.util.ArrayList;
 import java.sql.Date;
 
@@ -22,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  * @author admin
  */
 public class formKhachHang extends javax.swing.JInternalFrame {
-    
+
     DefaultTableModel md = new DefaultTableModel();
     List<khachHang> list = new ArrayList<>();
     DAO_khachHang dao = new DAO_khachHang();
@@ -39,25 +42,26 @@ public class formKhachHang extends javax.swing.JInternalFrame {
         btnSua.setEnabled(false);
         btnXacnhan.setEnabled(false);
         btnXoa.setEnabled(false);
-        
+
         this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         load();
+        nhanvien();
     }
-    
+
     public void loaddata() {
         String[] header = {
             "Mã Khách Hàng", "Họ Tên", "Ngày Sinh", "Giới Tính", "Số Điện Thoại", "Email"
         };
         md.setColumnIdentifiers(header);
         tblModel.setModel(md);
-        
+
     }
-    
+
     public void filltoform() {
         md.setRowCount(0);
-        
+
         for (khachHang kh : list) {
             String gt = "Nữ";
             if (kh.isGioiTinh() == true) {
@@ -76,7 +80,7 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             });
         }
     }
-    
+
     public void load() {
         try {
             list.clear();
@@ -86,18 +90,18 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             System.out.println("lôii" + e.getMessage());
         }
     }
-    
+
     public void locGT(String gtinh) {
         try {
             list.clear();
             list = dao.locGT(gtinh);
             filltoform();
-            
+
         } catch (Exception e) {
             System.out.println("loi" + e.getMessage());
         }
     }
-    
+
     public void filltotable(int index) {
         lblKH.setText(list.get(index).getMaKhachHang());
         txtHoten.setText(list.get(index).getHoVaTen());
@@ -112,21 +116,30 @@ public class formKhachHang extends javax.swing.JInternalFrame {
         btnThem.setEnabled(false);
         btnSua.setEnabled(true);
         btnXoa.setEnabled(true);
-        
+
     }
-    
+
     public void reset() {
         lblKH.setText("");
         txtEmail.setText("");
         txtHoten.setText("");
         date.setDate(DateHelper.now());
         txtSDt.setText("");
-        
+
     }
-    
+public void nhanvien(){
+    DAO_banHang b=new DAO_banHang();
+    nhanVien nv = b.findByMaNV("admin1");
+    ShareHelper.role = nv;
+}
     public void deletekh(String id) {
         try {
-            if (dao.findKH(id) != null) {
+            if (!ShareHelper.role.getChucVu()) {
+                System.out.println( ShareHelper.role.getChucVu().toString());
+                DialogHelper.alert("bạn không có quyền xóa học viên");
+            } else if (dao.findKH(id) != null && ShareHelper.role.getChucVu()) {
+                                System.out.println( ShareHelper.role.getChucVu().toString());
+
                 dao.delete(id);
                 load();
                 DialogHelper.alert("xóa thành công");
@@ -137,13 +150,14 @@ public class formKhachHang extends javax.swing.JInternalFrame {
         } catch (Exception e) {
             System.out.println("lỗii" + e.getMessage());
         }
+
     }
-    
+
     public void addkh() {
         try {
             String makh = "KH" + System.currentTimeMillis();
             lblKH.setText(makh);
-            
+
             String hoVaTen = txtHoten.getText();
             java.util.Date ngaySinh = date.getDate();
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
@@ -163,9 +177,9 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             String s = txtEmail.getText();
             if (s.matches(MauEmail)) {
                 txtEmail.getText();
-                
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(null, "email sai!!");
                 return;
             }
@@ -174,12 +188,12 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             System.out.println();
             load();
             DialogHelper.alert("thêm thnhf công");
-            
+
         } catch (Exception e) {
             System.out.println("loii" + e.getMessage());
         }
     }
-    
+
     public void updatekh() {
         try {
             String makh = lblKH.getText();
@@ -202,9 +216,9 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             String s = txtEmail.getText();
             if (s.matches(MauEmail)) {
                 txtEmail.getText();
-                
+
             } else {
-                
+
                 JOptionPane.showMessageDialog(null, "email sai!!");
                 return;
             }
@@ -212,13 +226,13 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             dao.update(kh);
             load();
             DialogHelper.alert("update thành công");
-            
+
         } catch (Exception e) {
             System.out.println("loi" + e.getMessage());
         }
-        
+
     }
-    
+
     public void timKiemTen(String name) {
         try {
             list.clear();
@@ -228,18 +242,18 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             System.out.println("");
         }
     }
-    
+
     public void timKiemMa(String ma) {
         try {
             list.clear();
             list = dao.timKiemMa(ma);
             filltoform();
-            
+
         } catch (Exception e) {
-            
+
         }
     }
-    
+
     public void thongKe(Date ngay) {
         thongKe = (DefaultTableModel) tblThongke.getModel();
         thongKe.setRowCount(0);
@@ -442,10 +456,13 @@ public class formKhachHang extends javax.swing.JInternalFrame {
                         .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel7)
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(258, Short.MAX_VALUE))
+                        .addGap(37, 37, 37))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -455,14 +472,14 @@ public class formKhachHang extends javax.swing.JInternalFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtHoten, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                        .addComponent(rdoNam, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(rdoNu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txtSDt, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)
-                                    .addComponent(date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addComponent(rdoNam, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(rdoNu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtSDt, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(35, 35, 35))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -636,21 +653,22 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(418, 418, 418)
                         .addComponent(btnThongKe))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(date1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))))
+                        .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(460, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addComponent(date1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnThongKe)
@@ -691,10 +709,14 @@ public class formKhachHang extends javax.swing.JInternalFrame {
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
         try {
-            index = 0;
+            if (index <= 0) {
+                index = current - 1;
+            } else {
+                index--;
+            }
             filltotable(index);
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (Exception e) {
+            System.out.println(e);// TODO add your handling code here:
         }
     }//GEN-LAST:event_btnFirstActionPerformed
 
@@ -727,7 +749,7 @@ public class formKhachHang extends javax.swing.JInternalFrame {
         btnXoa.setEnabled(false);
         String makh = "MK: " + System.currentTimeMillis();
         lblKH.setText(makh);
-        
+
 
     }//GEN-LAST:event_btnThemActionPerformed
 
@@ -747,7 +769,7 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             } else {
                 load();
             }
-            
+
         } catch (Exception e) {
             System.out.println("loi" + e.getMessage());
         }
@@ -760,7 +782,7 @@ public class formKhachHang extends javax.swing.JInternalFrame {
             } else {
                 load();
             }
-            
+
         } catch (Exception e) {
             System.out.println("loii" + e.getMessage());
         }
@@ -769,9 +791,12 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     private void btnLatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLatActionPerformed
         // TODO add your handling code here:
         try {
-            index = current + 1;
+            if (index <= current - 0) {
+                index = 1;
+            } else {
+                index++;
+            }
             filltotable(index);
-            
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -780,7 +805,7 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     private void cboLocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboLocItemStateChanged
         try {
             String gioiTinh = (String) cboLoc.getSelectedItem();
-            
+
             locGT(gioiTinh);
             cboLoc.removeItem("Lọc theo giới tính");
             DialogHelper.alert("Xong rồi");

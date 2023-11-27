@@ -17,7 +17,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ShareHelper {
-
+public static nhanVien role; 
     public static nhanVien USER; // Thông tin nhân viên đăng nhập
     public static khachHang khachHang; // thông tin khách hàng
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
