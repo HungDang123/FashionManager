@@ -64,15 +64,18 @@ public class card extends javax.swing.JPanel {
         lblTen = new javax.swing.JLabel();
         lblGia = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        btnXem = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
-        btnXem = new javax.swing.JButton();
         lblTenSP = new javax.swing.JLabel();
         lblGiaSP = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(250, 350));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        setPreferredSize(new java.awt.Dimension(267, 350));
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(257, 310));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel1MouseEntered(evt);
@@ -83,6 +86,7 @@ public class card extends javax.swing.JPanel {
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblHinh.setBackground(new java.awt.Color(255, 255, 255));
         lblHinh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblHinh.setOpaque(true);
@@ -95,19 +99,30 @@ public class card extends javax.swing.JPanel {
                 lblHinhMouseExited(evt);
             }
         });
-        jPanel1.add(lblHinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 230, -1));
+        jPanel1.add(lblHinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 6, 250, -1));
 
-        lblTen.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
+        lblTen.setFont(new java.awt.Font("Lexend Deca", 0, 16)); // NOI18N
         lblTen.setText("Tên sản phẩm:");
-        jPanel1.add(lblTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 218, -1, -1));
+        jPanel1.add(lblTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
-        lblGia.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
+        lblGia.setFont(new java.awt.Font("Lexend Deca", 0, 16)); // NOI18N
         lblGia.setText("Giá:");
-        jPanel1.add(lblGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 241, -1, -1));
+        jPanel1.add(lblGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel2MouseEntered(evt);
+            }
+        });
+
+        btnXem.setBackground(new java.awt.Color(123, 213, 0));
+        btnXem.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
+        btnXem.setText("Xem");
+        btnXem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXemActionPerformed(evt);
             }
         });
 
@@ -149,40 +164,31 @@ public class card extends javax.swing.JPanel {
             }
         });
 
-        btnXem.setBackground(new java.awt.Color(123, 213, 0));
-        btnXem.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
-        btnXem.setText("Xem");
-        btnXem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnXemActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(btnXem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSua)
-                .addContainerGap())
+                .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(btnXem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXem, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 260, -1, 60));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 240, 50));
         jPanel1.add(lblTenSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 206, 118, -1));
         jPanel1.add(lblGiaSP, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 212, -1, -1));
 
@@ -194,12 +200,57 @@ public class card extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
+        hoverIn();
+    }//GEN-LAST:event_jPanel1MouseEntered
+
+    private void jPanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseExited
+        hoverOut();
+    }//GEN-LAST:event_jPanel1MouseExited
+
+    private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
+        hoverIn();
+    }//GEN-LAST:event_jPanel2MouseEntered
+
+    private void lblHinhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseEntered
+        // TODO add your handling code here:
+        hoverIn();
+    }//GEN-LAST:event_lblHinhMouseEntered
+
+    private void lblHinhMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseExited
+        // TODO add your handling code here:
+        hoverOut();
+        if (!jPanel2.isVisible()) {
+            hoverOut();
+        }
+    }//GEN-LAST:event_lblHinhMouseExited
+
+    private void btnXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemActionPerformed
+        setDis = "1";
+        them them = new them(setDis);
+        them.setVisible(true);
+        them.setLocationRelativeTo(null);
+        them.setForm(sp);
+    }//GEN-LAST:event_btnXemActionPerformed
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaMouseClicked
+
+    private void btnXoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseEntered
+        hoverIn();
+    }//GEN-LAST:event_btnXoaMouseEntered
+
+    private void btnXoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseExited
+        hoverIn();
+    }//GEN-LAST:event_btnXoaMouseExited
+
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        int confirmResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        int confirmResult = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
         
         if (confirmResult == JOptionPane.YES_OPTION) {
             dao.delete(idSanPham);
@@ -210,44 +261,9 @@ public class card extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnXoaActionPerformed
 
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        setDis = null;
-        them them = new them(setDis);
-        them.setVisible(true);
-        them.setLocationRelativeTo(null);
-        them.setForm(sp);
-    }//GEN-LAST:event_btnSuaActionPerformed
-
-    private void jPanel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseEntered
-        hoverIn();
-    }//GEN-LAST:event_jPanel1MouseEntered
-
-    private void jPanel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseExited
-        hoverOut();
-    }//GEN-LAST:event_jPanel1MouseExited
-
-    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
-
-    }//GEN-LAST:event_btnXoaMouseClicked
-
-    private void jPanel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseEntered
-        hoverIn();
-    }//GEN-LAST:event_jPanel2MouseEntered
-
-    private void btnXoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseEntered
-        hoverIn();
-    }//GEN-LAST:event_btnXoaMouseEntered
-
     private void btnSuaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseEntered
         hoverIn();
     }//GEN-LAST:event_btnSuaMouseEntered
-
-    private void btnXoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseExited
-        hoverOut();
-        if (!jPanel2.isVisible()) {
-            hoverOut();
-        }
-    }//GEN-LAST:event_btnXoaMouseExited
 
     private void btnSuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseExited
         hoverOut();
@@ -256,26 +272,13 @@ public class card extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSuaMouseExited
 
-    private void lblHinhMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseEntered
-        // TODO add your handling code here:
-        hoverIn();
-    }//GEN-LAST:event_lblHinhMouseEntered
-
-    private void btnXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXemActionPerformed
-        setDis = "1";
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        setDis = null;
         them them = new them(setDis);
         them.setVisible(true);
         them.setLocationRelativeTo(null);
         them.setForm(sp);
-    }//GEN-LAST:event_btnXemActionPerformed
-
-    private void lblHinhMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHinhMouseExited
-        // TODO add your handling code here:
-        hoverOut();
-        if (!jPanel2.isVisible()) {
-            hoverOut();
-        }
-    }//GEN-LAST:event_lblHinhMouseExited
+    }//GEN-LAST:event_btnSuaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
