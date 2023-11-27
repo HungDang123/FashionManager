@@ -21,7 +21,7 @@ import java.nio.file.Path;
 public class QRCodeGenerator {
 
     public static void main(String[] args) {
-        String url = "http://hungdang1041.byethost7.com/?i=1"; // Địa chỉ URL của trang web
+        String url = "con mẹ mày"; // Địa chỉ URL của trang web
         String filePath = "D:/PRO1041/QR.png"; // Đường dẫn tập tin ảnh QR
 
         try {

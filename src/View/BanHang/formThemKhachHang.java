@@ -11,6 +11,7 @@ import com.pro1041.util.DateHelper;
 import static com.pro1041.util.DateHelper.toString;
 import com.pro1041.util.DialogHelper;
 import com.pro1041.util.ShareHelper;
+import com.pro1041.util.listData;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
@@ -56,6 +57,11 @@ public class formThemKhachHang extends javax.swing.JDialog {
         Boolean gt = (rdoNam.isSelected());
         String sdt = lblSdt.getText();
         String email = txtEmail.getText();
+        listData ld = new listData();
+        if(!ld.isEmail(email)){
+            DialogHelper.alert("Email không đúng định dạng!");
+            return;
+        }
         khachHang kh = new khachHang(maKh, hoVaTen, dateOfBirth, gt, sdt, email);
         System.out.println(kh.toString());
         System.out.println(dao.findByIdKh(maKh));

@@ -25,7 +25,7 @@ public class DangKiQuanLi extends javax.swing.JFrame {
         setLocationRelativeTo(this);
     }
     String Driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    String url = "jdbc:sqlserver://localhost:1433;databaseName=PRO1041;user=sa;password=123;encrypt=false";
+    String url = "jdbc:sqlserver://localhost:1433;databaseName=PRO1041;encrypt=false";
     String user = "sa";
     String password = "123";
     Statement st;
@@ -129,6 +129,12 @@ public class DangKiQuanLi extends javax.swing.JFrame {
         jLabel8.setText("Mật Khẩu:");
 
         txthoTen.setText("Huynh Anh Quan");
+
+        txtHinhAnh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHinhAnhActionPerformed(evt);
+            }
+        });
 
         btngr1.add(rdbNam);
         rdbNam.setText("Nam");
@@ -341,6 +347,10 @@ public class DangKiQuanLi extends javax.swing.JFrame {
     private void txtmaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmaNhanVienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtmaNhanVienActionPerformed
+
+    private void txtHinhAnhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHinhAnhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHinhAnhActionPerformed
 
     /**
      * @param args the command line arguments

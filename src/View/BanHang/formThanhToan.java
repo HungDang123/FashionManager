@@ -57,6 +57,19 @@ public class formThanhToan extends javax.swing.JDialog {
 
     public void thanhToan() {
         try {
+            try {
+                if (Integer.parseInt(txt_banHang_tienKhachDua.getText()) <= 0) {
+                    DialogHelper.alert("Vui lòng nhập số tiền");
+                }
+                if (txt_banHang_tienKhachDua.getText().length() == 0) {
+                    DialogHelper.alert("Không được để trống");
+                }
+            } catch (Exception e) {
+                DialogHelper.alert("Tiền đưa phải là số!");
+                e.printStackTrace();
+                return;
+            }
+
             DAO_banHang dao = new DAO_banHang();
             for (Object[] obj : list) {
                 String maCthd = "CTHD" + System.currentTimeMillis();
@@ -75,6 +88,8 @@ public class formThanhToan extends javax.swing.JDialog {
                 dao.insertCTHD(objects);
                 System.out.println("Đã thêm thành công");
                 System.out.println();
+                dispose();
+                this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             }
             DialogHelper.alert("Đã thanh toán thành công!");
         } catch (Exception e) {
@@ -342,8 +357,6 @@ public class formThanhToan extends javax.swing.JDialog {
 
     private void btn_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thanhToanActionPerformed
         thanhToan();
-        dispose();
-        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_btn_thanhToanActionPerformed
 
     private void btn_inHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inHoaDonActionPerformed
