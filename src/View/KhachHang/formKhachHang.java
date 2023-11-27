@@ -157,7 +157,10 @@ public void nhanvien(){
         try {
             String makh = "KH" + System.currentTimeMillis();
             lblKH.setText(makh);
-
+            if(txtHoten.getText().isEmpty()){
+                DialogHelper.alert("Không được để trống họ và tên");
+                return;
+            }
             String hoVaTen = txtHoten.getText();
             java.util.Date ngaySinh = date.getDate();
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
@@ -197,6 +200,10 @@ public void nhanvien(){
     public void updatekh() {
         try {
             String makh = lblKH.getText();
+            if(txtHoten.getText().isEmpty()){
+                DialogHelper.alert("Không được để trống họ và tên");
+                return;
+            }
             String hoVaTen = txtHoten.getText();
             java.util.Date ngaySinh = date.getDate();
             java.sql.Date ngaySinhSQL = new java.sql.Date(ngaySinh.getTime());
