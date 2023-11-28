@@ -129,7 +129,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         edit_btn_update = new javax.swing.JButton();
         edit_btn_Image = new javax.swing.JButton();
         edit_erorMs = new javax.swing.JLabel();
-        edit_date_Date = new com.toedter.calendar.JCalendar();
+        edit_date_Date = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,6 +180,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
         });
 
         edit_btn_Image.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        edit_btn_Image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/a13.jpg"))); // NOI18N
         edit_btn_Image.setText("Ảnh đại diện");
         edit_btn_Image.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         edit_btn_Image.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -225,7 +226,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(edit_rdo_feMale, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(edit_erorMs)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -238,7 +239,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edit_btn_Image, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(edit_txt_maNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -261,9 +262,9 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addComponent(edit_erorMs))
                     .addComponent(edit_date_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(edit_btn_update)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -315,7 +316,7 @@ public class nhanVien_Form_Edit extends javax.swing.JFrame {
     private javax.swing.JButton edit_btn_Image;
     private javax.swing.JButton edit_btn_update;
     private javax.swing.JComboBox<String> edit_cbb_chucVu;
-    private com.toedter.calendar.JCalendar edit_date_Date;
+    private com.toedter.calendar.JDateChooser edit_date_Date;
     private javax.swing.JLabel edit_erorMs;
     private javax.swing.JRadioButton edit_rdo_Male;
     private javax.swing.JRadioButton edit_rdo_feMale;
