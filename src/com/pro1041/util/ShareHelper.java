@@ -38,6 +38,11 @@ public static nhanVien role;
         APP_ICON = icon;
     }
 
+    public static void setUSER(nhanVien USER) {
+        ShareHelper.USER = USER;
+    }
+    
+
     public static void logoff() {
         USER = null;
     }

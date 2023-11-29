@@ -23,7 +23,8 @@ public class nhanVien_data_DAO {
     final String changePassword = "update nhanVien \n"
             + "SET matKhau = ? where maNhanVien = ?";
 
-    final String selectAll = "select * from nhanVien";
+    final String selectAll = "SELECT * FROM nhanVien\n"
+            + "ORDER BY hovaTen";
 
     final String selectID = "Select * from nhanVien where maNhanVien = ?";
 
@@ -31,7 +32,7 @@ public class nhanVien_data_DAO {
             + "(maNhanVien, hoVaTen, matKhau, chucVu, gioiTinh, ngaySinh, canCuocCongDan, soDienThoai, hinhAnh) "
             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    final String selectID_Almost = "Select * from nhanVien where maNhanVien like ?";
+    final String select_Almost = "Select * from nhanVien where maNhanVien like ? and hoVaTen like ?";
     final String deleteQuery = "Delete nhanVien where maNhanVien = ?";
     final String updateQuery = "UPDATE nhanVien \n"
             + "SET maNhanVien = ?,hoVaTen = ?, matKhau = ?, chucVu = ?, gioiTinh = ?, ngaySinh = ?, canCuocCongDan = ?, soDienThoai = ?, hinhAnh = ? "
@@ -41,6 +42,22 @@ public class nhanVien_data_DAO {
             + "from nhanVien "
             + "where maNhanVien = ?";
     final String selectCount_maNhanVien = "Select Count(*) from nhanVien where maNhanVien = ?";
+
+    final String selectStatistiCal = "SELECT\n"
+            + "  nv.maNhanVien as 'Mã Nhân Viên',\n"
+            + "  nv.hoVaten as 'Tên Nhân Viên',\n"
+            + "  COUNT(hd.maNhanVien) as 'Số lượng hóa đơn',\n"
+            + "  Sum(ctHD.soLuong) as 'Số lượng đơn hàng',\n"
+            + "  SUM(ctHD.tongTien) as 'Tổng Tiền'\n"
+            + "FROM\n"
+            + "  nhanVien nv\n"
+            + "  JOIN hoaDon hd ON nv.maNhanVien = hd.maNhanVien\n"
+            + "  JOIN khachHang kh ON kh.maKhachHang = hd.maKhachHang\n"
+            + "  JOIN chiTietHoaDon ctHD ON ctHD.maHoaDon = hd.maHoaDon\n"
+            + "WHERE\n"
+            + "  nv.maNhanVien like ? and ctHD.tongTien > ?\n"
+            + "GROUP BY\n"
+            + "  nv.maNhanVien,nv.hoVaten";
 
     public int getCount_maNv(String id) {
         Object[] args = null;
@@ -84,7 +101,6 @@ public class nhanVien_data_DAO {
 
     public nhanVien selectNhanVien_byID(String ID) {
         ResultSet rs = jdbcHelper.executeQuery(selectID, ID);
-
         try {
             while (rs.next()) {
                 nhanVien nvM = new nhanVien();
@@ -109,8 +125,11 @@ public class nhanVien_data_DAO {
         return null;
     }
 
-    public List<nhanVien> selectNhanVien_byID_almost(String ID) {
-        ResultSet rs = jdbcHelper.executeQuery(selectID_Almost, "%" + ID + "%");
+    public List<nhanVien> selectNhanVien_byIDandHovaTen_almost(String ID, String hovaten) {
+        ResultSet rs = jdbcHelper.executeQuery(select_Almost, "%" + ID + "%", hovaten + "%");
+        System.out.println("sQL: " + select_Almost);
+        System.out.println("ID: " + ID);
+        System.out.println("HovaTEn: " + hovaten);
         List<nhanVien> listNV = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -137,6 +156,10 @@ public class nhanVien_data_DAO {
         return null;
     }
 
+    public ResultSet getStatical(String maNhanVien, double tongTien) {
+        return jdbcHelper.executeQuery(selectStatistiCal, maNhanVien, tongTien);
+    }
+
     public void insert(nhanVien nvM) {
         jdbcHelper.executeUpdate(insertQuery, nvM.getMaNhanVien(), nvM.getHoVaTen(), nvM.getMatKhau(), nvM.getChucVu(),
                 nvM.getGioiTinh(), nvM.getNgaySinh(), nvM.getCanCuocCongDan(), nvM.getSoDienThoai(), nvM.getHinhAnh());
@@ -157,11 +180,19 @@ public class nhanVien_data_DAO {
     }
 
     public static void main(String[] args) {
-//        new nhanVien_data_DAO().nhanVien_Insert(new nhanVien("nv011", "Hồ Minh Nhựt", "123456", false, 
+        try {
+            //        new nhanVien_data_DAO().nhanVien_Insert(new nhanVien("nv011", "Hồ Minh Nhựt", "123456", false,
 //                Boolean.TRUE, new Date(new java.util.Date().getTime()), "0002223", "012345", "404"));
 //        new nhanVien_data_DAO().nhanVien_Delete("123456");
 
-        new nhanVien_data_DAO().insert(new nhanVien("nv0ss", "Hồ Minh Nhựts", "123456", false,
-                Boolean.TRUE, new Date(new java.util.Date().getTime()), null, "0002223", "012345", "404"));
+            ResultSet rs = new nhanVien_data_DAO().getStatical("%%", 1);
+
+// Check if there are rows in the result set
+// Close the ResultSet when done
+            rs.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(nhanVien_data_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

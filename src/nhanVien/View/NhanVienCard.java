@@ -1,6 +1,7 @@
 package nhanVien.View;
 
 import Model.nhanVien;
+import com.pro1041.util.ShareHelper;
 import nhanVien.Controller.Controller_nhanVien_Crud;
 import nhanVien.data.nhanVien_data_DAO;
 import java.awt.BorderLayout;
@@ -8,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +41,7 @@ public class NhanVienCard extends JPanel {
         NhanVienCard.container = container;
         this.setLayout(new BorderLayout());
         this.setBorder(new BevelBorder(BevelBorder.RAISED));
-        System.out.println("n: "+nv.getHinhAnh());
+        System.out.println("n: " + nv.getHinhAnh());
         if (nv.getHinhAnh() == null || nv.getHinhAnh().isEmpty()) {
             nv.setHinhAnh("src\\image\\user.png");
         }
@@ -71,6 +73,40 @@ public class NhanVienCard extends JPanel {
         labelImage = new JLabel();
         Icon icon = new ImageIcon(nv.getHinhAnh());
         labelImage.setIcon(icon);
+
+// Lấy kích thước gốc của hình ảnh
+        int originalWidth = icon.getIconWidth();
+        int originalHeight = icon.getIconHeight();
+
+// Kích thước mong muốn cho JLabel
+        int targetWidth = 160; // Kích thước rộng mong muốn
+        int targetHeight = 140; // Kích thước cao mong muốn
+
+// Tính toán tỷ lệ giữa kích thước gốc và kích thước mong muốn
+        double widthRatio = (double) targetWidth / originalWidth;
+        double heightRatio = (double) targetHeight / originalHeight;
+
+// Tìm tỷ lệ thu nhỏ tốt nhất để hình ảnh vừa khít với kích thước mong muốn
+        double scaleFactor = Math.min(widthRatio, heightRatio);
+
+// Tính toán kích thước mới dựa trên tỷ lệ thu nhỏ
+        int scaledWidth = (int) (originalWidth * scaleFactor);
+        int scaledHeight = (int) (originalHeight * scaleFactor);
+
+// Lấy hình ảnh từ Icon
+        Image originalImage = ((ImageIcon) icon).getImage();
+
+// Thay đổi kích thước của hình ảnh
+        Image resizedImage = originalImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+
+// Tạo một ImageIcon mới từ hình ảnh đã thay đổi kích thước
+        Icon resizedIcon = new ImageIcon(resizedImage);
+
+// Đặt biểu tượng đã thay đổi kích thước vào JLabel
+        labelImage.setIcon(resizedIcon);
+
+// Đặt kích thước mới cho JLabel
+        labelImage.setPreferredSize(new Dimension(scaledWidth, scaledHeight));
 
         labelName = new JLabel("Họ và tên: " + nv.getHoVaTen());
         labelMatKhau = new JLabel("Mật khẩu: " + nv.getMatKhau());
@@ -108,7 +144,6 @@ public class NhanVienCard extends JPanel {
 //        pnMidder.add(labelEmail,midderConstraints);
 //        midderConstraints.gridy = 4;
 //        pnMidder.add(labelMatKhau, midderConstraints);
-
         this.add(pnMidder, BorderLayout.CENTER);
         this.setPreferredSize(new Dimension(300, 340));
 
@@ -128,10 +163,12 @@ public class NhanVienCard extends JPanel {
         btnChangePw.addActionListener(Controller_nhanVien_Crud.getController_nvChangePw(this));
         btn_Security.addActionListener(Controller_nhanVien_Crud.getController_nvUpdateSecurity(this));
 
-        pnFooter.add(btn_Security);
+        if (ShareHelper.USER.getChucVu()) {
+            pnFooter.add(btn_Security);
         pnFooter.add(btnDelete);
         pnFooter.add(btnEdit);
         pnFooter.add(btnChangePw);
+        }
 
         this.add(pnFooter, BorderLayout.SOUTH);
 
@@ -173,7 +210,7 @@ public class NhanVienCard extends JPanel {
 
         updateParent();
     }
-    
+
     public void updateData(String maNv) {
         nhanVienInstance = new nhanVien_data_DAO().selectNhanVien_byID(maNv
         );

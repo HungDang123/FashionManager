@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  * @author hnhut
  */
 public class desktop extends javax.swing.JFrame {
-
+       
     nhanVien_InternalForm internalForm = new nhanVien_InternalForm();
 
     /**
@@ -25,7 +25,7 @@ public class desktop extends javax.swing.JFrame {
     public desktop() {
         initComponents();
         deskTop.setLayout(new BorderLayout());
-        internalForm.showList_nv();
+//        internalForm.showList_nv();
         internalForm.setVisible(true);
          
         deskTop.add(internalForm, BorderLayout.CENTER);

@@ -24,6 +24,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         begin();
+        pictureBox1.setImage(image);
 
     }
 

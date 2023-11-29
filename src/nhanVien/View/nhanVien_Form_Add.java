@@ -91,7 +91,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             nhanVien_txt_CCCD.setBorder(new LineBorder(Color.red));
             isTrue = false;
         } else if (!checkNhanVien.kiemTraDinhDangCCCD(nhanVien_txt_CCCD.getText())) {
-            nhanVien_txt_CCCD.setText("$Căn cước công dân không đúng định dạng");
+            nhanVien_txt_CCCD.setText("$Căn cước công dân không đúng định dạng (gồm 12 số) (Vd: 123456789012)");
             isTrue = false;
         }
         if (!nhanVien_ck_agree.isSelected()) {
@@ -276,8 +276,6 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nhanVien_btn_Add)
-                .addGap(256, 256, 256)
-                .addComponent(nhanVien_ck_agree)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,7 +317,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(nhanVien_txt_Female, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGap(0, 370, Short.MAX_VALUE))
                                     .addComponent(nhanVien_txt_hovaTen)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -333,7 +331,9 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(errorMessage_agree)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nhanVien_ck_agree)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -380,16 +380,16 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addComponent(nhanVien_ck_agree)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nhanVien_btn_Add))
+                            .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(nhanVien_ck_agree)
+                .addGap(7, 7, 7)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nhanVien_btn_Add)
                 .addContainerGap())
         );
 
@@ -415,6 +415,8 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             nvInsert.setMatKhau("1");
             nvDao.insert(nvInsert);
             update();
+            this.dispose();
+            System.out.println("dis");
         }
 
     }//GEN-LAST:event_nhanVien_btn_AddActionPerformed
