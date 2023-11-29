@@ -27,7 +27,9 @@ public class card extends javax.swing.JPanel {
      */
     public card(sanPham sp) {
         initComponents();
-        setIcon(new ImageIcon(this.getClass().getResource("/image/" + sp.getHinhAnh())), lblHinh);
+        if (sp.getHinhAnh() != null) {
+            setIcon(new ImageIcon(this.getClass().getResource("/image/" + sp.getHinhAnh())), lblHinh);
+        }
         lblTen.setText("Tên sản phẩm: " + sp.getTenSanPham());
         lblGia.setText("Giá: " + String.valueOf(df.format(sp.getDonGia())));
         this.idSanPham = sp.getMaSanPham();
@@ -226,6 +228,7 @@ public class card extends javax.swing.JPanel {
         hoverOut();
         if (!jPanel2.isVisible()) {
             hoverOut();
+            System.out.println("a");
         }
     }//GEN-LAST:event_lblHinhMouseExited
 
@@ -251,7 +254,7 @@ public class card extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         int confirmResult = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
-        
+
         if (confirmResult == JOptionPane.YES_OPTION) {
             dao.delete(idSanPham);
             DialogHelper.alert("Xóa thành công");

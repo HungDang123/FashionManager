@@ -4,6 +4,7 @@
  */
 package com.pro1041.dao;
 
+import Model.kichThuoc;
 import Model.sanPham;
 import com.pro1041.util.jdbcHelper;
 import java.sql.ResultSet;
@@ -15,6 +16,10 @@ import java.util.List;
  * @author HUNG
  */
 public class DAO_sanPham implements DAO<sanPham> {
+
+    private final String thongKe = "SELECT S.maSanPham,S.tenSanPham, SUM(c.soLuong) as 'soLuong',SUM(c.tongTien) as 'tongTien' \n"
+            + "FROM sanPham S INNER JOIN chiTietHoaDon c on S.maSanPham = c.maSanPham\n"
+            + "group by S.maSanPham,S.tenSanPham";
 
     @Override
     public List<sanPham> getSelectAll() {
@@ -100,5 +105,34 @@ public class DAO_sanPham implements DAO<sanPham> {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+    
+    public List<Object[]> thongKe() {
+        List<Object[]> list = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.prepareStatement(thongKe).executeQuery();
+            while (rs.next()) {
+                String maSP = rs.getString("maSanPham");
+                String tenSP = rs.getString("tenSanPham");
+                int soLuong = rs.getInt("soLuong");
+                float donGia = rs.getFloat("tongTien");
+                Object[] rowData = {maSP, tenSP, soLuong, donGia};
+                list.add(rowData);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println("Thống kê: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public void insertKichThuoc(kichThuoc k) {
+        try {
+            String sql = "insert into kichThuoc values(?,?,?)";
+            jdbcHelper.executeUpdate(sql, k.getSanPham(), k.getKichThuoc(), k.getsoLuong());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

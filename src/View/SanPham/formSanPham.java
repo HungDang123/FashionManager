@@ -11,7 +11,6 @@ import Model.sanPham;
 import com.pro1041.dao.DAO_sanPham;
 import java.awt.Dimension;
 import View.SanPham.card;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author HUNG
+ * @author Hoang
  */
 public class formSanPham extends javax.swing.JInternalFrame {
 
@@ -46,9 +45,8 @@ public class formSanPham extends javax.swing.JInternalFrame {
         ui.setNorthPane(null);
         loadToData();
         initThongKe();
+        fillThongKe();
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
-//        jPanel1.setLayout(new GridLayout(0, 3, 60, 10));
-
 
         // tìm sản phẩm theo tên
         txtFindByName.getDocument().addDocumentListener(new DocumentListener() {
@@ -111,14 +109,16 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         });
     }
-    
+
     public void loadToData() {
         try {
             list = dao.getSelectAll();
             fillCard();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            e.printStackTrace();
         }
+
     }
 
     public void fillCard() {
@@ -134,12 +134,11 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         }
         repaint();
-//        validate();
     }
 
-    // tìm kiếm sản phẩm theo tên
+    // Tìm kiếm sản phẩm theo tên
     public void findByName() {
-        String searchTerm = txtFindByName.getText().trim().toLowerCase(); // getText FindByName
+        String searchTerm = txtFindByName.getText().trim().toLowerCase(); // getText findByName
         // Lọc list theo từ tìm kiếm
         List<sanPham> filteredListName = list.stream()
                 .filter(sp -> sp.getTenSanPham().toLowerCase().contains(searchTerm))
@@ -164,8 +163,8 @@ public class formSanPham extends javax.swing.JInternalFrame {
         repaint();
         validate();
     }
-    
-    // tìm kiếm sản phẩm theo mã
+
+    // Tìm kiếm sản phẩm theo mã
     public void findByID() {
         String searchTerm = txtFindByID.getText().trim().toLowerCase(); // getText FindByID
         // Lọc list theo từ tìm kiếm
@@ -209,11 +208,10 @@ public class formSanPham extends javax.swing.JInternalFrame {
             default:
                 break;
         }
-//        fillCard();
         displayFilteredResults(filteredOption);
     }
 
-    // lọc sản phẩm
+    // Lọc sản phẩm
     public void locDuLieu() {
         String selectedOption2 = cboLoc.getSelectedItem().toString();
 
@@ -229,24 +227,43 @@ public class formSanPham extends javax.swing.JInternalFrame {
                 displayFilteredResults(filteredListChoice);
                 return;
             case "Áo":
-                // Lọc và chỉ hiển thị sản phẩm có chứa chữ "quần" trong tên
+                // Lọc và chỉ hiển thị sản phẩm có chứa chữ "Áo" trong tên
                 filteredListChoice = list.stream()
                         .filter(sp -> sp.getTenSanPham().toLowerCase().contains("áo"))
+                        .collect(Collectors.toList());
+                displayFilteredResults(filteredListChoice);
+                return;
+            case "Mũ":
+                // Lọc và chỉ hiển thị sản phẩm có chứa chữ "Áo" trong tên
+                filteredListChoice = list.stream()
+                        .filter(sp -> sp.getTenSanPham().toLowerCase().contains("mũ"))
                         .collect(Collectors.toList());
                 displayFilteredResults(filteredListChoice);
                 return;
             default:
                 break;
         }
-//        fillCard();
         displayFilteredResults(filteredList);
     }
-    
-    // bảng thống kê, dùng custom chart
+
+    // Bảng thống kê, dùng custom chart
     public void initThongKe() {
         modelThongKe = new DefaultTableModel();
         String[] cols = new String[]{"Mã sản phẩm", "Tên sản phẩm", "Số lượng", "Số tiền"};
         modelThongKe.setColumnIdentifiers(cols);
+        tblThongKe.setModel(modelThongKe);
+    }
+
+    public void fillThongKe() {
+        modelThongKe.setRowCount(0);
+        List<Object[]> thongKeSP = dao.thongKe();
+
+        if (thongKeSP != null) {
+            for (Object[] rowData : thongKeSP) {
+                modelThongKe.addRow(rowData);
+            }
+        }
+
         tblThongKe.setModel(modelThongKe);
     }
 
@@ -283,6 +300,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
         setPreferredSize(new java.awt.Dimension(1000, 800));
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTabbedPane1.setOpaque(true);
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1000, 700));
 
@@ -332,7 +350,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -369,7 +387,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtFindByID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -397,7 +415,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Thống kê sản phẩm đã bán");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -423,7 +441,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jLabel1)))
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(446, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,7 +457,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Thống kê", jPanel3);

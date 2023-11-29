@@ -1,16 +1,20 @@
 package View.SanPham;
 
+import Model.kichThuoc;
 import Model.sanPham;
 import View.Main;
 import com.pro1041.dao.DAO_sanPham;
 import com.pro1041.util.DialogHelper;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -44,11 +48,29 @@ public class them extends javax.swing.JFrame {
             String nhaCC = cboNhaCC.getSelectedItem().toString();
             float donGia = Float.parseFloat(txtGiaNhap.getText());
             float vat = Float.parseFloat(txtVAT.getText());
-            String imageName = lblHinh.getToolTipText();
-            sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, donGia, nhaCC, moTa, mauSac, imageName,vat);
-            if (dao.selectByID(maSP) == null) {
+            hinhAnh = lblHinh.getToolTipText();
+
+            sanPham sp = new sanPham(maSP, tenSP, loaiSP, xuatXu, donGia, nhaCC, moTa, mauSac, hinhAnh, vat);
+            if (dao.selectByID(sp.getMaSanPham()) == null) {
                 dao.insert(sp);
-                DialogHelper.alert("Thêm thành công");
+                DialogHelper.alert("Thêm sản phẩm thành công");
+                int sizeS = !txtS.getText().isEmpty() ? Integer.parseInt(txtS.getText()) : 0;
+                int sizeXL = !txtXL.getText().isEmpty() ? Integer.parseInt(txtXL.getText()) : 0;
+                int sizeM = !txtM.getText().isEmpty() ? Integer.parseInt(txtM.getText()) : 0;
+                int sizeL = !txtL.getText().isEmpty() ? Integer.parseInt(txtL.getText()) : 0;
+                int[] soLuong = {sizeS, sizeM, sizeL, sizeXL};
+                String[] size = {"S", "M", "L", "XL"};
+                for (int i = 0; i < size.length; i++) {
+                    int soLuongs = soLuong[i];
+                    String sizes = size[i];
+                    if (soLuongs != 0) {
+                        kichThuoc k = new kichThuoc(sp, sizes, soLuongs);
+                        dao.insertKichThuoc(k);
+                        System.out.println("Thêm kích thước thành công!");
+                    } else {
+                        System.out.println("size: " + size[i] + " \n số lượng: " + soLuong[i]);
+                    }
+                }
             } else {
                 dao.update(sp);
                 DialogHelper.alert("Cập nhật thành công");
@@ -57,6 +79,7 @@ public class them extends javax.swing.JFrame {
             System.out.println(dao.selectByID(maSP));
             clear();
         } catch (Exception e) {
+            e.printStackTrace();
             e.printStackTrace();
         }
     }
@@ -118,10 +141,7 @@ public class them extends javax.swing.JFrame {
             txtXL.setEnabled(false);
             cboLoaiSP.setEnabled(false);
             cboNhaCC.setEnabled(false);
-
-//            btnClearForm.setEnabled(false);
         } else {
-//            btnLuu1.setEnabled(true);
             btnThoat.setVisible(false);
             btnLuu1.setVisible(true);
             btnClearForm.setVisible(true);
@@ -139,14 +159,67 @@ public class them extends javax.swing.JFrame {
             txtXL.setEnabled(true);
             cboLoaiSP.setEnabled(true);
             cboNhaCC.setEnabled(true);
-//            btnClearForm.setEnabled(true);
         }
     }
-    
-    public void validateForm() {
-        try {
-            
-        } catch (Exception e) {
+
+    private boolean validateForm() {
+        String tenSP = txtTenSP.getText();
+        String moTa = txtMoTa.getText();
+        String mauSac = txtMauSac.getText();
+        String xuatXu = txtXuatXu.getText();
+        String donGia = txtGiaNhap.getText();
+        String vat = txtVAT.getText();
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Vui lòng không để trống:\n");
+        int sbLength = sb.length();
+        if (tenSP.equals("")) {
+            sb.append("Tên sản phẩm\n");
+        }
+        if (moTa.equals("")) {
+            sb.append("Mô tả\n");
+        }
+        if (mauSac.equals("")) {
+            sb.append("Màu sắc\n");
+        }
+        if (xuatXu.equals("")) {
+            sb.append("Xuất xứ\n");
+        }
+        if (donGia.equals("")) {
+            sb.append("Giá sản phẩm\n");
+        } else {
+            try {
+                Float.parseFloat(donGia); // Attempt to parse donGia
+            } catch (NumberFormatException e) {
+                DialogHelper.alert("Đơn giá phải là số");
+                return true;
+            }
+        }
+        if (vat.equals("")) {
+            sb.append("VAT\n");
+        } else {
+            try {
+                Float.parseFloat(vat); // Attempt to parse vat
+            } catch (NumberFormatException e) {
+                DialogHelper.alert("VAT phải là số");
+                return true;
+            }
+        }
+
+        if (sb.length() > sbLength) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "Invalidation", JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        return false;
+    }
+
+    void numberOnly(KeyEvent evt) {
+        JTextField txt = (JTextField) evt.getSource();
+        if ((evt.getKeyChar() >= 0 && evt.getKeyChar() <= '9' && txt.getText().length() < 10) || (evt.getKeyCode() == 8)) {
+            txt.setEditable(true);
+        } else {
+            txt.setEditable(false);
         }
     }
 
@@ -242,6 +315,11 @@ public class them extends javax.swing.JFrame {
         txtXuatXu.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
 
         txtGiaNhap.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
+        txtGiaNhap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtGiaNhapKeyPressed(evt);
+            }
+        });
 
         txtDonVi.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
 
@@ -459,7 +537,9 @@ public class them extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLuu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuu1ActionPerformed
-        luu();
+        if (!validateForm()) {
+            luu();
+        }
     }//GEN-LAST:event_btnLuu1ActionPerformed
 
     private void btnClearFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearFormActionPerformed
@@ -484,6 +564,11 @@ public class them extends javax.swing.JFrame {
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void txtGiaNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGiaNhapKeyPressed
+        // TODO add your handling code here:
+        numberOnly(evt);
+    }//GEN-LAST:event_txtGiaNhapKeyPressed
 
     /**
      * @param args the command line arguments
@@ -510,6 +595,10 @@ public class them extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(them.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
