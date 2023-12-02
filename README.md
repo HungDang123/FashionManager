@@ -6,7 +6,7 @@
     <img src="https://skillicons.dev/icons?i=java"/>
 </div>
 <hr/>
-<h3 align="center">Thành viên trong nhóm:</h3>
+<h3 align="center">Các thành viên trong nhóm:</h3>
 <p align="center">Đặng Thành Hùng (Trưởng nhóm)</p>
 <p align="center">Phan Huy Hoàng</p>
 <p align="center">Nguyễn Thị Trà My</p>
