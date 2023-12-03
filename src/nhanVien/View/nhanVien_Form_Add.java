@@ -165,21 +165,21 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 23)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Lexend Deca", 1, 23)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 0));
         jLabel5.setText("Thêm nhân viên");
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lexend Deca", 0, 15)); // NOI18N
         jLabel1.setText("Trở lại");
 
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 17)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lexend Deca", 1, 17)); // NOI18N
         jLabel2.setText("Điền thông tin");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         jLabel3.setText("Mã nhân viên");
 
         nhanVien_txt_maNV.setBackground(new java.awt.Color(0, 0, 0));
-        nhanVien_txt_maNV.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        nhanVien_txt_maNV.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         nhanVien_txt_maNV.setForeground(new java.awt.Color(255, 255, 255));
         nhanVien_txt_maNV.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         nhanVien_txt_maNV.setEnabled(false);
@@ -190,31 +190,34 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         jLabel4.setText("Họ và tên");
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         jLabel6.setText("Chức vụ");
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         jLabel7.setText("Giới tính");
 
-        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         jLabel8.setText("Ngày sinh");
 
         nhanVien_group_gioiTinh.add(nhanVien_rdo_Male);
+        nhanVien_rdo_Male.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         nhanVien_rdo_Male.setSelected(true);
         nhanVien_rdo_Male.setText("Nam");
 
         nhanVien_group_gioiTinh.add(nhanVien_txt_Female);
+        nhanVien_txt_Female.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         nhanVien_txt_Female.setText("Nữ");
 
+        nhanVien_cbb_chucVu.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         nhanVien_cbb_chucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nhân viên", "Quản lý" }));
 
         jLabel9.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel9.setText("Căn cước công dân");
 
-        nhanVien_ck_agree.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
+        nhanVien_ck_agree.setFont(new java.awt.Font("Lexend Deca", 3, 14)); // NOI18N
         nhanVien_ck_agree.setText("Đồng ý với các điều khoản và quy định của chúng tôi");
         nhanVien_ck_agree.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,9 +226,10 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
         });
 
         nhanVien_btn_Add.setBackground(new java.awt.Color(51, 51, 51));
-        nhanVien_btn_Add.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        nhanVien_btn_Add.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         nhanVien_btn_Add.setForeground(new java.awt.Color(255, 255, 255));
         nhanVien_btn_Add.setText("Tạo mới");
+        nhanVien_btn_Add.setOpaque(true);
         nhanVien_btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nhanVien_btn_AddActionPerformed(evt);
@@ -240,7 +244,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
 
         errorMessage_agree.setForeground(new java.awt.Color(0, 102, 102));
 
-        nhanVien_txt_hovaTen.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        nhanVien_txt_hovaTen.setFont(new java.awt.Font("Lexend Deca", 0, 16)); // NOI18N
         nhanVien_txt_hovaTen.setMargin(new java.awt.Insets(0, 6, 0, 6));
         nhanVien_txt_hovaTen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -253,7 +257,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             }
         });
 
-        nhanVien_txt_CCCD.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        nhanVien_txt_CCCD.setFont(new java.awt.Font("Lexend Deca", 0, 16)); // NOI18N
         nhanVien_txt_CCCD.setMargin(new java.awt.Insets(0, 6, 0, 6));
         nhanVien_txt_CCCD.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -275,8 +279,10 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nhanVien_btn_Add)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nhanVien_ck_agree)
+                    .addComponent(nhanVien_btn_Add))
+                .addContainerGap(203, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -307,17 +313,14 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nhanVien_txt_maNV)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(errorMessage_ngaySinh))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(nhanVien_rdo_Male, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(nhanVien_txt_Female, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 370, Short.MAX_VALUE))
+                                        .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(errorMessage_ngaySinh))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(nhanVien_rdo_Male, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(nhanVien_txt_Female, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(nhanVien_cbb_chucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(nhanVien_txt_hovaTen)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -331,9 +334,7 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(errorMessage_agree)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nhanVien_ck_agree)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -380,16 +381,16 @@ public class nhanVien_Form_Add extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(nhanVien_txt_CCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addComponent(nhanVien_ck_agree)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nhanVien_btn_Add))
                     .addComponent(nhanVien_txt_Date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(nhanVien_ck_agree)
-                .addGap(7, 7, 7)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(errorMessage_agree, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nhanVien_btn_Add)
                 .addContainerGap())
         );
 

@@ -73,8 +73,7 @@ public class nhanVien_data_DAO {
 
     public List<nhanVien> selectAll() {
         List<nhanVien> listNV = new ArrayList<>();
-        Object[] obj = null;
-        ResultSet rs = jdbcHelper.executeQuery(selectAll, obj);
+        ResultSet rs = jdbcHelper.executeQuery(selectAll);
         try {
             while (rs.next()) {
                 nhanVien nvM = new nhanVien();

@@ -1,13 +1,17 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Model;
 
 import java.io.Serializable;
 
 /**
  *
- * @author HOANG
+ * @author HUNG
  */
-public class kichThuoc implements Serializable{
+public class kichThuoc implements Serializable {
+
     private String maKichThuoc,kichThuoc;
     private sanPham sanPham;
     private int soLuong;
@@ -15,7 +19,7 @@ public class kichThuoc implements Serializable{
     public kichThuoc() {
     }
 
-    public kichThuoc(sanPham sanPham, String kichThuoc, int soLuong) {
+    public kichThuoc( sanPham sanPham, String kichThuoc, int soLuong) {
         this.sanPham = sanPham;
         this.kichThuoc = kichThuoc;
         this.soLuong = soLuong;
@@ -57,5 +61,5 @@ public class kichThuoc implements Serializable{
     public void setMaKichThuoc(String maKichThuoc) {
         this.maKichThuoc = maKichThuoc;
     }
-    
+
 }

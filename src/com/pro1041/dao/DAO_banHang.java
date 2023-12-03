@@ -8,6 +8,7 @@ package com.pro1041.dao;
 import Model.chiTietHoaDon;
 import Model.hoaDon;
 import Model.khachHang;
+import Model.kichThuoc;
 import Model.nhanVien;
 import Model.sanPham;
 import com.pro1041.util.jdbcHelper;
@@ -49,6 +50,11 @@ public class DAO_banHang {
             + "    SUM(c.tongTien) OVER (PARTITION BY c.maHoaDon) AS 'tongTiens'\n"
             + "FROM chiTietHoaDon c\n"
             + "GROUP BY c.maCthd, c.maSanPham,c.soLuong,c.tongTien,c.ngayLapHoaDon,c.maHoaDon,c.kichThuoc;";
+    private final String getAllCTHD1 = "SELECT c.maCthd,c.maSanPham, c.soLuong,c.tongTien,c.ngayLapHoaDon,c.maHoaDon,c.kichThuoc, SUM(c.tongTien)\n"
+            + "OVER (PARTITION BY c.maHoaDon) AS 'tongTiens'\n"
+            + "            FROM chiTietHoaDon c inner join hoaDon d on d.maHoaDon = c.maHoaDon \n"
+            + "            where d.maNhanVien = ? \n"
+            + "            GROUP BY c.maCthd, c.maSanPham,c.soLuong,c.tongTien,c.ngayLapHoaDon,c.maHoaDon,c.kichThuoc";
 //    private final String getAllCTHD1 = "select *,  from chiTietHoaDon  where";
     private final String getHD = "SELECT distinct s.tenSanPham, s.mauSac,s.donGia,c.kichThuoc,c.soLuong,\n"
             + "  (s.donGia * c.soLuong * s.VAT / 100) AS 'tienVAT',\n"
@@ -90,6 +96,28 @@ public class DAO_banHang {
             + " year(c.ngayLapHoaDon) = ?\n"
             + " and MONTH(c.ngayLapHoaDon) = ?";
     private final String updateCTHD = "update chiTietHoaDon set kichThuoc = ? , soLuong = ?,tongTien = ? where maCthd = ?";
+    private final String chartByMonth = "SELECT MONTH(ngayLapHoaDon) AS Thang, SUM(tongTien) AS TongTien\n"
+            + "FROM chiTietHoaDon\n"
+            + "WHERE YEAR(ngayLapHoaDon) = ?\n"
+            + "GROUP BY MONTH(ngayLapHoaDon)\n"
+            + "ORDER BY MONTH(ngayLapHoaDon)";
+    private final String chartByYear = "SELECT year(ngayLapHoaDon) AS Nam, SUM(tongTien) AS TongTien\n"
+            + "FROM chiTietHoaDon\n"
+            + "GROUP BY year(ngayLapHoaDon)\n"
+            + "ORDER BY year(ngayLapHoaDon)";
+    private final String chartByDatePart = "SELECT DATEPART(QUARTER, ngayLapHoaDon) AS Quy, SUM(tongTien) AS TongTien\n"
+            + "FROM chiTietHoaDon c\n"
+            + "where YEAR(c.ngayLapHoaDon) = ?\n"
+            + "GROUP BY DATEPART(QUARTER, ngayLapHoaDon)\n"
+            + "ORDER BY DATEPART(QUARTER, ngayLapHoaDon)";
+    private final String findSizes = "select * from kichThuoc "
+            + "where maSanPham = ? and kichThuoc = ?";
+    private final String khoSP = "UPDATE kichThuoc\n"
+            + "SET soLuong = CASE\n"
+            + "    WHEN soLuong - ? >= 0 THEN soLuong - ?\n"
+            + "    ELSE soLuong\n"
+            + "    END\n"
+            + "WHERE maSanPham = ? AND kichThuoc = ?";
 
     public List<sanPham> SelectSanPham() {
         List<sanPham> list = new ArrayList<>();
@@ -398,6 +426,34 @@ public class DAO_banHang {
         return null;
     }
 
+    public List<chiTietHoaDon> getAllCTHD1(String id) {
+        List<chiTietHoaDon> list = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(getAllCTHD1, id);
+            while (rs.next()) {
+                String maCTHD = rs.getString("maCthd");
+                String maSp = rs.getString("maSanPham");
+                sanPham sanPham = findByMaSP(maSp);
+                int soLuong = rs.getInt("soLuong");
+                String kichThuoc = rs.getString("kichThuoc");
+                Float tongTien = rs.getFloat("tongTiens");
+                Date ngayLapHoaDon = rs.getDate("ngayLapHoaDon");
+                String maHoaDon = rs.getString("maHoaDon");
+                hoaDon hd = findByMaHD(maHoaDon);
+                if (hd == null) {
+                    System.out.println("hd null");
+                    return null;
+                }
+                chiTietHoaDon cthd = new chiTietHoaDon(maCTHD, sanPham, soLuong, kichThuoc, tongTien, ngayLapHoaDon, hd);
+                list.add(cthd);
+            }
+            return list;
+        } catch (Exception e) {
+            System.out.println("GetAllCTHD1: " + e.getMessage());
+        }
+        return null;
+    }
+
     public List<Object[]> getHD(String hd) {
         List<Object[]> list = new ArrayList<>();
         try {
@@ -548,7 +604,81 @@ public class DAO_banHang {
             jdbcHelper.executeUpdate(insertTemp, objArray[0], objArray[1], objArray[2], objArray[3], objArray[4], objArray[5], objArray[6]);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Insert cthd: " + e.getMessage());
+            System.out.println("Insert cthd1: " + e.getMessage());
+        }
+    }
+
+    public List<Object[]> chartByMonth(int year) {
+        List<Object[]> f = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(chartByMonth, year);
+            while (rs.next()) {
+                int thang = rs.getInt("Thang");
+                Float tongTien = rs.getFloat("TongTien");
+                Object[] o = new Object[]{thang, tongTien};
+                f.add(o);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "ChartByMonth");
+        }
+        return f;
+    }
+
+    public List<Object[]> chartByDatepart(int year) {
+        List<Object[]> f = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(chartByDatePart, year);
+            while (rs.next()) {
+                int quy = rs.getInt("Quy");
+                Float tongTien = rs.getFloat("TongTien");
+                Object[] o = new Object[]{quy, tongTien};
+                f.add(o);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "ChartByDatepart");
+        }
+        return f;
+    }
+
+    public List<Object[]> chartByYear() {
+        List<Object[]> f = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(chartByYear);
+            while (rs.next()) {
+                int nam = rs.getInt("Nam");
+                Float tongTien = rs.getFloat("TongTien");
+                Object[] o = new Object[]{nam, tongTien};
+                f.add(o);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "ChartByYear");
+        }
+        return f;
+    }
+
+    public kichThuoc findSizes(String maSp, String size) {
+        kichThuoc k = null;
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(findSizes, maSp,size);
+            if(rs.next()){
+                String maSanPham = rs.getString("maSanPham");
+                String kichThuocs = rs.getString("kichThuoc");
+                int soLuong = rs.getInt("soLuong");
+                k = new kichThuoc(findByMaSP(maSanPham), kichThuocs, soLuong);
+            }
+        } catch (Exception e) {
+            System.out.println("FindSize: "+e.getMessage());
+            e.printStackTrace();
+        }
+        return k;
+    }
+
+    public void updateKho(int soLuong, String maSp, String kichThuoc) {
+        try {
+            jdbcHelper.executeUpdate(khoSP, soLuong, soLuong, maSp, kichThuoc);
+        } catch (Exception e) {
+            System.out.println("updateKho: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

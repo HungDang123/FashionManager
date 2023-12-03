@@ -14,13 +14,14 @@ import java.sql.*;
  */
 public class jdbcHelper {
 
-    static String url = "jdbc:sqlserver://localhost:1433;databaseName=PRO1041;encrypt=false";
-    static String user = "minhnhut";
-    static String pass = "1";
+    static String url = "jdbc:sqlserver://localhost:1433;TrustServerCertificate=True;databaseName=quanLyCuaHangThoiTrang;encrypt=false";
+    static String user = "sa";
+    static String pass = "hung";
 
     static {
         try {
         } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -32,14 +33,13 @@ public class jdbcHelper {
         } else {
             pr = con.prepareStatement(sql);
         }
-        if (args != null) {
-            for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             pr.setObject(i + 1, args[i]);
-        }
         }
         return pr;
     }
-    public static void executeUpdate(String sql,Object...args){
+
+    public static void executeUpdate(String sql, Object... args) {
         try {
             PreparedStatement pr = prepareStatement(sql, args);
             try {
@@ -51,13 +51,13 @@ public class jdbcHelper {
             System.out.println(e.getMessage());
         }
     }
-    public static ResultSet executeQuery(String sql,Object...args){
+
+    public static ResultSet executeQuery(String sql, Object... args) {
         try {
             PreparedStatement pr = prepareStatement(sql, args);
-            return  pr.executeQuery();
+            return pr.executeQuery();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException();
         }
-    } 
+    }
 }

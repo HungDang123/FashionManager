@@ -13,13 +13,6 @@ import javax.swing.JLayeredPane;
 
 public class PictureBox extends JLayeredPane {
 
-    public PictureBox(Icon image) {
-        getAutoSize(image);
-        this.image = image;
-        this.setImage(image);
-        System.out.println("srcs: " + image.toString());
-    }
-
     public Icon getImage() {
         return image;
     }

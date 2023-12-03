@@ -52,8 +52,8 @@ public class DAO_sanPham implements DAO<sanPham> {
         try {
             String sql = "exec addSanPham ?,?,?,?,?,?,?,?,?,?";
             jdbcHelper.executeUpdate(sql, entity.getMaSanPham(), entity.getTenSanPham(),
-                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getNhaCungCap(),
-                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh(), entity.getVAT());
+                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getVAT(), entity.getNhaCungCap(),
+                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh());
         } catch (Exception e) {
             System.out.println("Add sản phẩm: " + e.getMessage());
         }
@@ -74,8 +74,8 @@ public class DAO_sanPham implements DAO<sanPham> {
         try {
             String sql = "exec updateSanPham ?,?,?,?,?,?,?,?,?,?";
             jdbcHelper.executeUpdate(sql, entity.getMaSanPham(), entity.getTenSanPham(),
-                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getNhaCungCap(),
-                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh(), entity.getVAT());
+                    entity.getLoaiSanPham(), entity.getXuatXu(), entity.getDonGia(), entity.getVAT(), entity.getNhaCungCap(),
+                    entity.getMoTa(), entity.getMauSac(), entity.getHinhAnh());
         } catch (Exception e) {
             System.out.println("Update người học" + e.getMessage());
         }
@@ -129,7 +129,7 @@ public class DAO_sanPham implements DAO<sanPham> {
     public void insertKichThuoc(kichThuoc k) {
         try {
             String sql = "insert into kichThuoc values(?,?,?)";
-            jdbcHelper.executeUpdate(sql, k.getSanPham(), k.getKichThuoc(), k.getsoLuong());
+            jdbcHelper.executeUpdate(sql, k.getSanPham().getMaSanPham(), k.getKichThuoc(), k.getsoLuong());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

@@ -11,18 +11,20 @@ import java.awt.Panel;
 import javax.swing.JPanel;
 import Model.nhanVien;
 import nhanVien.data.nhanVien_data_DAO;
-import com.pro1041.datechooser.Button;
 import com.pro1041.util.ShareHelper;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -34,24 +36,20 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
      * Creates new form nhanVien_InternalForm
      */
     private DefaultTableModel statistiCal_defaultModel = new DefaultTableModel();
+    private TableRowSorter<DefaultTableModel> rowSorter;
 
     public nhanVien_InternalForm() {
         initComponents();
-        if (ShareHelper.USER == null) {
-            nhanVien nv = new nhanVien();
-            nv.setChucVu(false);
-            ShareHelper.setUSER(nv);
-            System.out.println("Tự khởi tạo User để tránh lỗi khi mở thẳng MÀ Chưa đăng nhập");
-        }
-        if (ShareHelper.USER.getChucVu()) {
+        System.out.println(ShareHelper.USER.getChucVu());
+        nhanVien nv = ShareHelper.USER;
+        if (nv.getChucVu()) {
             nhanVien_container.setLayout(new GridLayout(0, 3));
         } else {
-            JOptionPane.showMessageDialog(this, "Bạn Chỉ có quyền xem mục này (By:tuNguyen)");
+//            JOptionPane.showMessageDialog(this, "Bạn Chỉ có quyền xem mục này");
             Add.setVisible(false);
         }
         showList_nv();
         setSize(1000, 700);
-
     }
 
     public void update() {
@@ -88,15 +86,16 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         nhanVien_container.repaint();
     }
 
-    public void statistical_select(String manv,double tongtien) {
+    public void statistical_select(String manv, double tongtien) {
         statistiCal_defaultModel.setRowCount(0);
         statistiCal_defaultModel.setColumnCount(0);
         System.out.println("clera");
         String[] columns = {"Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Số lượng đơn hàng", "Tổng tiền"};
+
         for (String column : columns) {
             statistiCal_defaultModel.addColumn(column);
         }
-        ResultSet rs = new nhanVien_data_DAO().getStatical(manv,tongtien);
+        ResultSet rs = new nhanVien_data_DAO().getStatical(manv, tongtien);
         try {
             while (rs.next()) {
                 String maNhanVien = rs.getString("Mã Nhân Viên");
@@ -104,11 +103,11 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
                 int soLuongHoaDon = rs.getInt("Số lượng hóa đơn");
                 int soLuongDonHang = rs.getInt("Số lượng đơn hàng");
                 double tongTien = rs.getDouble("Tổng Tiền");
-                
-                statistiCal_defaultModel.addRow(new Object[] {
-                    maNhanVien,tenNhanVien,soLuongHoaDon,soLuongDonHang,tongTien
+
+                statistiCal_defaultModel.addRow(new Object[]{
+                    maNhanVien, tenNhanVien, soLuongHoaDon, soLuongDonHang, tongTien
                 });
-                
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(nhanVien_InternalForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,6 +115,20 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         statistiCal_Table.setModel(statistiCal_defaultModel);
     }
 
+    public void search_id(String id) {
+        rowSorter = new TableRowSorter<>(statistiCal_defaultModel);
+        statistiCal_Table.setRowSorter(rowSorter);
+        if (id.isEmpty()) {
+            rowSorter.setRowFilter(null);
+        } else {
+            RowFilter<DefaultTableModel, Object> rowFiler = RowFilter.regexFilter(id, 0);
+            rowSorter.setRowFilter(rowFiler);
+        }
+    }
+//  private void statistiCal_nhanVienBillIDCaretUpdate(javax.swing.event.CaretEvent evt) {
+//        // TODO add your handling code here:
+//        search_id(statistiCal_nhanVienBill.getText());
+//  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -378,7 +391,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
 
     private void nhanVien_txt_searchIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nhanVien_txt_searchIDCaretUpdate
         // TODO add your handling code here:
-        showList_nv_byID_almost(nhanVien_txt_searchID.getText(), nhanVien_txt_searchHovaTen.getText());
+        search_id(nhanVien_txt_searchID.getText());
     }//GEN-LAST:event_nhanVien_txt_searchIDCaretUpdate
 
     private void nhanVien_txt_searchHovaTenCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_nhanVien_txt_searchHovaTenCaretUpdate
@@ -391,19 +404,17 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         double tongTien;
         if (statistiCal_totalBill.getText().isEmpty()) {
             tongTien = 0;
+        } else {
+            tongTien = Double.parseDouble(statistiCal_totalBill.getText());
         }
-        else {
-          tongTien =  Double.parseDouble(statistiCal_totalBill.getText());
-        }
-        
+
         String mamv;
         if (statistiCal_nhanVienBill.getText().isEmpty()) {
             mamv = "%%";
-        }
-        else {
+        } else {
             mamv = statistiCal_nhanVienBill.getText();
         }
-        statistical_select(mamv,tongTien );
+        statistical_select(mamv, tongTien);
 
     }//GEN-LAST:event_statistiCal_getBillActionPerformed
 
@@ -416,8 +427,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if (jTabbedPane2.getSelectedIndex() == 1) {
             statistical_select("%%", 1);
-        }
-        else {
+        } else {
 //            showList_nv();
         }
     }//GEN-LAST:event_jTabbedPane2StateChanged

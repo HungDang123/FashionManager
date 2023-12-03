@@ -76,7 +76,7 @@ public class card extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setPreferredSize(new java.awt.Dimension(267, 350));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(228, 225, 214));
         jPanel1.setPreferredSize(new java.awt.Dimension(257, 310));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -88,7 +88,7 @@ public class card extends javax.swing.JPanel {
         });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblHinh.setBackground(new java.awt.Color(255, 255, 255));
+        lblHinh.setBackground(new java.awt.Color(228, 225, 214));
         lblHinh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHinh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblHinh.setOpaque(true);
@@ -111,7 +111,7 @@ public class card extends javax.swing.JPanel {
         lblGia.setText("Giá:");
         jPanel1.add(lblGia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(228, 225, 214));
         jPanel2.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -119,7 +119,7 @@ public class card extends javax.swing.JPanel {
             }
         });
 
-        btnXem.setBackground(new java.awt.Color(123, 213, 0));
+        btnXem.setBackground(new java.awt.Color(145, 169, 120));
         btnXem.setFont(new java.awt.Font("Lexend Deca", 0, 12)); // NOI18N
         btnXem.setText("Xem");
         btnXem.addActionListener(new java.awt.event.ActionListener() {

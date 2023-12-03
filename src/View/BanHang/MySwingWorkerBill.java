@@ -11,14 +11,12 @@ import javax.swing.*;
 public class MySwingWorkerBill extends SwingWorker<Void, Void> {
 
     private JDialog dialog;
-    public static float tongTien;
     public static hoaDon hoaDon;
     public static List<Object[]> list;
 
-    public MySwingWorkerBill(JDialog dialog, float tongTien, hoaDon hoaDon, List<Object[]> list) {
+    public MySwingWorkerBill(JDialog dialog, hoaDon hoaDon, List<Object[]> list) {
         this.dialog = dialog;
         this.hoaDon = hoaDon;
-        this.tongTien = tongTien;
         this.list = list;
     }
 
@@ -29,7 +27,7 @@ public class MySwingWorkerBill extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                Bill dialog = new Bill(new javax.swing.JFrame(), true, tongTien, hoaDon, list);
+                Bill dialog = new Bill(new javax.swing.JFrame(), true, hoaDon, list);
                 dialog.setVisible(true);
             }
         });

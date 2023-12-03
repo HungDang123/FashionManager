@@ -24,11 +24,11 @@ public class DAO_nhanVien {
 
     public List<nhanVien> getALL_nv() {
         try {
-        List<nhanVien> listNV = new ArrayList<>();
+            List<nhanVien> listNV = new ArrayList<>();
 //       Gọi connection
-        Object[] params = null;
-        ResultSet rs = (ResultSet) jdbcHelper.prepareStatement(sql_getAll);
-        
+            Object[] params = null;
+            ResultSet rs = (ResultSet) jdbcHelper.prepareStatement(sql_getAll).executeQuery();
+
             while (rs.next()) {
                 nhanVien nhanVien = new nhanVien();
                 nhanVien.setMaNhanVien(rs.getString("manhanvien"));
@@ -40,20 +40,21 @@ public class DAO_nhanVien {
                 nhanVien.setCanCuocCongDan(rs.getString("cancuoccongdan"));
                 nhanVien.setSoDienThoai(rs.getString("sodienthoai"));
                 nhanVien.setHinhAnh(rs.getString("hinhanh"));
-                
+
                 listNV.add(nhanVien);
             }
-            
+
             return listNV;
         } catch (SQLException ex) {
             Logger.getLogger(DAO_nhanVien.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    public nhanVien findById(String id){
+
+    public nhanVien findById(String id) {
         try {
             ResultSet rs = jdbcHelper.executeQuery(findByID, id);
-            if(rs.next()){
+            if (rs.next()) {
                 nhanVien nhanVien = new nhanVien();
                 nhanVien.setMaNhanVien(rs.getString("manhanvien"));
                 nhanVien.setHoVaTen(rs.getString("hovaten"));
@@ -64,13 +65,40 @@ public class DAO_nhanVien {
                 nhanVien.setCanCuocCongDan(rs.getString("cancuoccongdan"));
                 nhanVien.setSoDienThoai(rs.getString("sodienthoai"));
                 nhanVien.setHinhAnh(rs.getString("hinhanh"));
-                
+
                 return nhanVien;
             }
         } catch (Exception e) {
-            System.out.println("Find by ID: "+e.getMessage());
+            System.out.println("Find by ID: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String[] thongKe(String id) {
+        String[] obj = null;
+        try {
+            String sql = "SELECT\n"
+                    + "    dbo.GetHoaDonCountByMaNhanVien(?) AS soHd,\n"
+                    + "    COUNT(c.maCthd) AS soCTHD,\n"
+                    + "    SUM(c.tongTien) AS tongTien\n"
+                    + "FROM\n"
+                    + "    hoaDon h\n"
+                    + "    INNER JOIN chiTietHoaDon c ON h.maHoaDon = c.maHoaDon\n"
+                    + "WHERE\n"
+                    + "    h.maNhanVien = ?\n"
+                    + "GROUP BY\n"
+                    + "    h.maNhanVien;";
+            ResultSet rs = jdbcHelper.executeQuery(sql, id,id);
+            if(rs.next()){
+                String soHD = rs.getString("soHd");
+                String soSP = rs.getString("soCTHD");
+                String tongTien = rs.getString("tongTien");
+                obj= new String[]{soHD,soSP,tongTien};
+            }
+        } catch (Exception e) {
+            System.out.println("thongke:"+e.getMessage());
+        }
+        return obj;
     }
 }

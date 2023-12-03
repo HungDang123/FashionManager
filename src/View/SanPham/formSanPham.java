@@ -299,27 +299,29 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(1000, 800));
 
-        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setBackground(new java.awt.Color(248, 247, 241));
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTabbedPane1.setOpaque(true);
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1000, 700));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(248, 247, 241));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(248, 247, 241));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 1200));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
         jScrollPane1.setViewportView(jPanel1);
 
+        jLabel4.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel4.setText("Lọc");
 
+        jLabel2.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel2.setText("Sắp xếp");
 
-        btnThem.setBackground(new java.awt.Color(123, 213, 0));
-        btnThem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnThem.setBackground(new java.awt.Color(145, 169, 120));
+        btnThem.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +329,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel5.setText("Tìm theo tên");
 
         txtFindByName.addActionListener(new java.awt.event.ActionListener() {
@@ -335,6 +338,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel6.setText("Tìm theo mã");
 
         txtFindByID.addActionListener(new java.awt.event.ActionListener() {
@@ -350,7 +354,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

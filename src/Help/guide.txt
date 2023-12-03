@@ -1,0 +1,32 @@
+- Cài  file PRO1041.sql và execute query tất cả trong file sql
+
+- Vào trang chủ đăng nhập
+	username : NV001	password: password1
+	username : NV002	password: password2
+	username : NV003	password: password3
+	username : NV004	password: password4
+	username : NV005	password: password5
+- Quản lý bán hàng muốn sử dụng phải tạo khách hàng bằng cách nhấn vào NÚT thêm khách hàng
++ Sau khi tạo xong thì phải nhập số điện thoại để trang hiện thông tin khách hàng, sau đó bấm vào tạo hóa đơn
++ Hiển thị bảng sản phẩm để mình mua và lựa chọn số lượng kích thước
++ Bấm nút thanh toán để thanh toán 
++ Nếu muốn đợi và thanh toán người khác thì phải nhấn vào nút chờ cho danh sách sản phẩm vào danh sách chờ
++ Tab xem hóa đơn cho phép xem các hóa đơn đã bán được của admin, đối với admin là được xem tất cả, còn nhân viên là chỉ được xem những sản phẩm mà nhân viên đó bán được
++ Có thể thay đổi số lượng và kích thước của hóa đơn bằng cách chỉnh sửa trực tiếp trên bảng
++ Tab thống kê có 3 loại thống kê đó là theo năm,tháng,quý
+
+- Quản lý nhân viên chỉ admin mới được quản lý
++ Có các chức năng thêm,xóa ,sửa,thống kê được nhân viên
+
+- Quản lý khách hàng 
++ Hiển thị ra danh sách khách hàng
++ Thêm khách hàng và khi nhấn vào bảng thì sẽ xóa hoặc cập nhật thông tin khách hàng
+chỉ admin mới được sửa và xóa thông tin khách hàng
++ Tab thống kê cho phép xem số tiền khách hàng đã mua
+
+- Quản lý sản phẩm 
++ Hiển thị ra danh sách sản phẩm
++ Thêm sản phẩm và khi nhấn vào bảng thì sẽ xóa hoặc cập nhật thông tin sản phẩm
+chỉ admin mới được sửa và xóa thông tin sản phẩm
+
+

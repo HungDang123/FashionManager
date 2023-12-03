@@ -48,23 +48,22 @@ public class nhanVien_Form_changePassword extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Thay Đổi Mật Khẩu");
 
-        changePw_ID.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        changePw_ID.setFont(new java.awt.Font("Lexend Deca", 1, 14)); // NOI18N
         changePw_ID.setText("Mã nhân viên");
 
-        jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lexend Deca", 0, 16)); // NOI18N
         jLabel2.setText("Nhập mật khẩu mới");
 
-        changePw_txt_newPW.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        changePw_txt_newPW.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         changePw_txt_newPW.setMargin(new java.awt.Insets(5, 9, 5, 9));
 
-        changePw_btn_change.setBackground(new java.awt.Color(153, 0, 0));
-        changePw_btn_change.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        changePw_btn_change.setForeground(new java.awt.Color(153, 255, 255));
+        changePw_btn_change.setBackground(new java.awt.Color(145, 169, 120));
+        changePw_btn_change.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
+        changePw_btn_change.setForeground(new java.awt.Color(255, 255, 255));
         changePw_btn_change.setText("CHANGE PASSWORD");
         changePw_btn_change.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,7 +101,7 @@ public class nhanVien_Form_changePassword extends javax.swing.JFrame {
                 .addComponent(changePw_txt_newPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(changePw_btn_change)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         pack();

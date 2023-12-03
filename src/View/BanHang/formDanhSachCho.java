@@ -6,6 +6,7 @@ package View.BanHang;
 
 import Model.hoaDon;
 import Model.hoaDonContainer;
+import Model.kichThuoc;
 import Model.sanPham;
 import com.pro1041.dao.DAO_banHang;
 import com.pro1041.util.DateHelper;
@@ -16,6 +17,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.Date;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -29,6 +31,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
     DAO_banHang dao = new DAO_banHang();
     private TableRowSorter<DefaultTableModel> rowSorter;
     private List<Object> list = new ArrayList<>();
+    DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
 
     /**
      * Creates new form formDanhSachCho
@@ -57,7 +60,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
                 tongTien += (Float) objArray[7] + (Float) objArray[6];
             }
             model.addRow(new Object[]{h.getHd().getMaHoaDon(), h.getHd().getMaKhachHang().getHoVaTen(),
-                h.getHd().getMaKhachHang().getSoDienThoai(), tongTien});
+                h.getHd().getMaKhachHang().getSoDienThoai(), decimalFormat.format(tongTien)});
         }
     }
 
@@ -102,6 +105,24 @@ public class formDanhSachCho extends javax.swing.JDialog {
                     java.sql.Date ngayLapHD = new java.sql.Date(DateHelper.now().getTime());
                     String maHd = listKh.get(index).getHd().getMaHoaDon();
                     String kichThuoc = (String) objArray[4];
+                    sanPham sp = dao.findByMaSP(maSp);
+                    try {
+                        kichThuoc k = dao.findSizes(maSp, kichThuoc);
+                        if (k != null) {
+                            if (k.getsoLuong() - soLuong >= 0) {
+                                dao.updateKho(soLuong, maSp, kichThuoc);
+                                System.out.println("Đã cập nhật thành công kho");
+                                System.out.println("Check có tồn kho");
+                            } else {
+                                DialogHelper.alert("Sản phẩm " + sp.getTenSanPham() + " có Size " + kichThuoc + " không còn hàng trong kho!");
+                                return;
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Check không tồn kho: " + e.getMessage());
+                        e.printStackTrace();
+                        return;
+                    }
                     Object obj = new Object[]{maCthd, maSp, maHd, soLuong, tongTien, ngayLapHD, kichThuoc};
                     list.clear();
                     list.add(obj);
@@ -141,7 +162,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Chờ thanh toán");
@@ -165,6 +186,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbl_banHang_danhSachCho);
 
+        jLabel2.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel2.setText("Tìm kiếm");
 
         txt_banHang_find.addCaretListener(new javax.swing.event.CaretListener() {
@@ -175,6 +197,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
+        btn_banHang_thanhToan.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         btn_banHang_thanhToan.setText("Thanh toán");
         btn_banHang_thanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -183,6 +206,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
         });
         jPanel1.add(btn_banHang_thanhToan);
 
+        btn_banHang_xoa.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         btn_banHang_xoa.setText("Xóa");
         btn_banHang_xoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,6 +215,7 @@ public class formDanhSachCho extends javax.swing.JDialog {
         });
         jPanel1.add(btn_banHang_xoa);
 
+        btn_banHang_xoaTatCa.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
         btn_banHang_xoaTatCa.setText("Xóa tất cả");
         btn_banHang_xoaTatCa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

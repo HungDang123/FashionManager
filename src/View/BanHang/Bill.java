@@ -15,6 +15,8 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import static View.BanHang.thanhToan.tongTien;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -22,18 +24,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Bill extends javax.swing.JDialog {
 
-    public static float tongTien;
     public static hoaDon hoaDon;
     public static List<Object[]> list;
     DefaultTableModel model = new DefaultTableModel();
+    DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
 
     /**
      * Creates new form Printer
      */
-    public Bill(java.awt.Frame parent, boolean modal, float tongTien, hoaDon hoaDon, List<Object[]> list) {
+    public Bill(java.awt.Frame parent, boolean modal, hoaDon hoaDon, List<Object[]> list) {
         super(parent, modal);
         this.hoaDon = hoaDon;
-        this.tongTien = tongTien;
         this.list = list;
         initComponents();
         setLocationRelativeTo(null);
@@ -48,14 +49,14 @@ public class Bill extends javax.swing.JDialog {
         lbl_hoaDon_tenKH.setText(hoaDon.getMaKhachHang().getHoVaTen());
         lbl_hoaDon_sdt.setText(hoaDon.getMaKhachHang().getSoDienThoai());
         lbl_hoaDon_ngayMua.setText(DateHelper.toString(DateHelper.now(), "yyyy-MM-dd"));
-        lbl_hoaDon_tongTien.setText(String.valueOf(tongTien));
+        lbl_hoaDon_tongTien.setText(decimalFormat.format(tongTien));
     }
 
     public void fillToTable() {
         model = (DefaultTableModel) tbl_hoaDon.getModel();
         model.setRowCount(0);
         for (Object[] obj : list) {
-            model.addRow(new Object[]{obj[1], obj[3], obj[5], obj[6], obj[7]});
+            model.addRow(new Object[]{obj[1], decimalFormat.format(obj[3]), obj[5], decimalFormat.format(obj[6]), decimalFormat.format(obj[7])});
         }
     }
 
@@ -319,7 +320,7 @@ public class Bill extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Bill dialog = new Bill(new javax.swing.JFrame(), true, tongTien, hoaDon, list);
+                Bill dialog = new Bill(new javax.swing.JFrame(), true, hoaDon, list);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -11,15 +11,13 @@ import javax.swing.*;
 
 public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
 
-    private static float tongTien;
     private static hoaDon hoaDon;
     private static List<Object[]> list;
     private JInternalFrame internalFrame;
 
-    public MySwingWorkerThanhToan(JInternalFrame internalFrame, Float tongTien, hoaDon hoaDon,List<Object[]> list) {
+    public MySwingWorkerThanhToan(JInternalFrame internalFrame,  hoaDon hoaDon,List<Object[]> list) {
         this.internalFrame = internalFrame;
         this.hoaDon = hoaDon;
-        this.tongTien = tongTien;
         this.list = list;
     }
 
@@ -30,7 +28,7 @@ public class MySwingWorkerThanhToan extends SwingWorker<Void, Void> {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 // Hiển thị JDialog ở đây
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true,tongTien,hoaDon,list);
+                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true,hoaDon,list);
                 dialog.setVisible(true);
             }
         });

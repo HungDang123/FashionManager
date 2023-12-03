@@ -43,7 +43,7 @@ public class NhanVienCard extends JPanel {
         this.setBorder(new BevelBorder(BevelBorder.RAISED));
         System.out.println("n: " + nv.getHinhAnh());
         if (nv.getHinhAnh() == null || nv.getHinhAnh().isEmpty()) {
-            nv.setHinhAnh("src\\image\\user.png");
+            nv.setHinhAnh("image\\user.png");
         }
 
         // Header (Mã nhân viên, Chức Vụ)

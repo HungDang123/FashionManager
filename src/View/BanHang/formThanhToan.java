@@ -6,6 +6,8 @@ package View.BanHang;
 
 import Model.hoaDon;
 import Model.khachHang;
+import Model.kichThuoc;
+import Model.sanPham;
 import static View.BanHang.QRCodeGenerator.generateQR;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -22,6 +24,13 @@ import java.sql.Date;
 import com.pro1041.dao.DAO_banHang;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
+import static View.BanHang.thanhToan.tongTien;
+import static View.BanHang.thanhToan.list;
+import static View.BanHang.thanhToan.modelHd;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,19 +38,18 @@ import java.nio.file.Path;
  */
 public class formThanhToan extends javax.swing.JDialog {
 
-    public static float tongTien;
     public static hoaDon hoaDon;
     public static List<Object[]> list;
     public static List<Object> objects = new ArrayList<>();
     public static String path;
+    DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
 
     /**
      * Creates new form formThanhToan_1
      */
-    public formThanhToan(java.awt.Frame parent, boolean modal, float tongTien, hoaDon hoaDon, List<Object[]> list) {
+    public formThanhToan(java.awt.Frame parent, boolean modal, hoaDon hoaDon, List<Object[]> list) {
         super(parent, modal);
         this.hoaDon = hoaDon;
-        this.tongTien = tongTien;
         this.list = list;
         initComponents();
         setLocationRelativeTo(null);
@@ -52,7 +60,7 @@ public class formThanhToan extends javax.swing.JDialog {
         lbl_banHang_maHoaDon.setText(hoaDon.getMaHoaDon());
         lbl_banHang_maKhachHang.setText(hoaDon.getMaKhachHang().getMaKhachHang());
         lbl_banHang_tenKh.setText(hoaDon.getMaKhachHang().getHoVaTen());
-        lbl_banHang_tongThanhToan.setText(String.valueOf(tongTien) + " VNĐ");
+        lbl_banHang_tongThanhToan.setText(decimalFormat.format(tongTien));
     }
 
     public void thanhToan() {
@@ -60,9 +68,14 @@ public class formThanhToan extends javax.swing.JDialog {
             try {
                 if (Integer.parseInt(txt_banHang_tienKhachDua.getText()) <= 0) {
                     DialogHelper.alert("Vui lòng nhập số tiền");
+                    return;
                 }
                 if (txt_banHang_tienKhachDua.getText().length() == 0) {
                     DialogHelper.alert("Không được để trống");
+                    return;
+                } else if (Integer.parseInt(txt_banHang_tienKhachDua.getText()) - tongTien < 0) {
+                    DialogHelper.alert("Số tiền bạn đưa không đủ");
+                    return;
                 }
             } catch (Exception e) {
                 DialogHelper.alert("Tiền đưa phải là số!");
@@ -83,11 +96,34 @@ public class formThanhToan extends javax.swing.JDialog {
                 String dateStr = DateHelper.toString(DateHelper.now(), "yyyy-MM-dd");
                 Date date = new Date(DateHelper.toDate(dateStr, "yyyy-MM-dd").getTime());
                 String kichThuoc = (String) obj[4];
+                sanPham sp = dao.findByMaSP(maSp);
+                try {
+                    kichThuoc k = dao.findSizes(maSp, kichThuoc);
+                    if (k != null) {
+                        if (k.getsoLuong() - soLuong >= 0) {
+                            dao.updateKho(soLuong, maSp, kichThuoc);
+                            System.out.println("Đã cập nhật thành công kho");
+                            System.out.println("Check có tồn kho");
+                        } else {
+                            DialogHelper.alert("Sản phẩm " + sp.getTenSanPham() + " có Size " + kichThuoc + " không còn hàng trong kho!");
+                            return;
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Check không tồn kho: " + e.getMessage());
+                    e.printStackTrace();
+                    return;
+                }
+
                 objects.clear();
                 objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date, kichThuoc});
                 dao.insertCTHD(objects);
-                System.out.println("Đã thêm thành công");
+                System.out.println("Đã thêm thành công cthd");
                 System.out.println();
+                tongTien = 0.0f;
+                list.clear();
+                modelHd.setRowCount(0);
+                System.out.println(tongTien);
                 dispose();
                 this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             }
@@ -99,7 +135,7 @@ public class formThanhToan extends javax.swing.JDialog {
 
     public void formBill() {
         try {
-            MySwingWorkerBill worker = new MySwingWorkerBill(this, tongTien, hoaDon, list);
+            MySwingWorkerBill worker = new MySwingWorkerBill(this, hoaDon, list);
             worker.execute();
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,10 +154,11 @@ public class formThanhToan extends javax.swing.JDialog {
         }
     }
 
-    public void scanQR() {
-        String url = "http://hungdang1041.byethost7.com/?i=1"; // Địa chỉ URL của trang web
-        path = "D:/PRO1041/QR.png"; // Đường dẫn tập tin ảnh QR
-
+    public void scanQR() throws IOException, WriterException {
+        String url = "00020101021138540010A00000072701240006970422011003393530730208QRIBFTTA5303704" + String.valueOf(2000000) + "5802VN63044451"; // Địa chỉ URL của trang web
+        path = "image/QR.png";
+        QRCodeGenerator qr = new QRCodeGenerator();
+        qr.qr();
         try {
             generateQR(url, 1250, 1250, path);
             System.out.println("QR code generated successfully.");
@@ -163,9 +200,10 @@ public class formThanhToan extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         jLabel1.setText("THANH TOÁN HÓA ĐƠN");
 
+        lbl_banHang_ngayLap.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         lbl_banHang_ngayLap.setText("Ngày lập HD: 02-11-2023");
         lbl_banHang_ngayLap.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -184,7 +222,7 @@ public class formThanhToan extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_banHang_ngayLap)
@@ -200,23 +238,29 @@ public class formThanhToan extends javax.swing.JDialog {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        lbl_banHang_maHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lbl_banHang_maHoaDon.setFont(new java.awt.Font("Lexend Deca", 1, 18)); // NOI18N
         lbl_banHang_maHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Lexend Deca", 1, 12)); // NOI18N
         jLabel4.setText("Mã khách hàng:");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Lexend Deca", 1, 12)); // NOI18N
         jLabel5.setText("Tên khác hàng:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Lexend Deca", 1, 12)); // NOI18N
         jLabel6.setText("Tiền khách đưa:");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Lexend Deca", 1, 12)); // NOI18N
         jLabel7.setText("Tổng thanh toán:");
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Lexend Deca", 1, 12)); // NOI18N
         jLabel8.setText("Tiền trả khách:");
+
+        lbl_banHang_maKhachHang.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
+
+        lbl_banHang_tenKh.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
+
+        lbl_banHang_tongThanhToan.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
 
         txt_banHang_tienKhachDua.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -229,8 +273,11 @@ public class formThanhToan extends javax.swing.JDialog {
             }
         });
 
+        lbl_banHang_tienTraKhach.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
+
         jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
+        btnDong.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         btnDong.setText("Đóng");
         btnDong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +286,7 @@ public class formThanhToan extends javax.swing.JDialog {
         });
         jPanel2.add(btnDong);
 
+        btn_thanhToan.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         btn_thanhToan.setText("Thanh toán");
         btn_thanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -247,6 +295,7 @@ public class formThanhToan extends javax.swing.JDialog {
         });
         jPanel2.add(btn_thanhToan);
 
+        btnQR.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         btnQR.setText("Quét mã QR");
         btnQR.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -255,6 +304,7 @@ public class formThanhToan extends javax.swing.JDialog {
         });
         jPanel2.add(btnQR);
 
+        btn_inHoaDon.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         btn_inHoaDon.setText("In hóa đơn");
         btn_inHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,7 +374,7 @@ public class formThanhToan extends javax.swing.JDialog {
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -340,13 +390,18 @@ public class formThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_lbl_banHang_ngayLapAncestorAdded
 
     private void txt_banHang_tienKhachDuaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_banHang_tienKhachDuaCaretUpdate
-        Float tienKhachTra = Float.parseFloat(txt_banHang_tienKhachDua.getText());
-        if ((tienKhachTra) < tongTien) {
-            System.out.println("Trả không đủ ");
-            lbl_banHang_tienTraKhach.setText("");
-        } else {
-            String tienTraKhach = String.valueOf(tienKhachTra - tongTien);
-            lbl_banHang_tienTraKhach.setText(tienTraKhach + " VNĐ");
+        try {
+            Float tienKhachTra = Float.parseFloat(txt_banHang_tienKhachDua.getText());
+            if ((tienKhachTra) < tongTien) {
+                System.out.println("Trả không đủ ");
+                lbl_banHang_tienTraKhach.setText("");
+            } else {
+                float tienTraKhach = tienKhachTra - tongTien;
+                String formattedTienTraKhach = decimalFormat.format(tienTraKhach);
+                lbl_banHang_tienTraKhach.setText(formattedTienTraKhach);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "Tiền đưa");
         }
     }//GEN-LAST:event_txt_banHang_tienKhachDuaCaretUpdate
 
@@ -364,7 +419,13 @@ public class formThanhToan extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_inHoaDonActionPerformed
 
     private void btnQRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQRMouseClicked
-        scanQR();
+        try {
+            scanQR();
+        } catch (IOException ex) {
+            Logger.getLogger(formThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (WriterException ex) {
+            Logger.getLogger(formThanhToan.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             MySwingWorkerQR worker = new MySwingWorkerQR(this, path);
             worker.execute();
@@ -404,7 +465,7 @@ public class formThanhToan extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, tongTien, hoaDon, list);
+                formThanhToan dialog = new formThanhToan(new javax.swing.JFrame(), true, hoaDon, list);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

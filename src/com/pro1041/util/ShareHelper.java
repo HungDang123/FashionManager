@@ -17,7 +17,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ShareHelper {
-public static nhanVien role; 
+
     public static nhanVien USER; // Thông tin nhân viên đăng nhập
     public static khachHang khachHang; // thông tin khách hàng
     public static final Image APP_ICON; // Biểu tượng của ứng dụng
@@ -26,7 +26,7 @@ public static nhanVien role;
         // Khởi tạo biểu tượng của ứng dụng
         Image icon = null;
         try {
-            File iconFile = new File("C:\\Users\\HUNG\\OneDrive\\Hình ảnh\\Saved Pictures\\339068686_226572036593332_828360317069871275_n.png");
+            File iconFile = new File("C:/Users/HUNG/Downloads/icon.ico");
             if (iconFile.exists()) {
                 icon = ImageIO.read(iconFile);
             } else {
@@ -38,11 +38,6 @@ public static nhanVien role;
         APP_ICON = icon;
     }
 
-    public static void setUSER(nhanVien USER) {
-        ShareHelper.USER = USER;
-    }
-    
-
     public static void logoff() {
         USER = null;
     }
@@ -53,7 +48,7 @@ public static nhanVien role;
 
     public static void saveLogo(File file) {
         try {
-            ImageIO.write(ImageIO.read(file), "png", new File("\"C:\\Users\\HUNG\\OneDrive\\Hình ảnh\\Saved Pictures\\339068686_226572036593332_828360317069871275_n.png"));
+            ImageIO.write(ImageIO.read(file), "png", new File("C:/Users/HUNG/Downloads/icon.ico"));
             System.out.println("Logo saved successfully.");
         } catch (IOException e) {
             e.printStackTrace();

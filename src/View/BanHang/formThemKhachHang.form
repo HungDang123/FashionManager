@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="com.toedter.calendar.JCalendar" name="jCalendar1">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -47,7 +49,6 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="txtTenKhachHang" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblSdt" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="rdoNam" min="-2" pref="104" max="-2" attributes="0"/>
                               <EmptySpace pref="20" max="32767" attributes="0"/>
@@ -55,6 +56,7 @@
                           </Group>
                           <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
                           <Component id="DateChooserNgaySinh" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtSdts" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -88,9 +90,9 @@
                   <Component id="rdoNu" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="lblSoDienThoai" max="32767" attributes="0"/>
-                  <Component id="lblSdt" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblSoDienThoai" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtSdts" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -102,7 +104,7 @@
                   <Component id="btnDong" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace pref="11" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -115,17 +117,22 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtTenKhachHang">
     </Component>
-    <Component class="javax.swing.JLabel" name="lblSdt">
-    </Component>
     <Component class="javax.swing.JTextField" name="txtEmail">
     </Component>
     <Component class="javax.swing.JRadioButton" name="rdoNam">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup1"/>
+        </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Nam"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rdoNu">
       <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="buttonGroup1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
       </Properties>
     </Component>
@@ -185,6 +192,8 @@
       </Properties>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="DateChooserNgaySinh">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtSdts">
     </Component>
   </SubComponents>
 </Form>

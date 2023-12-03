@@ -13,19 +13,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateHelper {
+
     private static final DateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     public static String toString(Date date, String format) {
         DateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
-     public static int calculateAge(int birthYear, int birthMonth, int birthDay) {
-         birthMonth++;
-         birthYear = birthYear + 1900;
+
+    public static int calculateAge(int birthYear, int birthMonth, int birthDay) {
+        birthMonth++;
+        birthYear = birthYear + 1900;
         LocalDate birthDate = LocalDate.of(birthYear, birthMonth, birthDay);
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(birthDate, currentDate);
-         System.out.println(period.getYears());
+        System.out.println(period.getYears());
         return period.getYears();
     }
 
@@ -50,4 +52,13 @@ public class DateHelper {
         calendar.add(Calendar.DAY_OF_YEAR, days);
         return calendar.getTime();
     }
+
+    public static void main(String[] args) throws ParseException {
+        String originalDateString = "Sat Nov 04 13:05:54 ICT 2023";
+        Date date = toDate(originalDateString, "EEE MMM dd HH:mm:ss zzz yyyy");
+        System.out.println(date);
+        String formattedDate = toString(date, "yyyy-MM-dd");
+        System.out.println(formattedDate);
+    }
+
 }
