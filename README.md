@@ -7,9 +7,9 @@
 </div>
 <hr/>
 <h3 align="center">Các thành viên trong nhóm:</h3>
-<p align="center">Đặng Thành Hùng (Trưởng nhóm)</p>
-<p align="center">Phan Huy Hoàng</p>
-<p align="center">Nguyễn Thị Trà My</p>
-<p align="center">Huỳnh Anh Quân</p>
-<p align="center">Hồ Minh Nhựt</p>
-<p align="center">Nguyễn Anh Tài</p>
+<p align="center">Đặng Thành Hùng (Trưởng nhóm) PS30247</p>
+<p align="center">Phan Huy Hoàng PS30236</p>
+<p align="center">Nguyễn Thị Trà My PS32129</p>
+<p align="center">Huỳnh Anh Quân PS32033</p>
+<p align="center">Hồ Minh Nhựt PS</p>
+<p align="center">Nguyễn Anh Tài PS</p>
