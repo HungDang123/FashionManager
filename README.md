@@ -15,5 +15,5 @@
 <p align="center">Nguyễn Anh Tài PS32110</p>
 
 <div align="center">
-    <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1200px" height="800px">
+    <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="980px">
 </div>
