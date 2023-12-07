@@ -15,5 +15,5 @@
 <p align="center">Nguyễn Anh Tài PS</p>
 
 <div align="center">
-    <img src="https://i.pinimg.com/originals/74/65/f3/7465f30319191e2729668875e7a557f2.png">
+    <img src="https://i.pinimg.com/originals/74/65/f3/7465f30319191e2729668875e7a557f2.png" width="100px" height="100px">
 </div>
