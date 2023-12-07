@@ -13,3 +13,7 @@
 <p align="center">Huỳnh Anh Quân PS32033</p>
 <p align="center">Hồ Minh Nhựt PS</p>
 <p align="center">Nguyễn Anh Tài PS</p>
+
+<div align="center">
+    <img src="https://i.pinimg.com/originals/74/65/f3/7465f30319191e2729668875e7a557f2.png">
+</div>
