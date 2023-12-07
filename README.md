@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="https://readme-typing-svg.herokuapp.com/?font=LexendDeca&size=35&center=true&vCenter=true&width=500&height=70&duration=3000&lines=PRO1041+-+Dự+án+1;+Quản+lý+cửa+hàng+thời+trang!;" />
+    <img src="https://readme-typing-svg.herokuapp.com/?font=LexendDeca&size=35&center=true&vCenter=true&width=500&height=70&duration=5000&lines=PRO1041+-+Dự+án+1;+Quản+lý+cửa+hàng+thời+trang!;" />
 </h1>
 <h2 align="center">⚒️Language⚒️</h2>
 <div align="center">
