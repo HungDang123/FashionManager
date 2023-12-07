@@ -6,14 +6,15 @@
     <img src="https://skillicons.dev/icons?i=java"/>
 </div>
 <hr/>
-<h3 align="center">Các thành viên trong nhóm:</h3>
-<p align="center">Đặng Thành Hùng (Trưởng nhóm) PS30247</p>
-<p align="center">Phan Huy Hoàng PS30236</p>
-<p align="center">Nguyễn Thị Trà My PS32129</p>
-<p align="center">Huỳnh Anh Quân PS32033</p>
-<p align="center">Hồ Minh Nhựt PS32162</p>
-<p align="center">Nguyễn Anh Tài PS32110</p>
-
+<h3>Các thành viên trong nhóm:</h3>
+<p>Đặng Thành Hùng (Trưởng nhóm) PS30247</p>
+<p>Phan Huy Hoàng PS30236</p>
+<p>Nguyễn Thị Trà My PS32129</p>
+<p>Huỳnh Anh Quân PS32033</p>
+<p>Hồ Minh Nhựt PS32162</p>
+<p>Nguyễn Anh Tài PS32110</p>
+<hr/>
+<h1>Hướng dẫn sử dụng ứng dụng</h1>
 <div align="center">
-    <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="980px">
+    <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
 </div>
