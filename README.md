@@ -11,8 +11,8 @@
 <p align="center">Phan Huy Hoàng PS30236</p>
 <p align="center">Nguyễn Thị Trà My PS32129</p>
 <p align="center">Huỳnh Anh Quân PS32033</p>
-<p align="center">Hồ Minh Nhựt PS</p>
-<p align="center">Nguyễn Anh Tài PS</p>
+<p align="center">Hồ Minh Nhựt PS32162</p>
+<p align="center">Nguyễn Anh Tài PS32110</p>
 
 <div align="center">
     <img src="https://i.pinimg.com/originals/74/65/f3/7465f30319191e2729668875e7a557f2.png" width="100px" height="100px">
