@@ -8,11 +8,6 @@
 <h3>🌟 Thành viên trong nhóm:</h3>
 <p>Đặng Thành Hùng (Trưởng nhóm) - PS30247</p>
 <p>Phan Huy Hoàng - PS30236</p>
-
-## note
-- thanks to [@phh235](https://github.com/phh235)
-
-  
 <p>Nguyễn Thị Trà My - PS32129</p>
 <p>Huỳnh Anh Quân - PS32033</p>
 <p>Hồ Minh Nhựt - PS32162</p>
@@ -68,13 +63,9 @@ password: password1
 
 ## Form thêm khách hàng
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/form_themKH.png" width="1500px" height="650px">
+<img src="https://github.com/phh235/support-image/blob/7ff34a72dfeac1f8cd90b1e60a9a7720200c23a0/form_themKH.png" width="1500px" height="650px">
 
 ## Form thêm sản phẩm
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_cardSp.png" width="1500px" height="650px">
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addSp.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
-<img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_addKh.png" width="1500px" height="650px">
+<img src="https://github.com/phh235/support-image/blob/eff23597251da25e63fab77fd6bf55ef17628d33/form_themSp.png" width="1500px" height="650px">
