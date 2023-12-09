@@ -23,7 +23,7 @@ cd Downloads
 ```bash
 git clone https://github.com/HungDang123/PRO1041
 ```
-## Khởi chạy file Christore.sql trong SQL Server ( file sql nằm trong thư mục db )
+## Khởi chạy file Christore.sql trong SQL Server (file sql nằm trong thư mục db)
 ```
 Mở SQL Server và chạy
 ```
