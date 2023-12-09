@@ -25,7 +25,7 @@ git clone https://github.com/HungDang123/PRO1041
 ```
 ## Khởi chạy file Christore.sql trong SQL Server ( file sql nằm trong thư mục db )
 ```
-
+Mở SQL Server và chạy
 ```
 ## Mở file Christore.exe và đăng nhập
 ```bash
@@ -49,6 +49,7 @@ password: password1
 
 ## Thêm sản phẩm
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_themSp.png" width="1500px" height="600px">
+
 ## Form chờ
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_cho.png" width="1500px" height="600px">
 <img src="https://github.com/phh235/support-image/blob/d6d0470d8b72a62c2717bbeb53fb68d1535f625f/screenshot_formCho.png" width="1500px" height="600px">
