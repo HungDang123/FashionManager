@@ -8,7 +8,7 @@
     <img src="https://skillicons.dev/icons?i=java"/>
 </div>
 <h1>🌟 Thành viên trong nhóm:</h1>
-<p>Đặng Thành Hùng (Trưởng nhóm) - PS30247</p>
+<p>Đặng Thành Hùng - PS30247 (Trưởng nhóm)</p>
 <p>Phan Huy Hoàng - PS30236</p>
 <p>Nguyễn Thị Trà My - PS32129</p>
 <p>Huỳnh Anh Quân - PS32033</p>
