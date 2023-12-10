@@ -89,16 +89,17 @@ public class DAO_nhanVien {
                     + "    h.maNhanVien = ?\n"
                     + "GROUP BY\n"
                     + "    h.maNhanVien;";
-            ResultSet rs = jdbcHelper.executeQuery(sql, id,id);
-            if(rs.next()){
+            ResultSet rs = jdbcHelper.executeQuery(sql, id, id);
+            if (rs.next()) {
                 String soHD = rs.getString("soHd");
                 String soSP = rs.getString("soCTHD");
                 String tongTien = rs.getString("tongTien");
-                obj= new String[]{soHD,soSP,tongTien};
+                obj = new String[]{soHD, soSP, tongTien};
             }
         } catch (Exception e) {
-            System.out.println("thongke:"+e.getMessage());
+            System.out.println("thongke:" + e.getMessage());
         }
         return obj;
     }
+
 }

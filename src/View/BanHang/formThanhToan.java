@@ -25,12 +25,13 @@ import com.pro1041.dao.DAO_banHang;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
-import static View.BanHang.thanhToan.tongTien;
 import static View.BanHang.thanhToan.list;
 import static View.BanHang.thanhToan.modelHd;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static View.BanHang.thanhToan.tongTien;
+import java.net.URL;
 
 /**
  *
@@ -66,7 +67,7 @@ public class formThanhToan extends javax.swing.JDialog {
     public void thanhToan() {
         try {
             try {
-                if (Integer.parseInt(txt_banHang_tienKhachDua.getText()) <= 0) {
+                if (Integer.parseInt(txt_banHang_tienKhachDua.getText()) <= 0 || txt_banHang_tienKhachDua.getText().length() == 0) {
                     DialogHelper.alert("Vui lòng nhập số tiền");
                     return;
                 }
@@ -89,7 +90,21 @@ public class formThanhToan extends javax.swing.JDialog {
                 String maSp = (String) obj[0];
                 System.out.println("Mã sp :" + maSp);
                 String maHd = hoaDon.getMaHoaDon();
-                int soLuong = (Integer) obj[5];
+                Object obj5Value = obj[5];
+                int soLuong = 0;
+                if (obj5Value instanceof String) {
+                    // Handle the case where obj[5] is a String
+                    String obj5String = (String) obj5Value;
+                    soLuong = Integer.parseInt(obj5String);
+                    // Your logic for String case goes here
+                } else if (obj5Value instanceof Integer) {
+                    // Handle the case where obj[5] is an Integer
+                    soLuong = (Integer) obj5Value;
+                    // Your logic for Integer case goes here
+                } else {
+                    // Handle other cases or raise an error if needed
+                    System.err.println("Unexpected type for obj[5]: " + obj5Value.getClass());
+                }
                 System.out.println("Số lượng: " + soLuong);
                 Float tongTien = (Float) obj[7] + (Float) obj[6];
                 System.out.println("Tiền: " + tongTien);
@@ -118,6 +133,7 @@ public class formThanhToan extends javax.swing.JDialog {
                 objects.clear();
                 objects.add(new Object[]{maCthd, maSp, maHd, soLuong, tongTien, date, kichThuoc});
                 dao.insertCTHD(objects);
+                DialogHelper.alert("Thanh toán thành công!");
                 System.out.println("Đã thêm thành công cthd");
                 System.out.println();
                 tongTien = 0.0f;
@@ -126,10 +142,11 @@ public class formThanhToan extends javax.swing.JDialog {
                 System.out.println(tongTien);
                 dispose();
                 this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+                break;
             }
-            DialogHelper.alert("Đã thanh toán thành công!");
         } catch (Exception e) {
             System.out.println("ThanhToan");
+            e.printStackTrace();
         }
     }
 
@@ -154,13 +171,19 @@ public class formThanhToan extends javax.swing.JDialog {
         }
     }
 
-    public void scanQR() throws IOException, WriterException {
-        String url = "00020101021138540010A00000072701240006970422011003393530730208QRIBFTTA5303704" + String.valueOf(2000000) + "5802VN63044451"; // Địa chỉ URL của trang web
-        path = "image/QR.png";
-        QRCodeGenerator qr = new QRCodeGenerator();
-        qr.qr();
+    public void scanQR(int price) throws IOException, WriterException {
+        String content;
+        if (price > 9999999) {
+            content = "00020101021238570010A000000727012700069704220113VQRQ00013hf8k0208QRIBFTTA53037045408" + String.valueOf(price) + "5802VN62350107NPS68690820Thanh toan Christore6304F505";
+        } else if (price > 999999) {
+            content = "00020101021238570010A000000727012700069704220113VQRQ00013hf8k0208QRIBFTTA53037045407" + String.valueOf(price) + "5802VN62350107NPS68690820Thanh toan Christore6304F505";
+        } else {
+            content = "00020101021238570010A000000727012700069704220113VQRQ00013hf8k0208QRIBFTTA53037045406" + String.valueOf(price) + "5802VN62350107NPS68690820Thanh toan Christore6304F505";
+        }
+        URL r = this.getClass().getResource("/image/QR.png");
+        path = String.valueOf(r);
         try {
-            generateQR(url, 1250, 1250, path);
+            generateQR(content, 1250, 1250, path);
             System.out.println("QR code generated successfully.");
         } catch (WriterException e) {
             System.out.println("QR code generation failed. Error: " + e.getMessage());
@@ -420,7 +443,7 @@ public class formThanhToan extends javax.swing.JDialog {
 
     private void btnQRMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQRMouseClicked
         try {
-            scanQR();
+            scanQR(Integer.parseInt(String.valueOf(tongTien)));
         } catch (IOException ex) {
             Logger.getLogger(formThanhToan.class.getName()).log(Level.SEVERE, null, ex);
         } catch (WriterException ex) {

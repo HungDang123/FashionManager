@@ -20,6 +20,9 @@ public class DAO_sanPham implements DAO<sanPham> {
     private final String thongKe = "SELECT S.maSanPham,S.tenSanPham, SUM(c.soLuong) as 'soLuong',SUM(c.tongTien) as 'tongTien' \n"
             + "FROM sanPham S INNER JOIN chiTietHoaDon c on S.maSanPham = c.maSanPham\n"
             + "group by S.maSanPham,S.tenSanPham";
+    private final String loaiSanPham = "SELECT loaiSanPham, COUNT(*) as soLuong\n"
+            + "FROM sanPham\n"
+            + "GROUP BY loaiSanPham";
 
     @Override
     public List<sanPham> getSelectAll() {
@@ -106,7 +109,7 @@ public class DAO_sanPham implements DAO<sanPham> {
         }
         return null;
     }
-    
+
     public List<Object[]> thongKe() {
         List<Object[]> list = new ArrayList<>();
         try {
@@ -134,5 +137,21 @@ public class DAO_sanPham implements DAO<sanPham> {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+     public List<Object[]> loaiSanPham() {
+        List<Object[]> i = new ArrayList<>();
+        try {
+            ResultSet rs = jdbcHelper.executeQuery(loaiSanPham);
+            while (rs.next()) {
+                String loaiSanPham = rs.getString("loaiSanPham");
+                int soLuong = rs.getInt("soLuong");
+                Object[] o ={loaiSanPham,soLuong};
+                i.add(o);
+            }
+        } catch (Exception e) {
+            System.out.println("loaiSanPham" + e.getMessage());
+            e.printStackTrace();
+        }
+        return i;
     }
 }

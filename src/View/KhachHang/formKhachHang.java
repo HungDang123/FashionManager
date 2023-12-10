@@ -53,7 +53,9 @@ public class formKhachHang extends javax.swing.JInternalFrame {
         btnSua.setEnabled(false);
         btnXacnhan.setEnabled(false);
         btnXoa.setEnabled(false);
-
+        if(!ShareHelper.USER.getChucVu()){
+            jTabbedPane1.removeTabAt(1);
+        }
         this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
@@ -296,38 +298,38 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     }
 
     public void chartKhachHang() {
-    try {
-        String dateString = DateHelper.toString(date1.getDate(), "yyyy-MM-dd");
-        if (dateString != null) {
-            java.sql.Date dateS = new java.sql.Date(DateHelper.toDate(dateString, "yyyy-MM-dd").getTime());
-            List<Object[]> listChart = dao.thongKe(dateS);
-            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-            for (Object[] o : listChart) {
-                System.out.println(o[3] + " " + o[1]);
-                dataset.setValue((Number) o[3], "Tiền", (Comparable) o[1]);
+        try {
+            String dateString = DateHelper.toString(date1.getDate(), "yyyy-MM-dd");
+            if (dateString != null) {
+                java.sql.Date dateS = new java.sql.Date(DateHelper.toDate(dateString, "yyyy-MM-dd").getTime());
+                List<Object[]> listChart = dao.thongKe(dateS);
+                DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+                for (Object[] o : listChart) {
+                    System.out.println(o[3] + " " + o[1]);
+                    dataset.setValue((Number) o[3], "Tiền", (Comparable) o[1]);
+                }
+                JFreeChart chart = ChartFactory.createBarChart("Tiền mua theo tháng", "Thống kê khách hàng", "Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+                chart.setTitle("Tiền mua theo tháng");
+                chart.getTitle().setFont(new Font("Arial", Font.BOLD, 18)); // Đặt kiểu chữ cho tiêu đề
+                CategoryPlot z = chart.getCategoryPlot();
+                z.getRenderer().setSeriesPaint(0, new Color(59, 89, 152));
+                z.setRangeGridlinePaint(Color.black);
+                ChartPanel chartPanel = new ChartPanel(chart);
+
+                // Đặt kích thước cho ChartPanel
+                Dimension panelSize = panelThongKe.getSize();
+                chartPanel.setPreferredSize(panelSize);
+
+                panelThongKe.removeAll();
+                panelThongKe.add(chartPanel);
+                panelThongKe.revalidate();
+                panelThongKe.repaint();
             }
-            JFreeChart chart = ChartFactory.createBarChart("Tiền mua theo tháng", "Thống kê khách hàng", "Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
-            chart.setTitle("Tiền mua theo tháng");
-            chart.getTitle().setFont(new Font("Arial", Font.BOLD, 18)); // Đặt kiểu chữ cho tiêu đề
-            CategoryPlot z = chart.getCategoryPlot();
-            z.getRenderer().setSeriesPaint(0, new Color(59, 89, 152));
-            z.setRangeGridlinePaint(Color.black);
-            ChartPanel chartPanel = new ChartPanel(chart);
-            
-            // Đặt kích thước cho ChartPanel
-            Dimension panelSize = panelThongKe.getSize();
-            chartPanel.setPreferredSize(panelSize);
-            
-            panelThongKe.removeAll();
-            panelThongKe.add(chartPanel);
-            panelThongKe.revalidate();
-            panelThongKe.repaint();
+        } catch (Exception e) {
+            System.out.println("ChartKhachHang: " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        System.out.println("ChartKhachHang: " + e.getMessage());
-        e.printStackTrace();
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -799,13 +801,18 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
         try {
             if (index <= 0) {
-                index = current - 1;
+                index = list.size() - 1; // Set index bằng list.size() - 1 khi index về 0
             } else {
                 index--;
             }
             filltotable(index);
         } catch (Exception e) {
-            System.out.println(e);// TODO add your handling code here:
+            index = current - 1;
+            if (index < 0) {
+                index = 0;
+            }
+            filltotable(index);
+            System.out.println("Error in prev(): " + e.getMessage());
         }
     }//GEN-LAST:event_btnPrevActionPerformed
 
@@ -862,14 +869,19 @@ public class formKhachHang extends javax.swing.JInternalFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
         try {
-            if (index <= current - 0) {
-                index = 1;
+            if (index >= list.size() - 1) { // Nếu index >= list.size() - 1, gán index = 0
+                index = 0;
             } else {
                 index++;
             }
             filltotable(index);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error in next(): " + e.getMessage());
+            index = current - 1;
+            if (index < 0) {
+                index = 0;
+            }
+            filltotable(index);
         }
     }//GEN-LAST:event_btnNextActionPerformed
 

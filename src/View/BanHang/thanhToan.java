@@ -58,6 +58,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import static com.pro1041.util.ShareHelper.USER;
+import java.text.NumberFormat;
 
 /**
  *
@@ -81,16 +82,17 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     DefaultTableModel modelCthd2 = new DefaultTableModel();
     private int index = 0;
     listData ld = new listData();
-    static Float tongTien = 0.0f;
+    static int tongTien = 0;
     private static String maHoaDon;
     int index1 = 0;
     String date;
     private TableRowSorter<DefaultTableModel> rowSorter;
-    int indexRow;
+    int indexRow = -1;
     List<String> year;
     List<Object[]> thongke;
     DecimalFormat decimalFormat = new DecimalFormat("#,##0 VNĐ");
     String checkList = "test";
+    sanPham sanPhamCTHD2;
 
     public JDesktopPane getDesktopPane() {
         return desktopPane;
@@ -101,6 +103,9 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
      */
     public thanhToan() {
         initComponents();
+        if(!nv.getChucVu()){
+            jTabbedPane1.removeTabAt(2);
+        }
         loadDataCTHD();
         this.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
@@ -206,7 +211,6 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
                     if (!nv.getChucVu()) {
                         System.out.println(nv.getChucVu());
                         listCTHD = dao.getAllCTHD1(nv.getMaNhanVien());
-                        jTabbedPane1.removeTabAt(2);
                     } else {
                         System.out.println(nv.getChucVu());
                         listCTHD = dao.getAllCTHD();
@@ -297,7 +301,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     }
 
     public void tongTien() {
-        tongTien = 0.0f;
+        tongTien = 0;
         for (Object[] obj : list) {
             tongTien += (Float) obj[6] + (Float) obj[7];
         }
@@ -306,7 +310,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     public void fillToTableHD() {
         modelHd.setRowCount(0);
         for (Object[] obj : list) {
-            modelHd.addRow(new Object[]{obj[1], obj[2], obj[3], obj[4], obj[5], obj[6], obj[7]});
+            modelHd.addRow(new Object[]{obj[1], obj[2],decimalFormat.format(obj[3]), obj[4], obj[5],decimalFormat.format(obj[6]), decimalFormat.format(obj[7])});
             tblHoaDon.setModel(modelHd);
         }
     }
@@ -315,15 +319,33 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         indexRow = tblHoaDon.getSelectedRow();
         Object[] obj = list.get(indexRow);
         if (obj.length >= 8) {
-            obj[4] = tblHoaDon.getValueAt(indexRow, 3);
-            obj[5] = tblHoaDon.getValueAt(indexRow, 4);
-            System.out.println(obj[5]);
-            String valueFromColumn4 = (String) tblHoaDon.getValueAt(indexRow, 4);
-            Integer intValue = Integer.valueOf(valueFromColumn4);
-            Float floatValue = (Float) tblHoaDon.getValueAt(indexRow, 2);
-            obj[7] = floatValue * intValue;
+            String kichThuoc = (String) tblHoaDon.getValueAt(indexRow, 3);
+            String soLuong = (String) tblHoaDon.getValueAt(indexRow, 4);
+            obj[4] = kichThuoc;
+            obj[5] = soLuong;
+            System.out.println(obj[4] + " ," + obj[5]);
+            String donGiaStr = (String) tblHoaDon.getValueAt(indexRow, 2);
+            Float donGia = parseMonetaryValue(donGiaStr);
+            Float thanhTien = donGia * Integer.valueOf(soLuong);
+            Float tienVat = thanhTien * listSp.get(index).getVAT()/100.0f;
+            obj[6] = (tienVat);
+            obj[7] =(thanhTien);
         }
         fillToTableHD();
+    }
+
+    private static Float parseMonetaryValue(String monetaryValue) {
+        // Remove non-numeric characters (assuming it's a valid representation)
+        String numericValue = monetaryValue.replaceAll("[^\\d.]+", "");
+
+        // Parse to Float
+        return Float.parseFloat(numericValue);
+    }
+
+    private static String formatCurrency(Float value) {
+        // Format the Float as currency
+        NumberFormat currencyFormat = new DecimalFormat("#,### VNĐ");
+        return currencyFormat.format(value);
     }
 
     public void formThanhToan() {
@@ -388,7 +410,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
             return;
         }
         checkList = kh.getMaKhachHang();
-        tongTien = 0.0f;
+        tongTien = 0;
         list.clear();
         modelHd.setRowCount(0);
     }
@@ -403,6 +425,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
     }
 
     public void fillToFormHD(int index1) {
+        sanPhamCTHD2 = listCTHD.get(index1).getMaSanPham();
         String maHD = listCTHD.get(index1).getMaHoaDon().getMaHoaDon();
         String maKH = listCTHD.get(index1).getMaHoaDon().getMaKhachHang().getMaKhachHang();
         String tenKH = listCTHD.get(index1).getMaHoaDon().getMaKhachHang().getHoVaTen();
@@ -680,6 +703,7 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
         o[4] = tblChiTietHD2.getValueAt(i, 4);
         String maCTHD = listCTHD.get(index1).getMaCthd();
         o[6] = Float.parseFloat(o[4].toString()) * Float.parseFloat(o[2].toString());
+        o[5] = Float.parseFloat(o[6].toString()) * (sanPhamCTHD2.getVAT() / 100);
         System.out.println(o[3] + " " + o[4] + " " + o[6] + " " + maCTHD);
         dao.updateCTHD((String) o[3], Integer.parseInt(o[4].toString()), Float.parseFloat(o[6].toString()), maCTHD);
         System.out.println("Cập nhật thành công");
@@ -1227,11 +1251,11 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
                     .addComponent(txt_banHang_timTheoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(txt_banHang_TimTheoMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(pictureBoxImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1988,7 +2012,11 @@ public class thanhToan extends javax.swing.JInternalFrame implements Runnable {
 
     private void btn_banHang_xoaHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_xoaHoaDonActionPerformed
         indexRow = tblHoaDon.getSelectedRow();
-        removeThongTinHoaDon(indexRow);
+        if (indexRow != -1) {
+            removeThongTinHoaDon(indexRow);
+        } else {
+            DialogHelper.alert("Vui lòng chọn sản phẩm cần xóa!");
+        }
     }//GEN-LAST:event_btn_banHang_xoaHoaDonActionPerformed
 
     private void btn_banHang_thanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_banHang_thanhToanActionPerformed

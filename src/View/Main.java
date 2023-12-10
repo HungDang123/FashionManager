@@ -4,6 +4,7 @@ import View.DangNhap.Login;
 import Model.nhanVien;
 import View.KhachHang.formKhachHang;
 import View.BanHang.thanhToan;
+import View.DangNhap.TroGiupForm;
 import View.SanPham.formSanPham;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import View.formProfile;
@@ -19,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import nhanVien.View.nhanVien_InternalForm;
 import static com.pro1041.util.ShareHelper.USER;
+
 /**
  *
  * @author HUNG
@@ -27,6 +29,7 @@ public class Main extends javax.swing.JFrame {
 
     public static formSanPham sanPham;
     nhanVien nv = USER;
+
     /**
      * Creates new form Main
      */
@@ -94,10 +97,11 @@ public class Main extends javax.swing.JFrame {
 
     public void imageProduct() {
         try {
-            if (nv.getHinhAnh().isEmpty()) {
+            String hinhAnh = nv.getHinhAnh();
+            if (hinhAnh == null || hinhAnh.isEmpty() || hinhAnh.equals("")) {
                 pictureBoxImage.setImage(null);
             } else {
-                pictureBoxImage.setImage(new ImageIcon((nv.getHinhAnh())));
+                pictureBoxImage.setImage(new ImageIcon(hinhAnh));
             }
             pictureBoxImage.repaint(); // Make sure to repaint the PictureBox to reflect the changes.
         } catch (Exception e) {
@@ -266,6 +270,11 @@ public class Main extends javax.swing.JFrame {
         btnTroGiup.setBorder(null);
         btnTroGiup.setMaximumSize(new java.awt.Dimension(150, 25));
         btnTroGiup.setPreferredSize(new java.awt.Dimension(200, 50));
+        btnTroGiup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTroGiupActionPerformed(evt);
+            }
+        });
 
         pictureBoxImage.setToolTipText("");
         pictureBoxImage.setBorderSize(2);
@@ -459,6 +468,20 @@ public class Main extends javax.swing.JFrame {
     private void btnDangXuatMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangXuatMouseExited
         btnDangXuat.setBackground(new Color(36, 37, 41));
     }//GEN-LAST:event_btnDangXuatMouseExited
+
+    private void btnTroGiupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroGiupActionPerformed
+        TroGiupForm troGiup = new TroGiupForm();
+        jDesktopPane1.removeAll();
+        jDesktopPane1.add(troGiup).setVisible(true);
+        Color background = new Color(53, 53, 55);
+        Color font = new Color(241, 238, 228);
+        btn_nhanVien.setBackground(background);
+        btn_nhanVien.setForeground(font);
+
+        btn_banHang.setBackground(new Color(36, 37, 41));
+        btn_khachHang.setBackground(new Color(36, 37, 41));
+        btn_sanPham.setBackground(new Color(36, 37, 41));
+    }//GEN-LAST:event_btnTroGiupActionPerformed
 
     /**
      * @param args the command line arguments

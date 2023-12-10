@@ -46,6 +46,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
             nhanVien_container.setLayout(new GridLayout(0, 3));
         } else {
 //            JOptionPane.showMessageDialog(this, "Bạn Chỉ có quyền xem mục này");
+            jTabbedPane2.removeTabAt(1);
             Add.setVisible(false);
         }
         showList_nv();
@@ -129,6 +130,7 @@ public class nhanVien_InternalForm extends javax.swing.JInternalFrame {
 //        // TODO add your handling code here:
 //        search_id(statistiCal_nhanVienBill.getText());
 //  }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

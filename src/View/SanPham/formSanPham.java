@@ -11,14 +11,27 @@ import Model.sanPham;
 import com.pro1041.dao.DAO_sanPham;
 import java.awt.Dimension;
 import View.SanPham.card;
+import com.pro1041.util.ShareHelper;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Collectors;
+import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -32,8 +45,9 @@ public class formSanPham extends javax.swing.JInternalFrame {
     List<sanPham> list = dao.getSelectAll();
     List<sanPham> filteredList = new ArrayList<>();
     List<sanPham> filteredListChoice = new ArrayList<>(list);
-
+    List<Object[]> thongKeSP = dao.thongKe();
     DefaultTableModel modelThongKe;
+    private TableRowSorter<DefaultTableModel> rowSorter;
 
     /**
      * Creates new form formSanPham
@@ -46,6 +60,10 @@ public class formSanPham extends javax.swing.JInternalFrame {
         loadToData();
         initThongKe();
         fillThongKe();
+        bieuDo();
+        if(!ShareHelper.USER.getChucVu()){
+            jTabbedPane1.removeTabAt(1);
+        }
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(15);
 
         // tìm sản phẩm theo tên
@@ -108,6 +126,54 @@ public class formSanPham extends javax.swing.JInternalFrame {
                 locDuLieu();
             }
         });
+
+        // tìm kiếm
+        cboTimKiem.addItem("Tất cả");
+        cboTimKiem.addItem("Giá tăng dần");
+        cboTimKiem.addItem("Giá giảm dần");
+        cboTimKiem.addItem("Tên A -> Z");
+        cboTimKiem.addItem("Tên Z -> A");
+        cboTimKiem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sapXepThongKe();
+            }
+        });
+
+        // tìm kiếm thống kê theo mã
+//        txtTimKiemID.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                timTheoMa();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                timTheoMa();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//                System.out.println(e);
+//            }
+//        });
+        // tìm thống kê theo tên
+//        txtTimKiemName.getDocument().addDocumentListener(new DocumentListener() {
+//            @Override
+//            public void insertUpdate(DocumentEvent e) {
+//                timTheoTen();
+//            }
+//
+//            @Override
+//            public void removeUpdate(DocumentEvent e) {
+//                timTheoTen();
+//            }
+//
+//            @Override
+//            public void changedUpdate(DocumentEvent e) {
+//
+//            }
+//        });
     }
 
     public void loadToData() {
@@ -115,7 +181,6 @@ public class formSanPham extends javax.swing.JInternalFrame {
             list = dao.getSelectAll();
             fillCard();
         } catch (Exception e) {
-            e.printStackTrace();
             e.printStackTrace();
         }
 
@@ -138,15 +203,30 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
     // Tìm kiếm sản phẩm theo tên
     public void findByName() {
-        String searchTerm = txtFindByName.getText().trim().toLowerCase(); // getText findByName
+        String searchTerm1 = txtFindByName.getText().trim().toLowerCase(); // getText findByName
         // Lọc list theo từ tìm kiếm
         List<sanPham> filteredListName = list.stream()
-                .filter(sp -> sp.getTenSanPham().toLowerCase().contains(searchTerm))
+                .filter(sp -> sp.getTenSanPham().toLowerCase().contains(searchTerm1))
                 .collect(Collectors.toList());
         // Cập nhật lại danh sách
         displayFilteredResults(filteredListName);
     }
 
+    // tìm kiếm thống kê theo tên 
+//    public void timTheoTen() {
+//        String searchTerm = txtTimKiemName.getText().trim().toLowerCase(); // getText findByName
+//        // Lọc list theo từ tìm kiếm
+//        List<Object[]> filteredList = thongKeSP.stream()
+//                .filter(objArr -> {
+//                    // Thực hiện điều kiện lọc tại đây
+//                    // Ví dụ: lọc các mảng Object[] có phần tử đầu tiên chứa searchTerm
+//                    String value = (String) objArr[1];
+//                    return value.toLowerCase().contains(searchTerm);
+//                })
+//                .collect(Collectors.toList());
+//        // Cập nhật lại danh sách
+//        fillThongKe();
+//    }
     private void displayFilteredResults(List<sanPham> filteredList) {
         jPanel1.removeAll();
 
@@ -175,6 +255,21 @@ public class formSanPham extends javax.swing.JInternalFrame {
         displayFilteredResults(filteredListID);
     }
 
+    // Tìm kiếm thống kê theo mã
+//    public void timTheoMa() {
+//        String searchTerm1 = txtTimKiemID.getText().trim().toLowerCase(); // getText FindByID
+//        // Lọc list theo từ tìm kiếm
+//        List<Object[]> filteredList = thongKeSP.stream()
+//                .filter(objArr -> {
+//                    // Thực hiện điều kiện lọc tại đây
+//                    // Ví dụ: lọc các mảng Object[] có phần tử đầu tiên chứa searchTerm
+//                    String value = (String) objArr[0];
+//                    return value.toLowerCase().contains(searchTerm1);
+//                })
+//                .collect(Collectors.toList());
+//        // Cập nhật lại danh sách
+//        fillThongKe();
+//    }
     // sắp xếp sản phẩm
     public void sapXepDuLieu() {
         String selectedOption = cboSapXep.getSelectedItem().toString();
@@ -256,8 +351,6 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
     public void fillThongKe() {
         modelThongKe.setRowCount(0);
-        List<Object[]> thongKeSP = dao.thongKe();
-
         if (thongKeSP != null) {
             for (Object[] rowData : thongKeSP) {
                 modelThongKe.addRow(rowData);
@@ -267,9 +360,118 @@ public class formSanPham extends javax.swing.JInternalFrame {
         tblThongKe.setModel(modelThongKe);
     }
 
+    public void sapXepThongKe() {
+        String selectedThongKe = cboTimKiem.getSelectedItem().toString();
+        switch (selectedThongKe) {
+            case "Tất cả":
+                thongKeSP = dao.thongKe();
+                break;
+            case "Giá tăng dần":
+                // Sắp xếp theo giá tăng dần
+                Comparator<Object[]> com = new Comparator<Object[]>() {
+                    @Override
+                    public int compare(Object[] o1, Object[] o2) {
+                        Comparable<Object> value1 = (Comparable<Object>) o1[3];
+                        Comparable<Object> value2 = (Comparable<Object>) o2[3];
+                        return value1.compareTo(value2);
+                    }
+                };
+                Collections.sort(thongKeSP, com);
+                break;
+            case "Giá giảm dần":
+                Comparator<Object[]> comm = new Comparator<Object[]>() {
+                    @Override
+                    public int compare(Object[] o1, Object[] o2) {
+                        Comparable<Object> value1 = (Comparable<Object>) o1[3];
+                        Comparable<Object> value2 = (Comparable<Object>) o2[3];
+                        return value2.compareTo(value1);
+                    }
+                };
+                Collections.sort(thongKeSP, comm);
+                break;
+            case "Tên A -> Z":
+                // Sắp xếp theo tên A -> Z
+                Comparator<Object[]> comparator = new Comparator<Object[]>() {
+                    @Override
+                    public int compare(Object[] o1, Object[] o2) {
+                        Comparable<Object> value1 = (Comparable<Object>) o1[1];
+                        Comparable<Object> value2 = (Comparable<Object>) o2[1];
+                        return value1.compareTo(value2);
+                    }
+                };
+                Collections.sort(thongKeSP, comparator);
+                for (Object[] o : thongKeSP) {
+                    System.out.println(o[0] + " " + o[1]);
+                }
+                break;
+            case "Tên Z -> A":
+                // Sắp xếp theo tên Z -> A
+                Comparator<Object[]> comparators = new Comparator<Object[]>() {
+                    @Override
+                    public int compare(Object[] o1, Object[] o2) {
+                        Comparable<Object> value1 = (Comparable<Object>) o1[1];
+                        Comparable<Object> value2 = (Comparable<Object>) o2[1];
+                        return value2.compareTo(value1);
+                    }
+                };
+                Collections.sort(thongKeSP, comparators);
+                for (Object[] o : thongKeSP) {
+                    System.out.println(o[0] + " " + o[1]);
+                }
+                break;
+            default:
+                break;
+        }
+        fillThongKe();
+    }
+
+    public void search_hd(String id, String name) {
+        rowSorter = new TableRowSorter<>(modelThongKe);
+        tblThongKe.setRowSorter(rowSorter);
+
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
+
+        // Kiểm tra và thêm RowFilter cho điều kiện 'name' nếu 'name' không rỗng
+        if (!id.isEmpty()) {
+            RowFilter<Object, Object> nameFilter = RowFilter.regexFilter(id, 0);
+            filters.add(nameFilter);
+        }
+
+        // Kiểm tra và thêm RowFilter cho điều kiện 'sdt' nếu 'sdt' không rỗng
+        if (!name.isEmpty()) {
+            RowFilter<Object, Object> sdtFilter = RowFilter.regexFilter(name, 1);
+            filters.add(sdtFilter);
+        }
+
+        // Tạo AndFilter để kết hợp các RowFilter thành một
+        RowFilter<Object, Object> combinedFilter = RowFilter.andFilter(filters);
+        rowSorter.setRowFilter(combinedFilter);
+    }
+
+    public void bieuDo() {
+        List<Object[]> value = dao.loaiSanPham();
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        for (Object[] i : value) {
+            dataset.setValue((Comparable) i[0], (Number) i[1]);
+        }
+
+        JFreeChart chart = ChartFactory.createPieChart("Số loại hàng bán được", dataset, true, true, false);
+        chart.setTitle("Biểu đồ số loại hàng bán được");
+        PiePlot plot = (PiePlot) chart.getPlot();
+        plot.setSectionPaint("Tiền", Color.blue); // Tùy chỉnh màu sắc của phần tiền trong biểu đồ tròn
+        
+        ChartPanel chartPanel = new ChartPanel(chart);
+        panelThongKe.removeAll();
+        panelThongKe.add(chartPanel);
+
+        panelThongKe.revalidate();
+        panelThongKe.repaint();
+    }
+
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-     * content of this method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -292,11 +494,15 @@ public class formSanPham extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblThongKe = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        cboTimKiem = new javax.swing.JComboBox<>();
+        txtTimKiemName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        txtTimKiemID = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        panelThongKe = new javax.swing.JPanel();
 
+        setBackground(new java.awt.Color(248, 247, 241));
         setPreferredSize(new java.awt.Dimension(1000, 800));
 
         jTabbedPane1.setBackground(new java.awt.Color(248, 247, 241));
@@ -314,14 +520,12 @@ public class formSanPham extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
         jScrollPane1.setViewportView(jPanel1);
 
-        jLabel4.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel4.setText("Lọc");
 
-        jLabel2.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel2.setText("Sắp xếp");
 
-        btnThem.setBackground(new java.awt.Color(145, 169, 120));
-        btnThem.setFont(new java.awt.Font("Lexend Deca", 0, 14)); // NOI18N
+        btnThem.setBackground(new java.awt.Color(140, 165, 115));
+        btnThem.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -329,7 +533,6 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel5.setText("Tìm theo tên");
 
         txtFindByName.addActionListener(new java.awt.event.ActionListener() {
@@ -338,7 +541,6 @@ public class formSanPham extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Lexend Deca", 0, 13)); // NOI18N
         jLabel6.setText("Tìm theo mã");
 
         txtFindByID.addActionListener(new java.awt.event.ActionListener() {
@@ -354,7 +556,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cboSapXep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -397,7 +599,7 @@ public class formSanPham extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Sản phẩm", jPanel2);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBackground(new java.awt.Color(248, 247, 241));
 
         tblThongKe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -413,14 +615,38 @@ public class formSanPham extends javax.swing.JInternalFrame {
         jScrollPane2.setViewportView(tblThongKe);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel1.setText("Bảng thể hiện sản phẩm tồn kho");
+        jLabel1.setText("Bảng thể hiện sản phẩm trong kho");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtTimKiemName.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTimKiemNameCaretUpdate(evt);
+            }
+        });
+        txtTimKiemName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemNameActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setText("Thống kê sản phẩm đã bán");
+        jLabel3.setText("Thống kê sản phẩm trong kho");
+
+        txtTimKiemID.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTimKiemIDCaretUpdate(evt);
+            }
+        });
+        txtTimKiemID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimKiemIDActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Tìm theo mã");
+
+        jLabel8.setText("Tìm theo tên");
+
+        panelThongKe.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -428,37 +654,53 @@ public class formSanPham extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(199, 199, 199)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(jLabel3))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cboTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(132, 132, 132)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTimKiemID, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(txtTimKiemName))))
+                        .addGap(18, 18, 18)
+                        .addComponent(panelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addComponent(jLabel1)))
-                .addContainerGap(446, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel3)
-                .addGap(29, 29, 29)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(1, 1, 1)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cboTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTimKiemName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTimKiemID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addContainerGap(93, Short.MAX_VALUE))
@@ -496,28 +738,45 @@ public class formSanPham extends javax.swing.JInternalFrame {
         findByID();
     }//GEN-LAST:event_txtFindByIDActionPerformed
 
+    private void txtTimKiemIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemIDActionPerformed
+    }//GEN-LAST:event_txtTimKiemIDActionPerformed
+
+    private void txtTimKiemNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemNameActionPerformed
+    }//GEN-LAST:event_txtTimKiemNameActionPerformed
+
+    private void txtTimKiemIDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemIDCaretUpdate
+        search_hd(txtTimKiemID.getText(), txtTimKiemName.getText());
+    }//GEN-LAST:event_txtTimKiemIDCaretUpdate
+
+    private void txtTimKiemNameCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTimKiemNameCaretUpdate
+        search_hd(txtTimKiemID.getText(), txtTimKiemName.getText());
+    }//GEN-LAST:event_txtTimKiemNameCaretUpdate
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnThem;
     private javax.swing.JComboBox<String> cboLoc;
     private javax.swing.JComboBox<String> cboSapXep;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> cboTimKiem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel panelThongKe;
     private javax.swing.JTable tblThongKe;
     private javax.swing.JTextField txtFindByID;
     private javax.swing.JTextField txtFindByName;
+    private javax.swing.JTextField txtTimKiemID;
+    private javax.swing.JTextField txtTimKiemName;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,8 +29,8 @@ import javax.imageio.ImageIO;
 public class QRCodeGenerator {
 
     public static void main(String[] args) {
-        String url = "00020101021238540010A00000072701240006970415011007798532380208QRIBFTTA53037045407" + String.valueOf(10000) + "5802VN62220818Thanh toan MTicket6304A73E";
-        String filePath = "D:/PRO1041/QR.png"; // Đường dẫn tập tin ảnh QR
+        String url = "https://github.com/HungDang123/PRO1041";
+        String filePath = "src/image/QR.jpg"; // Đường dẫn tập tin ảnh QR
 
         try {
             generateQR(url, 1250, 1250, filePath);
@@ -52,24 +52,24 @@ public class QRCodeGenerator {
         }
     }
 
-    public Image qr() throws IOException, WriterException {
-        String url = "00020101021138540010A00000072701240006970422011003393530730208QRIBFTTA5303704" + String.valueOf(2000000) + "5802VN63044451"; // Địa chỉ URL của trang web
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 450, 450);
-        MatrixToImageConfig imageConfig = new MatrixToImageConfig(MatrixToImageConfig.BLACK, MatrixToImageConfig.WHITE);
-
-        BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix, imageConfig);
-// Getting logo image
-//            BufferedImage logoImage = ImageIO.read(new File(pathToStore));
-//            int finalImageHeight = qrImage.getHeight() - 64;
-//            int finalImageWidth = qrImage.getWidth() - 64;
-//Merging both images
-        BufferedImage finalImage = new BufferedImage(qrImage.getHeight(), qrImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = (Graphics2D) finalImage.getGraphics();
-        graphics.drawImage(qrImage, 0, 0, null);
-        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-//            graphics.drawImage(logoImage.getScaledInstance(64, 64, 0), (int) Math.round(finalImageWidth / 2), (int) Math.round(finalImageHeight / 2), null);
-//            ImageIO.write(finalImage, "png", new File(createQRPayment.class.getResource("/mticket/image/").getPath().replace("build/classes", "src") + "QRcode.png"));
-        ImageIO.write(finalImage, "png", new File("D:/PRO1041/QR.png"));
-        return finalImage;
-    }
+//    public Image qr() throws IOException, WriterException {
+//        String url = "00020101021138540010A00000072701240006970422011003393530730208QRIBFTTA5303704" + String.valueOf(2000000) + "5802VN63044451"; // Địa chỉ URL của trang web
+//        BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 450, 450);
+//        MatrixToImageConfig imageConfig = new MatrixToImageConfig(MatrixToImageConfig.BLACK, MatrixToImageConfig.WHITE);
+//
+//        BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix, imageConfig);
+//// Getting logo image
+////            BufferedImage logoImage = ImageIO.read(new File(pathToStore));
+////            int finalImageHeight = qrImage.getHeight() - 64;
+////            int finalImageWidth = qrImage.getWidth() - 64;
+////Merging both images
+//        BufferedImage finalImage = new BufferedImage(qrImage.getHeight(), qrImage.getWidth(), BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D graphics = (Graphics2D) finalImage.getGraphics();
+//        graphics.drawImage(qrImage, 0, 0, null);
+//        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+////            graphics.drawImage(logoImage.getScaledInstance(64, 64, 0), (int) Math.round(finalImageWidth / 2), (int) Math.round(finalImageHeight / 2), null);
+////            ImageIO.write(finalImage, "png", new File(createQRPayment.class.getResource("/mticket/image/").getPath().replace("build/classes", "src") + "QRcode.png"));
+//        ImageIO.write(finalImage, "png", new File("D:/PRO1041/QR.png"));
+//        return finalImage;
+//    }
 }

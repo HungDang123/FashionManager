@@ -45,7 +45,6 @@ public class SignUp extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         rdbQuanLi = new javax.swing.JRadioButton();
         rdbNhanVien = new javax.swing.JRadioButton();
-        txtmatKhau = new javax.swing.JTextField();
         rdbNam = new javax.swing.JRadioButton();
         rdbNu = new javax.swing.JRadioButton();
         btnDangKy = new javax.swing.JButton();
@@ -56,6 +55,7 @@ public class SignUp extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        txtmatKhau = new javax.swing.JPasswordField();
         DateChooserNgaySinh = new com.toedter.calendar.JDateChooser();
         text = new javax.swing.JLabel();
 
@@ -76,16 +76,6 @@ public class SignUp extends javax.swing.JFrame {
         rdbNhanVien.setFont(new java.awt.Font("Lexend Deca", 0, 24)); // NOI18N
         rdbNhanVien.setText("Nhân viên");
         jPanel1.add(rdbNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 590, -1, 40));
-
-        txtmatKhau.setFont(new java.awt.Font("Lexend Deca", 0, 20));
-        PromptSupport.setPrompt("Mật khẩu", txtmatKhau);
-        txtmatKhau.setBorder(null);
-        txtmatKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtmatKhauActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtmatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 530, 330, 40));
 
         buttonGroup1.add(rdbNam);
         rdbNam.setFont(new java.awt.Font("Lexend Deca", 0, 24)); // NOI18N
@@ -164,6 +154,9 @@ public class SignUp extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Lexend Deca", 1, 48)); // NOI18N
         jLabel4.setText("Đăng ký");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 60, -1, -1));
+
+        txtmatKhau.setBorder(null);
+        jPanel1.add(txtmatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 530, 330, 40));
         jPanel1.add(DateChooserNgaySinh, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 290, 330, 40));
 
         text.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dang-ki.png"))); // NOI18N
@@ -182,10 +175,6 @@ public class SignUp extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtmatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmatKhauActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtmatKhauActionPerformed
 
     private void txtmaNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmaNhanVienActionPerformed
         // TODO add your handling code here:
@@ -259,7 +248,6 @@ public class SignUp extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        DialogHelper.alert("Đăng ký thành công");
         Login lg = new Login();
         lg.setVisible(true);
         this.dispose();
@@ -318,6 +306,6 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JTextField txtSodt;
     private javax.swing.JTextField txthoTen;
     private javax.swing.JTextField txtmaNhanVien;
-    private javax.swing.JTextField txtmatKhau;
+    private javax.swing.JPasswordField txtmatKhau;
     // End of variables declaration//GEN-END:variables
 }

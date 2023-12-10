@@ -35,6 +35,7 @@ public class formProfile extends javax.swing.JInternalFrame {
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
         hienThiThongTin();
+        fill();
     }
 
     public void formChangePass() {
@@ -60,25 +61,35 @@ public class formProfile extends javax.swing.JInternalFrame {
         lblChucVu.setText(chucVu);
         lblTen.setText(nv.getHoVaTen());
         imageProduct();
-        DAO_nhanVien dao = new DAO_nhanVien();
-        String[] o = dao.thongKe(nv.getMaNhanVien());
-        txtSoHoaDon.setText(o[0]);
-        txtSoSP.setText(o[1]);
-        String tongTien = decimalFormat.format(Double.parseDouble(o[2]));
-        txtTongTien.setText(tongTien);
     }
 
     public void imageProduct() {
         try {
-            if (nv.getHinhAnh().isEmpty()) {
+            String hinhAnh = nv.getHinhAnh();
+            if (hinhAnh == null || hinhAnh.isEmpty() || hinhAnh.equals("")) {
                 pictureBoxImage.setImage(null);
             } else {
-                pictureBoxImage.setImage(new ImageIcon((nv.getHinhAnh())));
+                pictureBoxImage.setImage(new ImageIcon(hinhAnh));
             }
             pictureBoxImage.repaint(); // Make sure to repaint the PictureBox to reflect the changes.
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void fill() {
+        DAO_nhanVien dao = new DAO_nhanVien();
+        String[] o = dao.thongKe(nv.getMaNhanVien());
+        if (o != null) {
+            txtSoHoaDon.setText(o[0]);
+            txtSoSP.setText(o[1]);
+            String tongTien = decimalFormat.format(Double.parseDouble(o[2]));
+            txtTongTien.setText(tongTien);
+        } else {
+            txtSoHoaDon.setText("");
+            txtSoSP.setText("");
+            txtTongTien.setText("");
         }
     }
 
@@ -195,15 +206,15 @@ public class formProfile extends javax.swing.JInternalFrame {
 
         txtTongTien.setFont(new java.awt.Font("Lexend Deca", 3, 14)); // NOI18N
         txtTongTien.setForeground(new java.awt.Color(0, 153, 204));
-        txtTongTien.setText("jLabel5");
+        txtTongTien.setText("0");
 
         txtSoSP.setFont(new java.awt.Font("Lexend Deca", 3, 14)); // NOI18N
         txtSoSP.setForeground(new java.awt.Color(0, 153, 204));
-        txtSoSP.setText("jLabel5");
+        txtSoSP.setText("0");
 
         txtSoHoaDon.setFont(new java.awt.Font("Lexend Deca", 3, 14)); // NOI18N
         txtSoHoaDon.setForeground(new java.awt.Color(0, 153, 204));
-        txtSoHoaDon.setText("jLabel5");
+        txtSoHoaDon.setText("0");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
